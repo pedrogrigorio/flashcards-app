@@ -1,6 +1,7 @@
 package com.example.flashcards_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
 import android.view.View;
