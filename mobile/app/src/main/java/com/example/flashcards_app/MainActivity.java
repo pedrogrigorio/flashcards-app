@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
             showEditDeckPopupWindow();
         });
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.container, MainFragment.).commitNow();
+        }
+
     }
 
     public void accessProfile(View v) {
