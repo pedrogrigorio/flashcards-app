@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/parent_layout">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -33,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="72dp"
-                android:onClick="acessNotifications"
+                android:onClick="accessNotifications"
                 android:src="@drawable/notifications"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +74,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginRight="28dp"
-            android:onClick="acessPerfil"
+            android:onClick="accessProfile"
             app:srcCompat="@drawable/user_img" />
 
         <TextView
@@ -126,7 +127,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_create_deck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -294,7 +295,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button2"
+                    android:id="@+id/btn_edit_deck"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginTop="22dp"
