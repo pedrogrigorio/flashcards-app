@@ -14,30 +14,49 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.flashcards_app.databinding.ActivityMainBinding;
+import com.google.android.material.tabs.TabLayoutMediator;
+
 public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout parent;
+    private ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         parent = findViewById(R.id.parent_layout);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Button createDeck = findViewById(R.id.btn_create_deck);
         createDeck.setOnClickListener(v -> {
             showCreateDeckPopupWindow();
         });
 
-        Button editDeck = findViewById(R.id.btn_edit_deck);
-        editDeck.setOnClickListener(v -> {
-            showEditDeckPopupWindow();
+//        Button editDeck = findViewById(R.id.btn_edit_deck);
+//        editDeck.setOnClickListener(v -> {
+//            showEditDeckPopupWindow();
+//        });
+
+        configTabLayout();
+    }
+
+    private void configTabLayout() {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        binding.viewPager.setAdapter(adapter);
+
+        adapter.addFragment(new DecksFragment(), "Baralhos");
+        adapter.addFragment(new FriendsFragment(), "Amigos");
+
+        binding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
+
+        TabLayoutMediator mediator = new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {
+            tab.setText(adapter.getTitle(position));
         });
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, MainFragment.).commitNow();
-        }
-
+        mediator.attach();
     }
 
     public void accessProfile(View v) {
