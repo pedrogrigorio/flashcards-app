@@ -100,32 +100,6 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
         app:layout_constraintVertical_bias="0.060000002">
 
-        <LinearLayout
-            android:id="@+id/gra"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Baralhos"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="#FFFFFF"
-                android:backgroundTintMode="src_over" />
-        </LinearLayout>
-
         <Button
             android:id="@+id/btn_create_deck"
             android:layout_width="wrap_content"
@@ -141,26 +115,24 @@
             app:strokeColor="#999999"
             app:strokeWidth="1dp" />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Amigos"
-            android:textColor="#C4C4C4"
-            android:textSize="16sp" />
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.0"
-        app:tabBackground="@color/purple_light" />
+        app:tabBackground="@color/transparent"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="4dp"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/CustomTabLayout"
+        app:tabTextColor="@color/gray" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

@@ -12,9 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.example.flashcards_app.databinding.ActivityMainBinding;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
 
         TabLayoutMediator mediator = new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {
+
             tab.setText(adapter.getTitle(position));
         });
 

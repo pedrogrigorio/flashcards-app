@@ -7,11 +7,10 @@
     tools:context=".FriendsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-     <TextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        android:background="@color/purple_light" />
+        android:background="@color/transparent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
