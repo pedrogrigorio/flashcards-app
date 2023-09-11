@@ -2,6 +2,7 @@ package com.example.flashcards_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout parent;
     private ActivityMainBinding binding;
+    private Button createDeck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +35,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Button createDeck = findViewById(R.id.btn_create_deck);
-        createDeck.setOnClickListener(v -> {
-            showCreateDeckPopupWindow();
-        });
+        createDeck = findViewById(R.id.btn_create_deck);
+//        createDeck.setOnClickListener(v -> {
+//            showCreateDeckPopupWindow();
+//        });
+
 
 //        Button editDeck = findViewById(R.id.btn_edit_deck);
 //        editDeck.setOnClickListener(v -> {
@@ -53,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new FriendsFragment(), "Amigos");
 
         binding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    binding.btnAddFriends.setVisibility(View.INVISIBLE);
+                    binding.btnCreateDeck.setVisibility(View.VISIBLE);
+                } else if (position == 1) {
+                    binding.btnCreateDeck.setVisibility(View.INVISIBLE);
+                    binding.btnAddFriends.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         TabLayoutMediator mediator = new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {
 
@@ -73,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showCreateDeckPopupWindow() {
+//        System.out.println(binding.viewPager.getCurrentItem());
         View view = View.inflate(this, R.layout.create_deck_popup, null);
         ImageView close = view.findViewById(R.id.create_deck_close_popup);
         TextView cancel = view.findViewById(R.id.cancel_create_deck);
@@ -93,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public Button getCreateDeckButton() {
+        return createDeck;
+    }
     public void showEditDeckPopupWindow() {
         View view = View.inflate(this, R.layout.edit_deck_popup, null);
         ImageView close = view.findViewById(R.id.edit_deck_close_popup);
