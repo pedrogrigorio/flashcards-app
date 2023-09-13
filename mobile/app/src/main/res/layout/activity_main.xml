@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
@@ -33,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="72dp"
-                android:onClick="acessNotifications"
+                android:onClick="accessNotifications"
                 android:src="@drawable/notifications"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +74,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginRight="28dp"
-            android:onClick="acessPerfil"
+            android:onClick="accessProfile"
             app:srcCompat="@drawable/user_img" />
 
         <TextView
@@ -88,248 +89,73 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="80dp"
+        android:background="@color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.05">
+        app:layout_constraintVertical_bias="0.0"
+        app:tabBackground="@color/transparent"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="4dp"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/CustomTabLayout"
+        app:tabTextColor="@color/gray" />
 
-        <LinearLayout
-            android:id="@+id/gra"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Baralhos"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider"
-                android:backgroundTint="#FFFFFF"
-                android:backgroundTintMode="src_over" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_weight="1"
-            android:backgroundTint="#26000000"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
-            android:text="Criar baralho"
-            android:textSize="16sp"
-            app:strokeColor="#999999"
-            app:strokeWidth="1dp" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Amigos"
-            android:textColor="#C4C4C4"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="-22dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.77">
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="match_parent"
-            android:layout_height="194dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            app:cardCornerRadius="34dp"
-            app:cardElevation="10dp">
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_create_deck"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/background_edit_button"
+        android:drawableStart="@drawable/plus"
+        android:isScrollContainer="true"
+        android:paddingLeft="14dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:id="@+id/linearLayout5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0">
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="14dp"
-                        android:layout_weight="1"
-                        android:text="Inglês"
-                        android:textAlignment="textStart"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="24dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/textView5"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="14"
-                                android:textAlignment="center" />
-
-                            <TextView
-                                android:id="@+id/textView4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Novos"
-                                android:textAlignment="center" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="24dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/textView6"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="40"
-                                android:textAlignment="center" />
-
-                            <TextView
-                                android:id="@+id/textView7"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Aprender"
-                                android:textAlignment="center" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/textView9"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="2034"
-                                android:textAlignment="center" />
-
-                            <TextView
-                                android:id="@+id/textView8"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Revisar"
-                                android:textAlignment="center" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="14dp"
-                        android:background="@drawable/background_button_shadow"
-                        android:padding="14dp"
-                        android:paddingStart="30dp"
-                        android:paddingEnd="30dp"
-                        android:text="REVISAR"
-                        android:textColor="@color/white" />
-                    <!--                <Button-->
-                    <!--                    android:id="@+id/button3"-->
-                    <!--                    android:layout_width="wrap_content"-->
-                    <!--                    android:layout_height="wrap_content"-->
-                    <!--                    android:layout_marginBottom="14dp"-->
-                    <!--                    android:layout_weight="1"-->
-                    <!--                    android:background="@drawable/background_button"-->
-                    <!--                    android:paddingTop="14dp"-->
-                    <!--                    android:paddingBottom="14dp"-->
-                    <!--                    android:text="REVISAR" />-->
-
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button2"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="22dp"
-                    android:background="@drawable/background_edit_button"
-                    android:drawableStart="@drawable/edit_pencil"
-                    android:isScrollContainer="true"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="0dp"
-                    android:paddingRight="0dp"
-                    android:paddingBottom="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="124dp"
-                    android:layout_height="124dp"
-                    android:layout_marginEnd="-16dp"
-                    android:layout_marginBottom="-16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0"
-                    app:srcCompat="@drawable/deck_img_placeholder" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_friends"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/background_edit_button"
+        android:drawableStart="@drawable/add_friends"
+        android:isScrollContainer="true"
+        android:paddingLeft="16dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
