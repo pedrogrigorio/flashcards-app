@@ -20,34 +20,28 @@ import java.util.List;
 
 public class DecksFragment extends Fragment {
 
-    private FrameLayout frameLayout;
     private LinearLayout linearLayout;
     private int cardCount = 0;
-
     private List<Deck> deckList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                                Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_decks, container, false);
 
-        frameLayout = view.findViewById(R.id.decksLayout);
         linearLayout = view.findViewById(R.id.decksLinearLayout);
         Button addButton = ((MainActivity) requireActivity()).getCreateDeckButton();
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewCard();
-            }
+        addButton.setOnClickListener(v -> {
+            addNewCard();
         });
 
         return view;
     }
 
     private void addNewCard() {
-        // Inflar layout
+        /* Inflar layout */
         View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.card_layout, null);
 
         // Layout config
@@ -57,23 +51,39 @@ public class DecksFragment extends Fragment {
         );
 
         Resources r = getContext().getResources();
-        int x_margin = (int) TypedValue.applyDimension(
+        int margin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 24,
                 r.getDisplayMetrics()
         );
 
-        layoutParams.setMargins(x_margin, 0, x_margin, x_margin);
+        layoutParams.setMargins(margin, 0, margin, margin);
         cardView.setLayoutParams(layoutParams);
 
-        // Deck Title
+        /* Create object */
+        Deck deck = new Deck(cardCount);
+
+        // TextViews References
         TextView deckTitle = cardView.findViewById(R.id.deckTitle);
         int uniqueTitleId = View.generateViewId();
         deckTitle.setId(uniqueTitleId);
 
-        // Objeto
-        Deck deck = new Deck(cardCount, "Baralho" + cardCount, deckTitle);
-        deck.setTitle(deck.getTitle());
+        TextView newCardsNumber = cardView.findViewById(R.id.newCardsNumber);
+        int newCardsNumberUniqueId = View.generateViewId();
+        newCardsNumber.setId(newCardsNumberUniqueId);
+
+        TextView learnCardsNumber = cardView.findViewById(R.id.learnCardsNumber);
+        int learnCardsNumberUniqueId = View.generateViewId();
+        learnCardsNumber.setId(learnCardsNumberUniqueId);
+
+        TextView reviewCardsNumber = cardView.findViewById(R.id.reviewCardsNumber);
+        int reviewCardsNumberUniqueId = View.generateViewId();
+        reviewCardsNumber.setId(reviewCardsNumberUniqueId);
+
+        deck.setTitleTextView(deckTitle);
+        deck.setNewCardsNumberTextView(newCardsNumber);
+        deck.setLearnCardsNumberTextView(learnCardsNumber);
+        deck.setReviewCardsNumberTextView(reviewCardsNumber);
 
         // Edit button onClick
         AppCompatButton editButton = cardView.findViewById(R.id.btn_edit_deck);
@@ -84,7 +94,7 @@ public class DecksFragment extends Fragment {
             edit(deck);
         });
 
-        // Add to screen and list
+        // Persist
         linearLayout.addView(cardView);
         deckList.add(deck);
         cardCount++;
