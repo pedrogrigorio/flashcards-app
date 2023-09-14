@@ -1,7 +1,9 @@
-package com.example.flashcards_app;
+package com.example.flashcards_app.models;
 
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatButton;
 
 public class Deck {
     private int id;

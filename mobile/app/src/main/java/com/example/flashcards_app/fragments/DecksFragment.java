@@ -1,4 +1,4 @@
-package com.example.flashcards_app;
+package com.example.flashcards_app.fragments;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -18,6 +18,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.R;
+import com.example.flashcards_app.activities.MainActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +30,8 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
     private LinearLayout linearLayout;
     private int cardCount = 0;
     private List<Deck> deckList = new ArrayList<>();
+
+    private Deck currentDeckOptionsPopup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,14 +94,22 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         deck.setLearnCardsNumberTextView(learnCardsNumber);
         deck.setReviewCardsNumberTextView(reviewCardsNumber);
 
-        // Edit button onClick
+        // Buttons reference and onClickListener
         AppCompatButton editButton = cardView.findViewById(R.id.btn_edit_deck);
         int uniqueEditButtonId = View.generateViewId();
         editButton.setId(uniqueEditButtonId);
 
         editButton.setOnClickListener(v -> {
-//            edit(deck);
-            showPopupMenu(requireContext(), editButton);
+            showPopupMenu(requireContext(), editButton, deck);
+        });
+
+        AppCompatButton reviewButton = cardView.findViewById(R.id.btn_review);
+        int uniqueReviewButtonId = View.generateViewId();
+        reviewButton.setId(uniqueReviewButtonId);
+
+        reviewButton.setOnClickListener(v -> {
+            // Encaminhar para tela de revisões passando o deck (ou id)
+            Toast.makeText(requireContext(), "review deck: " + deck.getId(), Toast.LENGTH_SHORT).show();
         });
 
         // Persist
@@ -104,7 +118,8 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         cardCount++;
     }
 
-    public void showPopupMenu(Context context, View v) {
+    public void showPopupMenu(Context context, View v, Deck deck) {
+        currentDeckOptionsPopup = deck;
         PopupMenu popup = new PopupMenu(context, v);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.deck_options_menu);
@@ -116,23 +131,15 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         int id = item.getItemId();
 
         if (id == R.id.item1) {
-            Toast.makeText(requireContext(), "item 1", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Add cards in deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.item2) {
-            Toast.makeText(requireContext(), "item 2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Edit deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.item3) {
-            Toast.makeText(requireContext(), "item 3", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Delete deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
             return true;
         }
-
         return false;
     }
-
-    public void edit(Deck deck) {
-        System.out.println("editando " + deck.getTitle());
-        deck.setTitle("_" + deck.getTitle());
-    }
-
-
 }

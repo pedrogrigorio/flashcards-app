@@ -1,4 +1,4 @@
-package com.example.flashcards_app;
+package com.example.flashcards_app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.flashcards_app.databinding.ActivityMainBinding;
+import com.example.flashcards_app.fragments.DecksFragment;
+import com.example.flashcards_app.fragments.FriendsFragment;
+import com.example.flashcards_app.R;
+import com.example.flashcards_app.adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
