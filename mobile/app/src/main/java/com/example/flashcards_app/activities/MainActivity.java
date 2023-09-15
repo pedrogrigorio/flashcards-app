@@ -24,7 +24,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
 
-    ConstraintLayout parent;
+    ConstraintLayout rootLayout;
     private ActivityMainBinding binding;
     private Button createDeck;
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        parent = findViewById(R.id.parent_layout);
+        rootLayout = findViewById(R.id.root_layout);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         mediator.attach();
     }
 
+    /* Change page methods */
+
     public void accessProfile(View v) {
         Intent in = new Intent(MainActivity.this, ProfileActivity.class);
         startActivity(in);
@@ -90,49 +92,55 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    public void showCreateDeckPopupWindow() {
-//        System.out.println(binding.viewPager.getCurrentItem());
-        View view = View.inflate(this, R.layout.create_deck_popup, null);
-        ImageView close = view.findViewById(R.id.create_deck_close_popup);
-        TextView cancel = view.findViewById(R.id.cancel_create_deck);
+//    public void showCreateDeckPopupWindow() {
+////        System.out.println(binding.viewPager.getCurrentItem());
+//        View view = View.inflate(this, R.layout.create_deck_popup, null);
+//        ImageView close = view.findViewById(R.id.create_deck_close_popup);
+//        TextView cancel = view.findViewById(R.id.cancel_create_deck);
+//
+//        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+//        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+//
+//        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
+//
+//        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+//
+//        close.setOnClickListener(v -> {
+//            popupWindow.dismiss();
+//        });
+//
+//        cancel.setOnClickListener(v -> {
+//            popupWindow.dismiss();
+//        });
+//    }
 
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-
-        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-
-        close.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        cancel.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-    }
-
+    /* Get view elements */
     public Button getCreateDeckButton() {
         return createDeck;
     }
-    public void showEditDeckPopupWindow() {
-        View view = View.inflate(this, R.layout.edit_deck_popup, null);
-        ImageView close = view.findViewById(R.id.edit_deck_close_popup);
-        TextView cancel = view.findViewById(R.id.cancel_edit_deck);
 
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-
-        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-
-        close.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        cancel.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
+    public ConstraintLayout getRootLayout() {
+        return rootLayout;
     }
+
+//    public void showEditDeckPopupWindow() {
+//        View view = View.inflate(this, R.layout.edit_deck_popup, null);
+//        ImageView close = view.findViewById(R.id.edit_deck_close_popup);
+//        TextView cancel = view.findViewById(R.id.cancel_edit_deck);
+//
+//        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+//        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+//
+//        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
+//
+//        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+//
+//        close.setOnClickListener(v -> {
+//            popupWindow.dismiss();
+//        });
+//
+//        cancel.setOnClickListener(v -> {
+//            popupWindow.dismiss();
+//        });
+//    }
 }

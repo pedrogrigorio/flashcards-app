@@ -5,16 +5,20 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +32,7 @@ import java.util.List;
 public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
     private LinearLayout linearLayout;
+    private ConstraintLayout mainActivityRootLayout;
     private int cardCount = 0;
     private List<Deck> deckList = new ArrayList<>();
 
@@ -38,9 +43,12 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
                                 Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_decks, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
 
         linearLayout = view.findViewById(R.id.decksLinearLayout);
-        Button addButton = ((MainActivity) requireActivity()).getCreateDeckButton();
+        mainActivityRootLayout = mainActivity.getRootLayout();
+
+        Button addButton = mainActivity.getCreateDeckButton();
 
         addButton.setOnClickListener(v -> {
             addNewCard();
@@ -134,6 +142,7 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
             Toast.makeText(requireContext(), "Add cards in deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.item2) {
+            showEditDeckPopupWindow();
             Toast.makeText(requireContext(), "Edit deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.item3) {
@@ -141,5 +150,26 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
             return true;
         }
         return false;
+    }
+
+    public void showEditDeckPopupWindow() {
+        View view = View.inflate(requireContext(), R.layout.edit_deck_popup, null);
+        ImageView close = view.findViewById(R.id.edit_deck_close_popup);
+        TextView cancel = view.findViewById(R.id.cancel_edit_deck);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
+
+        popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
+
+        close.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        cancel.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
     }
 }
