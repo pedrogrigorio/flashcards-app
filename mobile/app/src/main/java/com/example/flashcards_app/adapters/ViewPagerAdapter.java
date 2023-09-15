@@ -1,4 +1,4 @@
-package com.example.flashcards_app;
+package com.example.flashcards_app.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
