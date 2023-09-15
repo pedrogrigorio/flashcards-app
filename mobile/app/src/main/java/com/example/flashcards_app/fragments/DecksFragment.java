@@ -59,7 +59,7 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
     private void addNewCard() {
         /* Inflar layout */
-        View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.card_layout, null);
+        View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_card_layout, null);
 
         // Layout config
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -138,14 +138,16 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
 
+        // currentDeckOptionsPopup <-- current deck object
         if (id == R.id.item1) {
+            showAddCardsPopupWindow();
             Toast.makeText(requireContext(), "Add cards in deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.item2) {
             showEditDeckPopupWindow();
-            Toast.makeText(requireContext(), "Edit deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.item3) {
+            showDeleteDeckPopupWindow();
             Toast.makeText(requireContext(), "Delete deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -153,9 +155,11 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
     }
 
     public void showEditDeckPopupWindow() {
-        View view = View.inflate(requireContext(), R.layout.edit_deck_popup, null);
+        View view = View.inflate(requireContext(), R.layout.dialog_edit_deck, null);
+        View outDialog = view.findViewById(R.id.out_dialog_edit_deck);
         ImageView close = view.findViewById(R.id.edit_deck_close_popup);
         TextView cancel = view.findViewById(R.id.cancel_edit_deck);
+        Button edit = view.findViewById(R.id.btn_dialog_edit_deck);
 
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -164,11 +168,71 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
         popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
 
+        outDialog.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
         close.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
 
         cancel.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        edit.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+    }
+
+    public void showDeleteDeckPopupWindow() {
+        View view = View.inflate(requireContext(), R.layout.dialog_delete_deck, null);
+        View outDialog = view.findViewById(R.id.out_dialog_delete_deck);
+        TextView cancel = view.findViewById(R.id.cancel_delete_deck);
+        Button exclude = view.findViewById(R.id.btn_dialog_delete_deck);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
+
+        popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
+
+        exclude.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        cancel.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        outDialog.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+    }
+
+    public void showAddCardsPopupWindow() {
+        View view = View.inflate(requireContext(), R.layout.dialog_add_cards, null);
+        View outDialog = view.findViewById(R.id.out_dialog_add_cards);
+        TextView cancel = view.findViewById(R.id.cancel_add_cards);
+        Button addCard = view.findViewById(R.id.btn_dialog_add_cards);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
+
+        popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
+
+        addCard.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        cancel.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        outDialog.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
     }
