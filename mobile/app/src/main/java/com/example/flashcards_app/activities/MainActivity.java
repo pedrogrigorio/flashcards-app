@@ -38,15 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         createDeck = findViewById(R.id.btn_create_deck);
-//        createDeck.setOnClickListener(v -> {
-//            showCreateDeckPopupWindow();
-//        });
-
-
-//        Button editDeck = findViewById(R.id.btn_edit_deck);
-//        editDeck.setOnClickListener(v -> {
-//            showEditDeckPopupWindow();
-//        });
 
         configTabLayout();
     }
@@ -92,28 +83,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-//    public void showCreateDeckPopupWindow() {
-////        System.out.println(binding.viewPager.getCurrentItem());
-//        View view = View.inflate(this, R.layout.create_deck_popup, null);
-//        ImageView close = view.findViewById(R.id.create_deck_close_popup);
-//        TextView cancel = view.findViewById(R.id.cancel_create_deck);
-//
-//        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-//        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-//
-//        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-//
-//        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-//
-//        close.setOnClickListener(v -> {
-//            popupWindow.dismiss();
-//        });
-//
-//        cancel.setOnClickListener(v -> {
-//            popupWindow.dismiss();
-//        });
-//    }
-
     /* Get view elements */
     public Button getCreateDeckButton() {
         return createDeck;
@@ -123,24 +92,4 @@ public class MainActivity extends AppCompatActivity {
         return rootLayout;
     }
 
-//    public void showEditDeckPopupWindow() {
-//        View view = View.inflate(this, R.layout.edit_deck_popup, null);
-//        ImageView close = view.findViewById(R.id.edit_deck_close_popup);
-//        TextView cancel = view.findViewById(R.id.cancel_edit_deck);
-//
-//        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-//        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-//
-//        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-//
-//        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-//
-//        close.setOnClickListener(v -> {
-//            popupWindow.dismiss();
-//        });
-//
-//        cancel.setOnClickListener(v -> {
-//            popupWindow.dismiss();
-//        });
-//    }
 }

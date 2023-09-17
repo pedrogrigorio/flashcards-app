@@ -142,7 +142,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/deck_img"
             android:layout_width="124dp"
             android:layout_height="124dp"
             android:translationX="10dp"

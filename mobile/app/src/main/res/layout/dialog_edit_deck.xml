@@ -17,26 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_dialog_edit_deck"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView19"
-            app:layout_constraintVertical_bias="0.0">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Inglês" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/imageView7"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/deck_img_edit_deck"
             android:layout_width="124dp"
             android:layout_height="124dp"
             android:layout_marginTop="72dp"
@@ -46,7 +28,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/deck_img_placeholder" />
+            app:shapeAppearanceOverlay="@style/circular"
+            app:srcCompat="@drawable/placeholder_deck_image" />
 
         <TextView
             android:id="@+id/textView19"
@@ -61,26 +44,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7"
+            app:layout_constraintTop_toBottomOf="@+id/deck_img_edit_deck"
             app:layout_constraintVertical_bias="0.0" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button5"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="@drawable/photo_edit_button"
-            android:drawableStart="@drawable/cam"
-            android:isScrollContainer="true"
-            android:paddingLeft="6dp"
-            android:paddingTop="0dp"
-            android:paddingRight="0dp"
-            android:paddingBottom="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-            app:layout_constraintEnd_toEndOf="@+id/imageView7"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/imageView7"
-            app:layout_constraintTop_toTopOf="@+id/imageView7"
-            app:layout_constraintVertical_bias="0.95" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_cam_edit_deck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/purple"
+            android:clickable="true"
+            android:focusable="true"
+            android:tint="@color/white"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@+id/deck_img_edit_deck"
+            app:layout_constraintEnd_toEndOf="@+id/deck_img_edit_deck"
+            app:srcCompat="@drawable/cam"
+            app:useCompatPadding="false" />
 
         <ImageView
             android:id="@+id/edit_deck_close_popup"
@@ -100,7 +79,7 @@
             android:id="@+id/btn_dialog_edit_deck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="124dp"
+            android:layout_marginTop="48dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/background_popup_button"
