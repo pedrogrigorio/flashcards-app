@@ -31,22 +31,6 @@
             app:shapeAppearanceOverlay="@style/circular"
             app:srcCompat="@drawable/placeholder_deck_image" />
 
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_weight="1"
-            android:text="Inglês"
-            android:textAlignment="textStart"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/deck_img_edit_deck"
-            app:layout_constraintVertical_bias="0.0" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_cam_edit_deck"
             android:layout_width="wrap_content"
@@ -79,7 +63,6 @@
             android:id="@+id/btn_dialog_edit_deck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/background_popup_button"
@@ -88,9 +71,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView19"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/cancel_edit_deck"
@@ -105,6 +86,23 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_dialog_edit_deck" />
+
+        <EditText
+            android:id="@+id/deck_title_edit_deck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="48dp"
+            android:ems="8"
+            android:inputType="text"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btn_dialog_edit_deck"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deck_img_edit_deck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

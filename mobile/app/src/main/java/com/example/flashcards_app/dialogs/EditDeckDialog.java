@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class EditDeckDialog extends AppCompatDialogFragment {
     FloatingActionButton camButton;
     TextView cancel;
     Button edit;
+    EditText title;
 
     public EditDeckDialog(Deck currentDeck) {
         this.currentDeck = currentDeck;
@@ -57,6 +59,9 @@ public class EditDeckDialog extends AppCompatDialogFragment {
         Drawable drawable = currentDeck.getDeckImage().getDrawable();
         currentDeckImg.setImageDrawable(drawable);
 
+        title = view.findViewById(R.id.deck_title_edit_deck);
+        title.setText(currentDeck.getTitle());
+
         close.setOnClickListener(v -> {
             dismiss();
         });
@@ -68,6 +73,8 @@ public class EditDeckDialog extends AppCompatDialogFragment {
         edit.setOnClickListener(v -> {
             ImageView deckImg = currentDeck.getDeckImage();
             deckImg.setImageDrawable(currentDeckImg.getDrawable());
+
+            currentDeck.setTitle(title.getText().toString());
             dismiss();
         });
 
