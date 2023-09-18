@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.example.flashcards_app.activities.NotificationActivity;
 import com.example.flashcards_app.activities.ProfileActivity;
 import com.example.flashcards_app.activities.ReviewActivity;
+import com.example.flashcards_app.dialogs.AddCardsDialog;
+import com.example.flashcards_app.dialogs.DeleteDeckDialog;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.R;
@@ -151,70 +153,19 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         int id = item.getItemId();
 
         if (id == R.id.item1) {
-            showAddCardsPopupWindow();
-            Toast.makeText(requireContext(), "Add cards in deck " + currentDeck.getId(), Toast.LENGTH_SHORT).show();
+            AddCardsDialog dialog = new AddCardsDialog(currentDeck);
+            dialog.show(getActivity().getSupportFragmentManager(), "edit_deck_popup");
             return true;
         } else if (id == R.id.item2) {
             EditDeckDialog dialog = new EditDeckDialog(currentDeck);
             dialog.show(getActivity().getSupportFragmentManager(), "edit_deck_popup");
             return true;
         } else if (id == R.id.item3) {
-            showDeleteDeckPopupWindow();
-            Toast.makeText(requireContext(), "Delete deck " + currentDeck.getId(), Toast.LENGTH_SHORT).show();
+            DeleteDeckDialog dialog = new DeleteDeckDialog(currentDeck);
+            dialog.show(getActivity().getSupportFragmentManager(), "delete_deck_popup");
             return true;
         }
+
         return false;
-    }
-
-    public void showDeleteDeckPopupWindow() {
-        View view = View.inflate(requireContext(), R.layout.dialog_delete_deck, null);
-        View outDialog = view.findViewById(R.id.out_dialog_delete_deck);
-        TextView cancel = view.findViewById(R.id.cancel_delete_deck);
-        Button exclude = view.findViewById(R.id.btn_dialog_delete_deck);
-
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-
-        popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
-
-        exclude.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        cancel.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        outDialog.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-    }
-
-    public void showAddCardsPopupWindow() {
-        View view = View.inflate(requireContext(), R.layout.dialog_add_cards, null);
-        View outDialog = view.findViewById(R.id.out_dialog_add_cards);
-        TextView cancel = view.findViewById(R.id.cancel_add_cards);
-        Button addCard = view.findViewById(R.id.btn_dialog_add_cards);
-
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-
-        popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
-
-        addCard.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        cancel.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        outDialog.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
     }
 }
