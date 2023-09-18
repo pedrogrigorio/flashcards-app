@@ -1,6 +1,9 @@
 package com.example.flashcards_app.models;
 
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -11,6 +14,8 @@ public class Deck {
     private int newCardsNumber;
     private int learnCardsNumber;
     private int reviewCardsNumber;
+
+    private ImageView deckImage;
 
     private TextView titleTextView;
     private TextView newCardsNumberTextView;
@@ -60,6 +65,16 @@ public class Deck {
 
     public void setReviewCardsNumber(int reviewCardsNumber) {
         this.reviewCardsNumber = reviewCardsNumber;
+    }
+
+    // Image getters and setters
+
+    public ImageView getDeckImage() {
+        return deckImage;
+    }
+
+    public void setDeckImage(ImageView deckImage) {
+        this.deckImage = deckImage;
     }
 
     // TextViews Setters

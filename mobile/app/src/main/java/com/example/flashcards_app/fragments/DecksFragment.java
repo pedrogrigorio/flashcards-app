@@ -1,6 +1,7 @@
 package com.example.flashcards_app.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -22,6 +23,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.flashcards_app.activities.NotificationActivity;
+import com.example.flashcards_app.activities.ProfileActivity;
+import com.example.flashcards_app.activities.ReviewActivity;
+import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.MainActivity;
@@ -33,10 +38,11 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
     private LinearLayout linearLayout;
     private ConstraintLayout mainActivityRootLayout;
+
     private int cardCount = 0;
     private List<Deck> deckList = new ArrayList<>();
 
-    private Deck currentDeckOptionsPopup;
+    private Deck currentDeck;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +65,7 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
     private void addNewCard() {
         /* Inflar layout */
-        View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.card_layout, null);
+        View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.item_card_layout, null);
 
         // Layout config
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -97,10 +103,15 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         int reviewCardsNumberUniqueId = View.generateViewId();
         reviewCardsNumber.setId(reviewCardsNumberUniqueId);
 
+        ImageView deckImg = cardView.findViewById(R.id.deck_img);
+        int imgUniqueId = View.generateViewId();
+        deckImg.setId(imgUniqueId);
+
         deck.setTitleTextView(deckTitle);
         deck.setNewCardsNumberTextView(newCardsNumber);
         deck.setLearnCardsNumberTextView(learnCardsNumber);
         deck.setReviewCardsNumberTextView(reviewCardsNumber);
+        deck.setDeckImage(deckImg);
 
         // Buttons reference and onClickListener
         AppCompatButton editButton = cardView.findViewById(R.id.btn_edit_deck);
@@ -116,8 +127,9 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         reviewButton.setId(uniqueReviewButtonId);
 
         reviewButton.setOnClickListener(v -> {
-            // Encaminhar para tela de revisões passando o deck (ou id)
             Toast.makeText(requireContext(), "review deck: " + deck.getId(), Toast.LENGTH_SHORT).show();
+            Intent in = new Intent(getActivity(), ReviewActivity.class);
+            startActivity(in);
         });
 
         // Persist
@@ -127,7 +139,7 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
     }
 
     public void showPopupMenu(Context context, View v, Deck deck) {
-        currentDeckOptionsPopup = deck;
+        currentDeck = deck;
         PopupMenu popup = new PopupMenu(context, v);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.deck_options_menu);
@@ -139,23 +151,26 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         int id = item.getItemId();
 
         if (id == R.id.item1) {
-            Toast.makeText(requireContext(), "Add cards in deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
+            showAddCardsPopupWindow();
+            Toast.makeText(requireContext(), "Add cards in deck " + currentDeck.getId(), Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.item2) {
-            showEditDeckPopupWindow();
-            Toast.makeText(requireContext(), "Edit deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
+            EditDeckDialog dialog = new EditDeckDialog(currentDeck);
+            dialog.show(getActivity().getSupportFragmentManager(), "edit_deck_popup");
             return true;
         } else if (id == R.id.item3) {
-            Toast.makeText(requireContext(), "Delete deck " + currentDeckOptionsPopup.getId(), Toast.LENGTH_SHORT).show();
+            showDeleteDeckPopupWindow();
+            Toast.makeText(requireContext(), "Delete deck " + currentDeck.getId(), Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
     }
 
-    public void showEditDeckPopupWindow() {
-        View view = View.inflate(requireContext(), R.layout.edit_deck_popup, null);
-        ImageView close = view.findViewById(R.id.edit_deck_close_popup);
-        TextView cancel = view.findViewById(R.id.cancel_edit_deck);
+    public void showDeleteDeckPopupWindow() {
+        View view = View.inflate(requireContext(), R.layout.dialog_delete_deck, null);
+        View outDialog = view.findViewById(R.id.out_dialog_delete_deck);
+        TextView cancel = view.findViewById(R.id.cancel_delete_deck);
+        Button exclude = view.findViewById(R.id.btn_dialog_delete_deck);
 
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -164,11 +179,41 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
         popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
 
-        close.setOnClickListener(v -> {
+        exclude.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
 
         cancel.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        outDialog.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+    }
+
+    public void showAddCardsPopupWindow() {
+        View view = View.inflate(requireContext(), R.layout.dialog_add_cards, null);
+        View outDialog = view.findViewById(R.id.out_dialog_add_cards);
+        TextView cancel = view.findViewById(R.id.cancel_add_cards);
+        Button addCard = view.findViewById(R.id.btn_dialog_add_cards);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
+
+        popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
+
+        addCard.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        cancel.setOnClickListener(v -> {
+            popupWindow.dismiss();
+        });
+
+        outDialog.setOnClickListener(v -> {
             popupWindow.dismiss();
         });
     }
