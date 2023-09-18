@@ -29,7 +29,6 @@ public class ReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
-
     }
 
     public void startAnimation() {
@@ -60,6 +59,7 @@ public class ReviewActivity extends AppCompatActivity {
     public void audioTextSpeaker() {
 
     }
+
     // Method for user speaker text in your microphone
     public void microphoneUserSpeaker() {
 

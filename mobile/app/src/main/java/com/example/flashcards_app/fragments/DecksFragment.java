@@ -1,6 +1,7 @@
 package com.example.flashcards_app.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -22,6 +23,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.flashcards_app.activities.NotificationActivity;
+import com.example.flashcards_app.activities.ProfileActivity;
+import com.example.flashcards_app.activities.ReviewActivity;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.R;
@@ -123,8 +127,9 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         reviewButton.setId(uniqueReviewButtonId);
 
         reviewButton.setOnClickListener(v -> {
-            // Encaminhar para tela de revisões passando o deck (ou id)
             Toast.makeText(requireContext(), "review deck: " + deck.getId(), Toast.LENGTH_SHORT).show();
+            Intent in = new Intent(getActivity(), ReviewActivity.class);
+            startActivity(in);
         });
 
         // Persist
