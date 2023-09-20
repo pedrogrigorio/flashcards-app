@@ -6,11 +6,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +17,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.flashcards_app.activities.NotificationActivity;
-import com.example.flashcards_app.activities.ProfileActivity;
 import com.example.flashcards_app.activities.ReviewActivity;
 import com.example.flashcards_app.dialogs.AddCardsDialog;
 import com.example.flashcards_app.dialogs.DeleteDeckDialog;
@@ -39,7 +34,6 @@ import java.util.List;
 public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
     private LinearLayout linearLayout;
-    private ConstraintLayout mainActivityRootLayout;
 
     private int cardCount = 0;
     private List<Deck> deckList = new ArrayList<>();
@@ -54,7 +48,6 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         MainActivity mainActivity = (MainActivity) getActivity();
 
         linearLayout = view.findViewById(R.id.decksLinearLayout);
-        mainActivityRootLayout = mainActivity.getRootLayout();
 
         Button addButton = mainActivity.getCreateDeckButton();
 
@@ -67,7 +60,7 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
 
     private void addNewCard() {
         /* Inflar layout */
-        View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.item_card_layout, null);
+        View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.item_deck_card, null);
 
         // Layout config
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
