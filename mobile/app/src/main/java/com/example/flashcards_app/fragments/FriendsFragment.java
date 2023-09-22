@@ -10,15 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.MainActivity;
 import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.models.Friend;
 
 public class FriendsFragment extends Fragment {
 
     LinearLayout linearLayout;
+    int friendCount = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +59,17 @@ public class FriendsFragment extends Fragment {
         cardView.setLayoutParams(layoutParams);
 
         /* Create object */
+        Friend friend = new Friend(friendCount++);
+
+        TextView nameTextView = cardView.findViewById(R.id.friend_name);
+        int nameTextViewUniqueId = View.generateViewId();
+        nameTextView.setId(nameTextViewUniqueId);
+
+        ImageView imgView = cardView.findViewById(R.id.friend_img);
+        int imgViewUniqueId = View.generateViewId();
+        imgView.setId(imgViewUniqueId);
+
+        friend.setNameView(nameTextView);
         linearLayout.addView(cardView);
     };
 }
