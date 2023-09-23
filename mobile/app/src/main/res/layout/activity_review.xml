@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg4"
+    android:background="@drawable/new_background"
     tools:context=".activities.ReviewActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -52,8 +52,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         app:cardCornerRadius="34dp"
-        app:cardElevation="100dp"
-        app:cardMaxElevation="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -79,8 +77,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         app:cardCornerRadius="34dp"
-        app:cardElevation="100dp"
-        app:cardMaxElevation="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -99,116 +95,102 @@
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
 
-
     <Button
         android:id="@+id/microphone_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:backgroundTint="#D03C45 "
-        android:drawableLeft="@drawable/microphone"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_microphone_sound_edit_card_rounded"
+        android:drawableBottom="@drawable/microphone"
         android:gravity="center"
-        android:paddingLeft="28dp"
-        android:paddingTop="0dp"
-        app:cornerRadius="30dp"
+        android:paddingBottom="20dp"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frontCardViewText"
-        app:layout_constraintVertical_bias="0.493" />
+        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
+        app:layout_constraintVertical_bias="0.385"
+        tools:layout_editor_absoluteX="155dp" />
 
     <Button
-        android:id="@+id/edit_card_button"
-        android:layout_width="37dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="196dp"
-        android:backgroundTint="#D03C45"
-        android:drawableBottom="@drawable/edit_pencil"
-        android:paddingBottom="10dp"
-        app:cornerRadius="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.225"
-        app:layout_constraintStart_toEndOf="@+id/audio_button"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewText"
-        app:layout_constraintVertical_bias="0.076" />
-
-    <Button
-        android:id="@+id/audio_button"
-        android:layout_width="37dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="196dp"
-        android:backgroundTint="#D03C45"
+        android:id="@+id/button4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_microphone_sound_edit_card_rounded"
         android:drawableBottom="@drawable/audio"
-        app:cornerRadius="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.818"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewText"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/hardButton"
-        android:layout_width="120dp"
-        android:layout_height="45dp"
-        android:elevation="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/goodButton"
-        app:layout_constraintHorizontal_bias="0.888"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/microphone_button"
-        app:layout_constraintVertical_bias="0.555"
-        app:srcCompat="@drawable/hard_button" />
-
-    <ImageView
-        android:id="@+id/goodButton"
-        android:layout_width="120dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/easyButton"
-        app:layout_constraintTop_toBottomOf="@+id/microphone_button"
-        app:layout_constraintVertical_bias="0.527"
-        app:srcCompat="@drawable/good_button" />
-
-    <ImageView
-        android:id="@+id/easyButton"
-        android:layout_width="120dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/microphone_button"
-        app:layout_constraintVertical_bias="0.555"
-        app:srcCompat="@drawable/easy_button" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:gravity="center"
-        android:shadowColor="#000000"
-        android:shadowDx="4"
-        android:shadowDy="0"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
+        app:layout_constraintVertical_bias="0.077"
+        tools:layout_editor_absoluteX="299dp" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/btn_microphone_sound_edit_card_rounded"
+        android:drawableBottom="@drawable/edit_pencil"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
+        app:layout_constraintVertical_bias="0.077"
+        tools:layout_editor_absoluteX="347dp" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:background="@drawable/btn_red_rounded"
+        android:text="ERREI"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
+        app:layout_constraintVertical_bias="0.925"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:background="@drawable/btn_green_rounded"
         android:text="BOM"
         android:textColor="#FFFFFF"
+        android:textSize="14sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="190dp"
-        tools:layout_editor_absoluteY="682dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
+        app:layout_constraintVertical_bias="0.925"
+        tools:layout_editor_absoluteX="145dp" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:shadowColor="#000000"
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:background="@drawable/btn_blue_rounded"
         android:text="FÁCIL"
         android:textColor="#FFFFFF"
+        android:textSize="14sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="320dp"
-        tools:layout_editor_absoluteY="682dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
+        app:layout_constraintVertical_bias="0.925"
+        tools:layout_editor_absoluteX="275dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/custom_progressbar"
+        android:layout_width="374dp"
+        android:layout_height="20dp"
+        android:elevation="10dp"
+        android:indeterminate="false"
+        android:progress="20"
+        android:progressBackgroundTint="#C5ACAC"
+        app:layout_constraintBottom_toTopOf="@+id/backCardViewText"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
+        tools:layout_editor_absoluteX="24dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

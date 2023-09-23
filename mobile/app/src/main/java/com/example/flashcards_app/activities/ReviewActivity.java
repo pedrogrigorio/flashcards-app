@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +36,17 @@ public class ReviewActivity extends AppCompatActivity {
         writeFrontTextCardView();
         writeBackTextCardView();
 
+
+
         Button microphoneButton = findViewById(R.id.microphone_button);
         microphoneButton.setOnClickListener(v -> {
            microphoneUserSpeaker();
         });
 
 
-
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        Drawable draw = getResources().getDrawable(R.drawable.custom_progressbar);
+        progressBar.setProgressDrawable(draw);
     }
 
     // Method for use as 'text writer' in front card
