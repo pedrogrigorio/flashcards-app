@@ -59,7 +59,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.388" >
+        app:layout_constraintVertical_bias="0.388">
 
         <TextView
             android:id="@+id/backCardText"
@@ -86,7 +86,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.388" >
+        app:layout_constraintVertical_bias="0.388">
 
         <TextView
             android:id="@+id/frontCardText"
@@ -109,13 +109,13 @@
         android:gravity="center"
         android:paddingLeft="28dp"
         android:paddingTop="0dp"
-        app:cornerRadius="14dp"
+        app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frontCardViewText"
-        app:layout_constraintVertical_bias="0.743" />
+        app:layout_constraintVertical_bias="0.493" />
 
     <Button
         android:id="@+id/edit_card_button"
@@ -148,6 +148,67 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewText"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/hardButton"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/goodButton"
+        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/microphone_button"
+        app:layout_constraintVertical_bias="0.555"
+        app:srcCompat="@drawable/hard_button" />
+
+    <ImageView
+        android:id="@+id/goodButton"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/easyButton"
+        app:layout_constraintTop_toBottomOf="@+id/microphone_button"
+        app:layout_constraintVertical_bias="0.527"
+        app:srcCompat="@drawable/good_button" />
+
+    <ImageView
+        android:id="@+id/easyButton"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/microphone_button"
+        app:layout_constraintVertical_bias="0.555"
+        app:srcCompat="@drawable/easy_button" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:shadowColor="#000000"
+        android:shadowDx="4"
+        android:shadowDy="0"
+        android:text="BOM"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="190dp"
+        tools:layout_editor_absoluteY="682dp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:shadowColor="#000000"
+        android:text="FÁCIL"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="320dp"
+        tools:layout_editor_absoluteY="682dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
