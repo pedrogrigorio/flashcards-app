@@ -21,65 +21,33 @@ import com.example.flashcards_app.models.Cards;
 
 public class ReviewActivity extends AppCompatActivity {
 
-    private AnimatorSet frontAnim;
-
-    private AnimatorSet backAnim;
-
-    private Boolean isFront = true;
-
-    private Float scale;
-
+    Cards card;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
-        Cards card = new Cards();
+
+        this.card = new Cards(this ,findViewById(R.id.frontCardViewText),
+                findViewById(R.id.backCardViewText),
+                findViewById(R.id.frontCardText),
+                findViewById(R.id.backCardText),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator));
+
+        this.card.setFrontCardText("Tudo funcionando! Amém! ");
 
         Button microphoneButton = findViewById(R.id.microphone_button);
         microphoneButton.setOnClickListener(v -> {
-            card.makeAnimation();
+            audioTextSpeaker();
         });
-
-
     }
 
 
     // Method for listening native speaker audio
     public void audioTextSpeaker() {
-
+        this.card.makeAnimation();
     }
-
-
-
-//    // Method for user speaker text in your microphone
-//    public void microphoneUserSpeaker() {
-//
-//        scale = getResources().getDisplayMetrics().density;
-//        View backCardViewText = findViewById(R.id.backCardViewText);
-//        View frontCardViewText = findViewById(R.id.frontCardViewText);
-//        backCardViewText.setCameraDistance(8000*scale);
-//        frontCardViewText.setCameraDistance(8000*scale);
-//
-//        frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator);
-//        backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator);
-//
-//
-//        if (isFront) {
-//            frontAnim.setTarget(frontCardViewText);
-//            backAnim.setTarget(backCardViewText);
-//            frontAnim.start();
-//            backAnim.start();
-//            isFront = false;
-//        } else {
-//            frontAnim.setTarget(backCardViewText);
-//            backAnim.setTarget(frontCardViewText);
-//            backAnim.start();
-//            frontAnim.start();
-//            isFront = true;
-//        }
-//    }
-
 
 
 

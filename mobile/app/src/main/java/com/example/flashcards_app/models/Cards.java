@@ -3,9 +3,13 @@ package com.example.flashcards_app.models;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.flashcards_app.R;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,27 +26,32 @@ public class Cards extends AppCompatActivity  {
     private boolean isFront;
     private View frontCardViewText;
     private View backCardViewText;
+    private Context context;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.frontCardText = findViewById(R.id.frontCardText);
-        this.backCardText = findViewById(R.id.backCardText);
-        this.frontCardViewText = findViewById(R.id.frontCardViewText);
-        this.backCardViewText = findViewById(R.id.backCardViewText);
-        this.frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator);
-        this.backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator);
-        this.scale = getResources().getDisplayMetrics().density;
+    public Cards(Context context,
+                 View frontCardViewText,
+                 View backCardViewText,
+                 TextView frontCardText,
+                 TextView backCardText,
+                 AnimatorSet frontAnim,
+                 AnimatorSet backAnim) {
+
+        this.frontCardViewText = frontCardViewText;
+        this.backCardViewText  = backCardViewText;
+        this.frontCardText     = frontCardText;
+        this.backCardText      = backCardText;
+        this.frontAnim         = frontAnim;
+        this.backAnim          = backAnim;
+        this.scale             = context.getApplicationContext().getResources().getDisplayMetrics().density;
+        this.isFront           = true;
         this.setCameraCardDistance();
-        this.current = 0;
-        this.amount  = 0;
     }
 
 
     private void setCameraCardDistance() {
-        this.frontCardViewText.setCameraDistance(this.scale * 8000);
-        this.backCardViewText.setCameraDistance(this.scale * 8000);
+        this.frontCardViewText.setCameraDistance(8000*this.scale);
+        this.backCardViewText.setCameraDistance(8000*this.scale);
     }
     public void setFrontCardText(String frontCardText) {
         this.frontCardText.setText(frontCardText);
