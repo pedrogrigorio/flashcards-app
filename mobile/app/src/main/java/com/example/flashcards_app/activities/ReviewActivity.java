@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 
@@ -29,30 +30,29 @@ public class ReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
-    }
 
-    public void startAnimation() {
-        scale = getResources().getDisplayMetrics().density;
-        View backCardViewText = findViewById(R.id.backCardText);
-        View frontCardViewText = findViewById(R.id.frontCardText);
-        backCardViewText.setCameraDistance(8000*scale);
-        frontCardViewText.setCameraDistance(8000*scale);
+        writeFrontTextCardView();
+        writeBackTextCardView();
 
-        frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator);
-        backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator);
+        Button microphoneButton = findViewById(R.id.microphone_button);
+        microphoneButton.setOnClickListener(v -> {
+           microphoneUserSpeaker();
+        });
+
+
 
     }
 
     // Method for use as 'text writer' in front card
     public void writeFrontTextCardView() {
         TextView frontCardText = findViewById(R.id.frontCardText);
-        frontCardText.setText("Front Card aqui");
+        frontCardText.setText("Front card");
     }
 
     // Method for use as 'text writer' in front card
     public void writeBackTextCardView() {
         TextView backCardText = findViewById(R.id.backCardText);
-        backCardText.setText("Back Card Aqui");
+        backCardText.setText("Back card");
     }
 
     // Method for listening native speaker audio
@@ -63,27 +63,29 @@ public class ReviewActivity extends AppCompatActivity {
     // Method for user speaker text in your microphone
     public void microphoneUserSpeaker() {
 
-        View backCardViewText = findViewById(R.id.backCardText);
-        View frontCardViewText = findViewById(R.id.frontCardText);
+        scale = getResources().getDisplayMetrics().density;
+        View backCardViewText = findViewById(R.id.backCardViewText);
+        View frontCardViewText = findViewById(R.id.frontCardViewText);
+        backCardViewText.setCameraDistance(8000*scale);
+        frontCardViewText.setCameraDistance(8000*scale);
 
-        Button microphoneButton = findViewById(R.id.microphone_button);
-        microphoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isFront) {
-                    frontAnim.setTarget(frontCardViewText);
-                    backAnim.setTarget(backCardViewText);
-                    frontAnim.start();
-                    backAnim.start();
-                    isFront = false;
-                } else {
-                    frontAnim.setTarget(backCardViewText);
-                    backAnim.setTarget(frontCardViewText);
-                    backAnim.start();
-                    frontAnim.start();
-                }
-            }
-        });
+        frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator);
+        backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator);
+
+
+        if (isFront) {
+            frontAnim.setTarget(frontCardViewText);
+            backAnim.setTarget(backCardViewText);
+            frontAnim.start();
+            backAnim.start();
+            isFront = false;
+        } else {
+            frontAnim.setTarget(backCardViewText);
+            backAnim.setTarget(frontCardViewText);
+            backAnim.start();
+            frontAnim.start();
+            isFront = true;
+        }
     }
 
 
