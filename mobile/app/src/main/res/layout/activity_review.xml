@@ -106,9 +106,10 @@
         android:paddingBottom="20dp"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
-        app:layout_constraintVertical_bias="0.385"
-        tools:layout_editor_absoluteX="155dp" />
+        app:layout_constraintVertical_bias="0.385" />
 
     <Button
         android:id="@+id/button4"
@@ -119,9 +120,11 @@
         android:gravity="center"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button5"
+        app:layout_constraintHorizontal_bias="0.973"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
-        app:layout_constraintVertical_bias="0.077"
-        tools:layout_editor_absoluteX="299dp" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <Button
         android:id="@+id/button5"
@@ -146,51 +149,86 @@
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button7"
+        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
-        app:layout_constraintVertical_bias="0.925"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintVertical_bias="0.925" />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="120dp"
         android:layout_height="45dp"
+        android:layout_marginEnd="12dp"
         android:background="@drawable/btn_green_rounded"
         android:text="BOM"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button8"
         app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
-        app:layout_constraintVertical_bias="0.925"
-        tools:layout_editor_absoluteX="145dp" />
+        app:layout_constraintVertical_bias="0.925" />
 
     <Button
         android:id="@+id/button8"
         android:layout_width="120dp"
         android:layout_height="45dp"
+        android:layout_marginEnd="12dp"
         android:background="@drawable/btn_blue_rounded"
         android:text="FÁCIL"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
-        app:layout_constraintVertical_bias="0.925"
-        tools:layout_editor_absoluteX="275dp" />
+        app:layout_constraintVertical_bias="0.925" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/custom_progressbar"
+
+    <FrameLayout
         android:layout_width="374dp"
-        android:layout_height="20dp"
-        android:elevation="10dp"
-        android:indeterminate="false"
-        android:progress="20"
-        android:progressBackgroundTint="#C5ACAC"
+        android:layout_height="30dp"
+        android:background="#00472C54"
         app:layout_constraintBottom_toTopOf="@+id/backCardViewText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.500"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        tools:layout_editor_absoluteX="24dp" />
+        app:layout_constraintVertical_bias="0.500">
+
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="374dp"
+            android:layout_height="20dp"
+            android:background="#00472C54"
+            android:progress="80"
+            android:progressDrawable="@drawable/custom_progress_bar"
+            app:layout_constraintBottom_toTopOf="@+id/backCardViewText"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
+            app:layout_constraintVertical_bias="0.657"
+            tools:layout_editor_absoluteX="24dp" />
+
+
+        <TextView
+            android:id="@+id/progressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:text="1270/2300"
+            android:textSize="12sp"
+            android:textColor="#FFFF"
+            android:textStyle="bold"
+            android:background="#00472C54"
+            />
+
+
+
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
