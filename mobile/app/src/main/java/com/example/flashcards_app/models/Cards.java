@@ -1,17 +1,10 @@
 package com.example.flashcards_app.models;
 
 
-import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.example.flashcards_app.models.AudioCard;
-import com.example.flashcards_app.R;
-import androidx.appcompat.app.AppCompatActivity;
 
 
 public class Cards {
@@ -52,15 +45,15 @@ public class Cards {
 
 
     public void easyButtonCommand() {
-        this.makeAnimation();
+        this.makeAnimationRight();
     }
 
     public void goodButtonCommand() {
-        this.makeAnimation();
+        this.makeAnimationRight();
     }
 
     public void hardButtonCommand() {
-        this.makeAnimation();
+        this.makeAnimationRight();
     }
     public void audioSpeak() {
         this.audioCard.speak(this.frontCardText.getText().toString());
@@ -86,7 +79,7 @@ public class Cards {
         this.amount = amount;
     }
 
-    public void makeAnimation() {
+    public void makeAnimationRight() {
         if (this.isFront) {
             this.frontAnim.setTarget(this.frontCardViewText);
             this.backAnim.setTarget(this.backCardViewText);
@@ -98,6 +91,22 @@ public class Cards {
             this.backAnim.setTarget(this.frontCardViewText);
             backAnim.start();
             frontAnim.start();
+            isFront = true;
+        }
+    }
+
+    public void makeAnimationLeft() {
+        if (this.isFront) {
+            this.frontAnim.setTarget(this.frontCardViewText);
+            this.backAnim.setTarget(this.backCardViewText);
+            backAnim.start();
+            frontAnim.start();
+            isFront = false;
+        } else {
+            this.frontAnim.setTarget(this.backCardViewText);
+            this.backAnim.setTarget(this.frontCardViewText);
+            frontAnim.start();
+            backAnim.start();
             isFront = true;
         }
     }

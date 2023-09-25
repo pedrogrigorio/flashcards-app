@@ -38,6 +38,8 @@ public class ReviewActivity extends AppCompatActivity {
         Button goodButton       = findViewById(R.id.good_button);
         Button hardButton       = findViewById(R.id.hard_button);
         Button audioButton      = findViewById(R.id.audio_button);
+        View leftClickableRegion = findViewById(R.id.leftClickableRegion);
+        View rightClickableRegion = findViewById(R.id.rightClickableRegion);
 
         this.card = new Cards(this ,findViewById(R.id.frontCardViewText),
                 findViewById(R.id.backCardViewText),
@@ -66,6 +68,14 @@ public class ReviewActivity extends AppCompatActivity {
 
         audioButton.setOnClickListener(v-> {
             this.card.audioSpeak();
+        });
+
+        rightClickableRegion.setOnClickListener(v->{
+            this.card.makeAnimationRight();
+        });
+
+        leftClickableRegion.setOnClickListener(v->{
+            this.card.makeAnimationLeft();
         });
 
     }
