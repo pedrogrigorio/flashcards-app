@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.example.flashcards_app.models.AudioCard;
 import com.example.flashcards_app.R;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +26,7 @@ public class Cards {
     private boolean isFront;
     private View frontCardViewText;
     private View backCardViewText;
+    private AudioCard audioCard;
 
 
     public Cards(Context context,
@@ -40,11 +41,13 @@ public class Cards {
         this.backCardViewText  = backCardViewText;
         this.frontCardText     = frontCardText;
         this.backCardText      = backCardText;
+        this.audioCard         =  new AudioCard(context);
         this.frontAnim         = frontAnim;
         this.backAnim          = backAnim;
         this.scale             = context.getApplicationContext().getResources().getDisplayMetrics().density;
         this.isFront           = true;
         this.setCameraCardDistance();
+
     }
 
 
@@ -58,6 +61,9 @@ public class Cards {
 
     public void hardButtonCommand() {
         this.makeAnimation();
+    }
+    public void audioSpeak() {
+        this.audioCard.speak("Hello, this is a sample text to be spoken in English.");
     }
 
     private void setCameraCardDistance() {

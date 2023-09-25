@@ -37,10 +37,7 @@ public class ReviewActivity extends AppCompatActivity {
         Button easyButton       = findViewById(R.id.easy_button);
         Button goodButton       = findViewById(R.id.good_button);
         Button hardButton       = findViewById(R.id.hard_button);
-
-        this.audioCard = new AudioCard(this);
-
-        audioCard.speak("Hello, this is a sample text to be spoken in English.");
+        Button audioButton      = findViewById(R.id.audio_button);
 
         this.card = new Cards(this ,findViewById(R.id.frontCardViewText),
                 findViewById(R.id.backCardViewText),
@@ -64,6 +61,10 @@ public class ReviewActivity extends AppCompatActivity {
 
         hardButton.setOnClickListener(v-> {
             this.card.hardButtonCommand();
+        });
+
+        audioButton.setOnClickListener(v-> {
+            this.card.audioSpeak();
         });
 
     }
