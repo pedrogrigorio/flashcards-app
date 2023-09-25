@@ -14,13 +14,10 @@ import com.example.flashcards_app.R;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class Cards extends AppCompatActivity  {
+public class Cards {
 
     private TextView frontCardText;
     private TextView backCardText;
-    private Button easyButton;
-    private Button goodButton;
-    private Button hardButton;
     public int amount;
     public int current;
     private AnimatorSet frontAnim;
@@ -29,7 +26,6 @@ public class Cards extends AppCompatActivity  {
     private boolean isFront;
     private View frontCardViewText;
     private View backCardViewText;
-    private Context context;
 
 
     public Cards(Context context,
@@ -37,9 +33,6 @@ public class Cards extends AppCompatActivity  {
                  View backCardViewText,
                  TextView frontCardText,
                  TextView backCardText,
-                 Button easyButton,
-                 Button goodButton,
-                 Button hardButton,
                  AnimatorSet frontAnim,
                  AnimatorSet backAnim) {
 
@@ -47,9 +40,6 @@ public class Cards extends AppCompatActivity  {
         this.backCardViewText  = backCardViewText;
         this.frontCardText     = frontCardText;
         this.backCardText      = backCardText;
-        this.easyButton        = easyButton;
-        this.goodButton        = goodButton;
-        this.hardButton        = hardButton;
         this.frontAnim         = frontAnim;
         this.backAnim          = backAnim;
         this.scale             = context.getApplicationContext().getResources().getDisplayMetrics().density;
@@ -58,18 +48,18 @@ public class Cards extends AppCompatActivity  {
     }
 
 
-    private void difficultButton() {
-        this.easyButton.setOnClickListener(v -> {
-            this.makeAnimation();
-        });
-        this.goodButton.setOnClickListener(v -> {
-            this.makeAnimation();
-        });
-        this.hardButton.setOnClickListener(v -> {
-            this.makeAnimation();
-        });
-
+    public void easyButtonCommand() {
+        this.makeAnimation();
     }
+
+    public void goodButtonCommand() {
+        this.makeAnimation();
+    }
+
+    public void hardButtonCommand() {
+        this.makeAnimation();
+    }
+
     private void setCameraCardDistance() {
         this.frontCardViewText.setCameraDistance(8000*this.scale);
         this.backCardViewText.setCameraDistance(8000*this.scale);
