@@ -32,15 +32,19 @@ public class ReviewActivity extends AppCompatActivity {
                 findViewById(R.id.backCardViewText),
                 findViewById(R.id.frontCardText),
                 findViewById(R.id.backCardText),
+                findViewById(R.id.easy_button),
+                findViewById(R.id.good_button),
+                findViewById(R.id.hard_button),
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator),
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator));
 
-        this.card.setFrontCardText("Tudo funcionando! Amém! ");
 
         Button microphoneButton = findViewById(R.id.microphone_button);
         microphoneButton.setOnClickListener(v -> {
             audioTextSpeaker();
         });
+
+
     }
 
 
