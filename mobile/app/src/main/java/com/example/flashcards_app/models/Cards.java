@@ -13,10 +13,13 @@ public class Cards {
     private TextView backCardText;
     public int amount;
     public int current;
-    private AnimatorSet frontAnim;
-    private AnimatorSet backAnim;
+    private AnimatorSet frontAnimAntiClockWise;
+    private AnimatorSet backAnimAntiClockWise;
+    private AnimatorSet frontAnimClockWise;
+    private AnimatorSet backAnimClockWise;
     private float scale;
     private boolean isFront;
+    private boolean isBack;
     private View frontCardViewText;
     private View backCardViewText;
     private AudioCard audioCard;
@@ -27,18 +30,23 @@ public class Cards {
                  View backCardViewText,
                  TextView frontCardText,
                  TextView backCardText,
-                 AnimatorSet frontAnim,
-                 AnimatorSet backAnim) {
+                 AnimatorSet frontAnimAntiClockWise,
+                 AnimatorSet backAnimAntiClockWise,
+                 AnimatorSet frontAnimClockWise,
+                 AnimatorSet backAnimClockWise) {
 
         this.frontCardViewText = frontCardViewText;
         this.backCardViewText  = backCardViewText;
         this.frontCardText     = frontCardText;
         this.backCardText      = backCardText;
         this.audioCard         =  new AudioCard(context);
-        this.frontAnim         = frontAnim;
-        this.backAnim          = backAnim;
+        this.frontAnimClockWise = frontAnimClockWise;
+        this.backAnimClockWise  = backAnimClockWise;
+        this.frontAnimAntiClockWise   = frontAnimAntiClockWise;
+        this.backAnimAntiClockWise    = backAnimAntiClockWise;
         this.scale             = context.getApplicationContext().getResources().getDisplayMetrics().density;
         this.isFront           = true;
+        this.isBack            = true;
         this.setCameraCardDistance();
 
     }
@@ -81,33 +89,33 @@ public class Cards {
 
     public void makeAnimationRight() {
         if (this.isFront) {
-            this.frontAnim.setTarget(this.frontCardViewText);
-            this.backAnim.setTarget(this.backCardViewText);
-            frontAnim.start();
-            backAnim.start();
+            this.frontAnimAntiClockWise.setTarget(this.frontCardViewText);
+            this.backAnimAntiClockWise.setTarget(this.backCardViewText);
+            frontAnimAntiClockWise.start();
+            backAnimAntiClockWise.start();
             isFront = false;
         } else {
-            this.frontAnim.setTarget(this.backCardViewText);
-            this.backAnim.setTarget(this.frontCardViewText);
-            backAnim.start();
-            frontAnim.start();
+            this.frontAnimAntiClockWise.setTarget(this.backCardViewText);
+            this.backAnimAntiClockWise.setTarget(this.frontCardViewText);
+            backAnimAntiClockWise.start();
+            frontAnimAntiClockWise.start();
             isFront = true;
         }
     }
 
     public void makeAnimationLeft() {
-        if (this.isFront) {
-            this.frontAnim.setTarget(this.frontCardViewText);
-            this.backAnim.setTarget(this.backCardViewText);
-            backAnim.start();
-            frontAnim.start();
-            isFront = false;
+        if (this.isBack) {
+            this.frontAnimClockWise.setTarget(this.frontCardViewText);
+            this.backAnimClockWise.setTarget(this.backCardViewText);
+            frontAnimClockWise.start();
+            backAnimClockWise.start();
+            isBack = false;
         } else {
-            this.frontAnim.setTarget(this.backCardViewText);
-            this.backAnim.setTarget(this.frontCardViewText);
-            frontAnim.start();
-            backAnim.start();
-            isFront = true;
+            this.frontAnimClockWise.setTarget(this.backCardViewText);
+            this.backAnimClockWise.setTarget(this.frontCardViewText);
+            backAnimClockWise.start();
+            frontAnimClockWise.start();
+            isBack = true;
         }
     }
 

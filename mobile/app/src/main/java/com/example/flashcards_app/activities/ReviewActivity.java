@@ -5,15 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.flashcards_app.R;
@@ -45,8 +40,10 @@ public class ReviewActivity extends AppCompatActivity {
                 findViewById(R.id.backCardViewText),
                 findViewById(R.id.frontCardText),
                 findViewById(R.id.backCardText),
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator),
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator));
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_anticlockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_anticlockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise));
 
         card.setFrontCardText("Hello, this is a sample text to be spoken in English.");
 
@@ -83,7 +80,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     // Method for listening native speaker audio
     public void audioTextSpeaker() {
-        this.card.makeAnimation();
+
     }
 
     @Override
