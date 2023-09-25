@@ -63,7 +63,7 @@ public class Cards {
         this.makeAnimation();
     }
     public void audioSpeak() {
-        this.audioCard.speak("Hello, this is a sample text to be spoken in English.");
+        this.audioCard.speak(this.frontCardText.getText().toString());
     }
 
     private void setCameraCardDistance() {

@@ -46,6 +46,7 @@ public class ReviewActivity extends AppCompatActivity {
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator),
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator));
 
+        card.setFrontCardText("Hello, this is a sample text to be spoken in English.");
 
         microphoneButton.setOnClickListener(v -> {
             audioTextSpeaker();
