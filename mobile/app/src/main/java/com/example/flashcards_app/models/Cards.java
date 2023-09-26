@@ -27,6 +27,7 @@ public class Cards {
     private Button easyButton;
     private Button goodButton;
     private Button hardButton;
+    private Button audioButton;
 
 
 
@@ -38,6 +39,7 @@ public class Cards {
                  Button easyButton,
                  Button goodButton,
                  Button hardButton,
+                 Button audioButton,
                  AnimatorSet frontAnimAntiClockWise,
                  AnimatorSet backAnimAntiClockWise,
                  AnimatorSet frontAnimClockWise,
@@ -49,6 +51,7 @@ public class Cards {
         this.easyButton        = easyButton;
         this.goodButton        = goodButton;
         this.hardButton        = hardButton;
+        this.audioButton       = audioButton;
         this.backCardText      = backCardText;
         this.audioCard         =  new AudioCard(context);
         this.frontAnimClockWise = frontAnimClockWise;
@@ -80,10 +83,12 @@ public class Cards {
             easyButton.setVisibility(Button.VISIBLE);
             goodButton.setVisibility(Button.VISIBLE);
             hardButton.setVisibility(Button.VISIBLE);
+            audioButton.setEnabled(false);
         }else {
             easyButton.setVisibility(Button.INVISIBLE);
             goodButton.setVisibility(Button.INVISIBLE);
             hardButton.setVisibility(Button.INVISIBLE);
+            audioButton.setEnabled(false);
         }
     }
 
