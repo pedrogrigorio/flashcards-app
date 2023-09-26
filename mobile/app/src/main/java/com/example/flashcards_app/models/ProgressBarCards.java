@@ -19,6 +19,7 @@ public class ProgressBarCards {
 
     public void setAmount(int amount) {
         this.amount = amount;
+        this.updateProgressBar();
     }
 
     public void setCurrent(int current) {
@@ -30,7 +31,7 @@ public class ProgressBarCards {
         this.progressText.setText(String.format(this.current + "/" + this.amount));
     }
     private void updateProgressBar() {
-        this.progressBar.setProgress((this.current/this.amount)*100);
+        this.progressBar.setProgress((int) ((float)this.current / this.amount * 100));
         this.setProgressText();
     }
 
