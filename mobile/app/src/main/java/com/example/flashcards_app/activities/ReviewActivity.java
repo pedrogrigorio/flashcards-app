@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.example.flashcards_app.R;
@@ -33,8 +34,10 @@ public class ReviewActivity extends AppCompatActivity {
         Button goodButton       = findViewById(R.id.good_button);
         Button hardButton       = findViewById(R.id.hard_button);
         Button audioButton      = findViewById(R.id.audio_button);
-        View leftClickableRegion = findViewById(R.id.leftClickableRegion);
-        View rightClickableRegion = findViewById(R.id.rightClickableRegion);
+        View leftClickableRegionFront = findViewById(R.id.leftClickableRegionFront);
+        View rightClickableRegionFront = findViewById(R.id.rightClickableRegionFront);
+        View leftClickableRegionBack = findViewById(R.id.leftClickableRegionBack);
+        View rightClickableRegionBack = findViewById(R.id.rightClickableRegionBack);
 
         this.card = new Cards(this ,findViewById(R.id.frontCardViewText),
                 findViewById(R.id.backCardViewText),
@@ -46,6 +49,7 @@ public class ReviewActivity extends AppCompatActivity {
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise));
 
         card.setFrontCardText("Hello, this is a sample text to be spoken in English.");
+        card.setBackCardText("Oi, este é pedaço de texto para ser lido em inglês");
 
         microphoneButton.setOnClickListener(v -> {
             audioTextSpeaker();
@@ -67,13 +71,32 @@ public class ReviewActivity extends AppCompatActivity {
             this.card.audioSpeak();
         });
 
-        rightClickableRegion.setOnClickListener(v->{
+        rightClickableRegionBack.setOnClickListener(v->{
             this.card.makeAnimationRight();
+
+            Toast.makeText(getApplicationContext(), "rightClickableRegionBack" , Toast.LENGTH_SHORT).show();
         });
 
-        leftClickableRegion.setOnClickListener(v->{
+        leftClickableRegionBack.setOnClickListener(v->{
             this.card.makeAnimationLeft();
+
+            Toast.makeText(getApplicationContext(), "leftClickableRegionBack" , Toast.LENGTH_SHORT).show();
         });
+
+        rightClickableRegionFront.setOnClickListener(v->{
+            this.card.makeAnimationRight();
+
+            Toast.makeText(getApplicationContext(), "rightClickableRegionFront" , Toast.LENGTH_SHORT).show();
+
+        });
+
+        leftClickableRegionFront.setOnClickListener(v->{
+            this.card.makeAnimationLeft();
+            Toast.makeText(getApplicationContext(), "leftClickableRegionFront" , Toast.LENGTH_SHORT).show();
+
+        });
+
+
 
     }
 

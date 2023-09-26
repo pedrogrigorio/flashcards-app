@@ -69,6 +69,32 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <!-- View para o lado esquerdo da tela -->
+            <View
+                android:id="@+id/leftClickableRegionBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="visible"
+                android:background="@android:color/transparent" />
+
+            <!-- View para o lado direito da tela -->
+            <View
+                android:id="@+id/rightClickableRegionBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="visible"
+                android:background="@android:color/transparent" />
+
+        </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 
 
@@ -105,20 +131,20 @@
 
             <!-- View para o lado esquerdo da tela -->
             <View
-                android:id="@+id/leftClickableRegion"
+                android:id="@+id/leftClickableRegionFront"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:background="@android:color/transparent" />
 
             <!-- View para o lado direito da tela -->
             <View
-                android:id="@+id/rightClickableRegion"
+                android:id="@+id/rightClickableRegionFront"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:background="@android:color/transparent" />
 
         </LinearLayout>

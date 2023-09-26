@@ -87,21 +87,33 @@ public class Cards {
         this.amount = amount;
     }
 
+    public void setInvisibilityFrontCard() {
+        this.frontCardViewText.setVisibility(View.INVISIBLE);
+    }
+    public void setVisibilityFrontCard() {
+        this.frontCardViewText.setVisibility(View.VISIBLE);
+    }
+
     public void makeAnimationRight() {
         if (this.isFront) {
             this.frontAnimAntiClockWise.setTarget(this.frontCardViewText);
             this.backAnimAntiClockWise.setTarget(this.backCardViewText);
             frontAnimAntiClockWise.start();
             backAnimAntiClockWise.start();
-            isFront = false;
+            this.isFront = false;
+            this.isBack  = false;
+            this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
         } else {
             this.frontAnimAntiClockWise.setTarget(this.backCardViewText);
             this.backAnimAntiClockWise.setTarget(this.frontCardViewText);
             backAnimAntiClockWise.start();
             frontAnimAntiClockWise.start();
-            isFront = true;
+            this.isFront = true;
+            this.isBack  = true;
+            this.setVisibilityFrontCard();
         }
     }
+
 
     public void makeAnimationLeft() {
         if (this.isBack) {
@@ -109,13 +121,17 @@ public class Cards {
             this.backAnimClockWise.setTarget(this.backCardViewText);
             frontAnimClockWise.start();
             backAnimClockWise.start();
-            isBack = false;
+            this.isBack = false;
+            this.isFront = false;
+            this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
         } else {
             this.frontAnimClockWise.setTarget(this.backCardViewText);
             this.backAnimClockWise.setTarget(this.frontCardViewText);
             backAnimClockWise.start();
             frontAnimClockWise.start();
-            isBack = true;
+            this.isBack = true;
+            this.isFront = true;
+            this.setVisibilityFrontCard();
         }
     }
 
