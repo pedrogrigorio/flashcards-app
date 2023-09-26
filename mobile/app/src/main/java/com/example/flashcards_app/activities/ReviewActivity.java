@@ -43,17 +43,16 @@ public class ReviewActivity extends AppCompatActivity {
                 findViewById(R.id.backCardViewText),
                 findViewById(R.id.frontCardText),
                 findViewById(R.id.backCardText),
+                easyButton,
+                goodButton,
+                hardButton,
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_anticlockwise),
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_anticlockwise),
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise),
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise));
-
-        card.setFrontCardText("Hello, this is a sample text to be spoken in English.");
-        card.setBackCardText("Oi, este é pedaço de texto para ser lido em inglês");
-
-        microphoneButton.setOnClickListener(v -> {
-            audioTextSpeaker();
-        });
+        this.card.showControlDifficultButton(false);
+        this.card.setFrontCardText("Hello, this is a sample text to be spoken in English.");
+        this.card.setBackCardText("Oi, este é pedaço de texto para ser lido em inglês");
 
         easyButton.setOnClickListener(v-> {
             this.card.easyButtonCommand();
@@ -101,10 +100,6 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
 
-    // Method for listening native speaker audio
-    public void audioTextSpeaker() {
-
-    }
 
     @Override
     protected void onDestroy() {

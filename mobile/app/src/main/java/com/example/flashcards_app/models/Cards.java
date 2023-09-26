@@ -4,6 +4,7 @@ package com.example.flashcards_app.models;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -23,6 +24,10 @@ public class Cards {
     private View frontCardViewText;
     private View backCardViewText;
     private AudioCard audioCard;
+    private Button easyButton;
+    private Button goodButton;
+    private Button hardButton;
+
 
 
     public Cards(Context context,
@@ -30,6 +35,9 @@ public class Cards {
                  View backCardViewText,
                  TextView frontCardText,
                  TextView backCardText,
+                 Button easyButton,
+                 Button goodButton,
+                 Button hardButton,
                  AnimatorSet frontAnimAntiClockWise,
                  AnimatorSet backAnimAntiClockWise,
                  AnimatorSet frontAnimClockWise,
@@ -38,6 +46,9 @@ public class Cards {
         this.frontCardViewText = frontCardViewText;
         this.backCardViewText  = backCardViewText;
         this.frontCardText     = frontCardText;
+        this.easyButton        = easyButton;
+        this.goodButton        = goodButton;
+        this.hardButton        = hardButton;
         this.backCardText      = backCardText;
         this.audioCard         =  new AudioCard(context);
         this.frontAnimClockWise = frontAnimClockWise;
@@ -63,6 +74,19 @@ public class Cards {
     public void hardButtonCommand() {
         this.makeAnimationRight();
     }
+
+    public void showControlDifficultButton(boolean show) {
+        if (show) {
+            easyButton.setVisibility(Button.VISIBLE);
+            goodButton.setVisibility(Button.VISIBLE);
+            hardButton.setVisibility(Button.VISIBLE);
+        }else {
+            easyButton.setVisibility(Button.INVISIBLE);
+            goodButton.setVisibility(Button.INVISIBLE);
+            hardButton.setVisibility(Button.INVISIBLE);
+        }
+    }
+
     public void audioSpeak() {
         this.audioCard.speak(this.frontCardText.getText().toString());
     }
@@ -87,10 +111,10 @@ public class Cards {
         this.amount = amount;
     }
 
-    public void setInvisibilityFrontCard() {
+    private void setInvisibilityFrontCard() {
         this.frontCardViewText.setVisibility(View.INVISIBLE);
     }
-    public void setVisibilityFrontCard() {
+    private void setVisibilityFrontCard() {
         this.frontCardViewText.setVisibility(View.VISIBLE);
     }
 
@@ -103,6 +127,7 @@ public class Cards {
             this.isFront = false;
             this.isBack  = false;
             this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
+            this.showControlDifficultButton(true);
         } else {
             this.frontAnimAntiClockWise.setTarget(this.backCardViewText);
             this.backAnimAntiClockWise.setTarget(this.frontCardViewText);
@@ -110,6 +135,7 @@ public class Cards {
             frontAnimAntiClockWise.start();
             this.isFront = true;
             this.isBack  = true;
+            this.showControlDifficultButton(false);
             this.setVisibilityFrontCard();
         }
     }
