@@ -42,7 +42,6 @@ public class ReviewActivity extends AppCompatActivity {
         View leftClickableRegionFront = findViewById(R.id.leftClickableRegionFront);
         View rightClickableRegionFront = findViewById(R.id.rightClickableRegionFront);
         View leftClickableRegionBack = findViewById(R.id.leftClickableRegionBack);
-        View rightClickableRegionBack = findViewById(R.id.rightClickableRegionBack);
 
         this.card = new Cards(this ,findViewById(R.id.frontCardViewText),
                 findViewById(R.id.backCardViewText),
@@ -83,10 +82,6 @@ public class ReviewActivity extends AppCompatActivity {
             this.card.audioSpeak();
         });
 
-        rightClickableRegionBack.setOnClickListener(v->{
-            this.card.makeAnimationRight();
-        });
-
         leftClickableRegionBack.setOnClickListener(v->{
             this.card.makeAnimationLeft();
         });
@@ -102,6 +97,9 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
+    private void loadDailyDeckCards() {
+
+    }
 
 
     @Override

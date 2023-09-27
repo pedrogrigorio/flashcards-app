@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Vector;
+
 
 public class Cards {
 
@@ -28,8 +30,7 @@ public class Cards {
     private Button goodButton;
     private Button hardButton;
     private Button audioButton;
-
-
+    private Vector<String> dailyCards;
 
     public Cards(Context context,
                  View frontCardViewText,
@@ -76,6 +77,11 @@ public class Cards {
 
     public void hardButtonCommand() {
         this.makeAnimationRight();
+    }
+
+    public void loadDailyCards(Vector<String> dailyCards) {
+        this.dailyCards = new Vector<>();
+        this.dailyCards = dailyCards;
     }
 
     public void showControlDifficultButton(boolean show) {
