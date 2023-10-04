@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.example.flashcards_app.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -33,6 +34,9 @@ public class ProfileActivity extends AppCompatActivity {
                     .maxResultSize(1080, 1080)
                     .start();
         });
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+
     }
 
     @Override
