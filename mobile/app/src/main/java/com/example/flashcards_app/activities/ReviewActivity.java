@@ -26,6 +26,7 @@ public class ReviewActivity extends AppCompatActivity {
     private AudioCard audioCard;
     private ProgressBarCards progressBarCards;
     private int count = 0;
+    private int currentCard = 1;
 
 
     @Override
@@ -42,6 +43,8 @@ public class ReviewActivity extends AppCompatActivity {
         View leftClickableRegionFront = findViewById(R.id.leftClickableRegionFront);
         View rightClickableRegionFront = findViewById(R.id.rightClickableRegionFront);
         View leftClickableRegionBack = findViewById(R.id.leftClickableRegionBack);
+        View rightClickableRegionBack = findViewById(R.id.rightClickableRegionBack);
+
 
         this.card = new Cards(this ,findViewById(R.id.frontCardViewText),
                 findViewById(R.id.backCardViewText),
@@ -61,8 +64,7 @@ public class ReviewActivity extends AppCompatActivity {
         this.progressBarCards.setAmount(20);
 
         this.card.showControlDifficultButton(false);
-        this.card.setFrontCardText("Hello, this is a sample text to be spoken in English.");
-        this.card.setBackCardText("Oi, este é pedaço de texto para ser lido em inglês");
+
 
         easyButton.setOnClickListener(v-> {
             this.card.easyButtonCommand();
@@ -83,21 +85,21 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         leftClickableRegionBack.setOnClickListener(v->{
-            this.card.makeAnimationLeft();
+
         });
 
         rightClickableRegionFront.setOnClickListener(v->{
-            this.card.makeAnimationRight();
+
         });
 
         leftClickableRegionFront.setOnClickListener(v->{
-            this.card.makeAnimationLeft();
+
         });
 
+        rightClickableRegionBack.setOnClickListener(v->{
+          
+        });
 
-    }
-
-    private void loadDailyDeckCards() {
 
     }
 
@@ -109,6 +111,7 @@ public class ReviewActivity extends AppCompatActivity {
         }
         super.onDestroy();
     }
+
 
 
 }

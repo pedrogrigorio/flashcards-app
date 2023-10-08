@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.flashcards_app.activities.ReviewActivity;
+
 import java.util.Vector;
 
 
@@ -14,8 +16,6 @@ public class Cards {
 
     private TextView frontCardText;
     private TextView backCardText;
-    public int amount;
-    public int current;
     private AnimatorSet frontAnimAntiClockWise;
     private AnimatorSet backAnimAntiClockWise;
     private AnimatorSet frontAnimClockWise;
@@ -30,7 +30,11 @@ public class Cards {
     private Button goodButton;
     private Button hardButton;
     private Button audioButton;
-    private Vector<String> dailyCards;
+    private  LoadDataCards loadDataCards;
+
+    private Animator animator;
+    private boolean hiddenControl = false;
+
 
     public Cards(Context context,
                  View frontCardViewText,
@@ -59,13 +63,15 @@ public class Cards {
         this.backAnimClockWise  = backAnimClockWise;
         this.frontAnimAntiClockWise   = frontAnimAntiClockWise;
         this.backAnimAntiClockWise    = backAnimAntiClockWise;
+        this.loadDataCards      = new LoadDataCards();
         this.scale             = context.getApplicationContext().getResources().getDisplayMetrics().density;
         this.isFront           = true;
         this.isBack            = true;
         this.setCameraCardDistance();
+        this.loadDataCards.LoadCards();
+        this.animator = new Animator();
 
     }
-
 
     public void easyButtonCommand() {
         this.makeAnimationRight();
@@ -77,11 +83,6 @@ public class Cards {
 
     public void hardButtonCommand() {
         this.makeAnimationRight();
-    }
-
-    public void loadDailyCards(Vector<String> dailyCards) {
-        this.dailyCards = new Vector<>();
-        this.dailyCards = dailyCards;
     }
 
     public void showControlDifficultButton(boolean show) {
@@ -106,20 +107,21 @@ public class Cards {
         this.frontCardViewText.setCameraDistance(8000*this.scale);
         this.backCardViewText.setCameraDistance(8000*this.scale);
     }
-    public void setFrontCardText(String frontCardText) {
+
+    public void updateCard(int request) {
+        String[] data = this.loadDataCards.getDataCard(request);
+        if (data == null) return;
+        else {
+            this.setFrontCardText(data[0]);
+            this.setBackCardText(data[1]);
+        }
+    }
+    private void setFrontCardText(String frontCardText) {
         this.frontCardText.setText(frontCardText);
     }
 
-    public void setBackCardText(String backCardText) {
+    private void setBackCardText(String backCardText) {
         this.backCardText.setText(backCardText);
-    }
-
-    private void setCurrentValue(int current) {
-        this.current = current;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     private void setInvisibilityFrontCard() {
@@ -129,47 +131,62 @@ public class Cards {
         this.frontCardViewText.setVisibility(View.VISIBLE);
     }
 
-    public void makeAnimationRight() {
-        if (this.isFront) {
-            this.frontAnimAntiClockWise.setTarget(this.frontCardViewText);
-            this.backAnimAntiClockWise.setTarget(this.backCardViewText);
-            frontAnimAntiClockWise.start();
-            backAnimAntiClockWise.start();
-            this.isFront = false;
-            this.isBack  = false;
-            this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
-            this.showControlDifficultButton(true);
-        } else {
-            this.frontAnimAntiClockWise.setTarget(this.backCardViewText);
-            this.backAnimAntiClockWise.setTarget(this.frontCardViewText);
-            backAnimAntiClockWise.start();
-            frontAnimAntiClockWise.start();
-            this.isFront = true;
-            this.isBack  = true;
-            this.showControlDifficultButton(false);
-            this.setVisibilityFrontCard();
-        }
-    }
 
+    public void makeAnimationRight() {
+        animator.makeAnimationRight();
+        this.showControlDifficultButton(!this.hiddenControl);
+    }
 
     public void makeAnimationLeft() {
-        if (this.isBack) {
-            this.frontAnimClockWise.setTarget(this.frontCardViewText);
-            this.backAnimClockWise.setTarget(this.backCardViewText);
-            frontAnimClockWise.start();
-            backAnimClockWise.start();
-            this.isBack = false;
-            this.isFront = false;
-            this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
-        } else {
-            this.frontAnimClockWise.setTarget(this.backCardViewText);
-            this.backAnimClockWise.setTarget(this.frontCardViewText);
-            backAnimClockWise.start();
-            frontAnimClockWise.start();
-            this.isBack = true;
-            this.isFront = true;
-            this.setVisibilityFrontCard();
-        }
+        this.animator.makeAnimationLeft();
     }
+
+
+
+//    public void makeAnimationRight() {
+//        if (this.isFront) {
+//            this.frontAnimAntiClockWise.setTarget(this.frontCardViewText);
+//            this.backAnimAntiClockWise.setTarget(this.backCardViewText);
+//            frontAnimAntiClockWise.start();
+//            backAnimAntiClockWise.start();
+//            this.isFront = false;
+//            this.isBack  = false;
+//            this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
+//            this.showControlDifficultButton(true);
+//        } else {
+//            this.frontAnimAntiClockWise.setTarget(this.backCardViewText);
+//            this.backAnimAntiClockWise.setTarget(this.frontCardViewText);
+//            backAnimAntiClockWise.start();
+//            frontAnimAntiClockWise.start();
+//            this.isFront = true;
+//            this.isBack  = true;
+//            this.showControlDifficultButton(false);
+//            this.setVisibilityFrontCard();
+//        }
+//    }
+
+
+//    public void makeAnimationLeft() {
+//        if (this.isBack) {
+//            this.frontAnimClockWise.setTarget(this.frontCardViewText);
+//            this.backAnimClockWise.setTarget(this.backCardViewText);
+//            frontAnimClockWise.start();
+//            backAnimClockWise.start();
+//            this.isBack = false;
+//            this.isFront = false;
+//            this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
+//        } else {
+//            this.frontAnimClockWise.setTarget(this.backCardViewText);
+//            this.backAnimClockWise.setTarget(this.frontCardViewText);
+//            backAnimClockWise.start();
+//            frontAnimClockWise.start();
+//            this.isBack = true;
+//            this.isFront = true;
+//            this.setVisibilityFrontCard();
+//        }
+//    }
+
+
+
 
 }
