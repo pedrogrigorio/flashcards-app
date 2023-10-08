@@ -89,11 +89,11 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         rightClickableRegionFront.setOnClickListener(v->{
-
+            this.card.makeAnimationLeft();
         });
 
         leftClickableRegionFront.setOnClickListener(v->{
-
+            this.card.makeAnimationRight();
         });
 
         rightClickableRegionBack.setOnClickListener(v->{

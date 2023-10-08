@@ -11,6 +11,7 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.ReviewActivity;
@@ -24,20 +25,27 @@ public class Animator extends ReviewActivity {
     private float scale;
     private View frontCardViewText;
     private View backCardViewText;
-    private boolean turnControl = true;
+    private boolean turnControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.backAnimClockWise  = ((AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise));
+        Toast.makeText(getApplicationContext(), "Inflate complete " , Toast.LENGTH_SHORT).show();
+        this.backAnimClockWise  = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise);
         this.frontAnimClockWise = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise);
         this.backAnimAntiClockWise  = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_anticlockwise);
         this.frontAnimAntiClockWise = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise);
+        this.frontCardViewText = findViewById(R.id.frontCardViewText);
+        this.backCardViewText  =  findViewById(R.id.backCardViewText);
         this.scale = getApplicationContext().getResources().getDisplayMetrics().density;
+        this.setCameraCardDistance();
+        this.turnControl = true;
+
+
     }
-    public Animator() {
-        setCameraCardDistance();
-    }
+//    public Animator() {
+//        setCameraCardDistance();
+//    }
     private void setCameraCardDistance() {
         this.frontCardViewText.setCameraDistance(8000*this.scale);
         this.backCardViewText.setCameraDistance(8000*this.scale);
@@ -65,7 +73,7 @@ public class Animator extends ReviewActivity {
                 this.turnControl = true;
                 this.setVisibilityFrontCard();
             }
-
+            break;
             case 2:
                 if (this.turnControl) {
                 this.frontAnimAntiClockWise.setTarget(this.frontCardViewText);
@@ -82,9 +90,11 @@ public class Animator extends ReviewActivity {
                 this.turnControl = true;
                 this.setVisibilityFrontCard();
             }
-
+            break;
         }
     }
+
+
     public void makeAnimationLeft() {
       this.mainAnimationEngine(1);
     }
