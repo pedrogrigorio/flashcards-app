@@ -9,6 +9,7 @@ package com.example.flashcards_app.models;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.ReviewActivity;
 
-public class Animator extends ReviewActivity {
+public class Animator {
 
     private AnimatorSet frontAnimAntiClockWise;
     private AnimatorSet backAnimAntiClockWise;
@@ -27,25 +28,24 @@ public class Animator extends ReviewActivity {
     private View backCardViewText;
     private boolean turnControl;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Toast.makeText(getApplicationContext(), "Inflate complete " , Toast.LENGTH_SHORT).show();
-        this.backAnimClockWise  = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise);
-        this.frontAnimClockWise = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise);
-        this.backAnimAntiClockWise  = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_anticlockwise);
-        this.frontAnimAntiClockWise = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise);
-        this.frontCardViewText = findViewById(R.id.frontCardViewText);
-        this.backCardViewText  =  findViewById(R.id.backCardViewText);
-        this.scale = getApplicationContext().getResources().getDisplayMetrics().density;
+    public Animator(Context context,
+                    AnimatorSet frontAnimAntiClockWise,
+                    AnimatorSet backAnimAntiClockWise,
+                    AnimatorSet frontAnimClockWise,
+                    AnimatorSet backAnimClockWise,
+                    View frontCardViewText,
+                    View backCardViewText) {
+
+        this.frontCardViewText = frontCardViewText;
+        this.backCardViewText  = backCardViewText;
+        this.frontAnimAntiClockWise = frontAnimAntiClockWise;
+        this.backAnimAntiClockWise  = backAnimAntiClockWise;
+        this.frontAnimClockWise = frontAnimClockWise;
+        this.backAnimClockWise  = backAnimClockWise;
+        this.scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
+
         this.setCameraCardDistance();
-        this.turnControl = true;
-
-
     }
-//    public Animator() {
-//        setCameraCardDistance();
-//    }
     private void setCameraCardDistance() {
         this.frontCardViewText.setCameraDistance(8000*this.scale);
         this.backCardViewText.setCameraDistance(8000*this.scale);

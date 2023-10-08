@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.models.Animator;
 import com.example.flashcards_app.models.Cards;
 import com.example.flashcards_app.models.AudioCard;
 import com.example.flashcards_app.models.ProgressBarCards;
@@ -24,9 +25,11 @@ public class ReviewActivity extends AppCompatActivity {
 
     private Cards card;
     private AudioCard audioCard;
+    private Animator animator;
     private ProgressBarCards progressBarCards;
     private int count = 0;
     private int currentCard = 1;
+    private boolean hiddenControl = false;
 
 
     @Override
@@ -60,6 +63,17 @@ public class ReviewActivity extends AppCompatActivity {
                 (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise));
 
 
+        this.animator = new Animator(this,
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_anticlockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_anticlockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise),
+                findViewById(R.id.frontCardViewText),
+                findViewById(R.id.backCardViewText));
+
+
+
+
         this.progressBarCards = new ProgressBarCards(findViewById(R.id.progressText), findViewById(R.id.progressBar));
         this.progressBarCards.setAmount(20);
 
@@ -89,11 +103,12 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         rightClickableRegionFront.setOnClickListener(v->{
-            this.card.makeAnimationLeft();
+           this.animator.makeAnimationLeft();
         });
 
         leftClickableRegionFront.setOnClickListener(v->{
-            this.card.makeAnimationRight();
+            this.animator.makeAnimationRight();
+            this.card.showControlDifficultButton(!hiddenControl);
         });
 
         rightClickableRegionBack.setOnClickListener(v->{

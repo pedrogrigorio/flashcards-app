@@ -33,7 +33,7 @@ public class Cards {
     private  LoadDataCards loadDataCards;
 
     private Animator animator;
-    private boolean hiddenControl = false;
+
 
 
     public Cards(Context context,
@@ -69,20 +69,18 @@ public class Cards {
         this.isBack            = true;
         this.setCameraCardDistance();
         this.loadDataCards.LoadCards();
-        this.animator = new Animator();
 
     }
 
     public void easyButtonCommand() {
-        this.makeAnimationRight();
+
     }
 
     public void goodButtonCommand() {
-        this.makeAnimationRight();
     }
 
     public void hardButtonCommand() {
-        this.makeAnimationRight();
+
     }
 
     public void showControlDifficultButton(boolean show) {
@@ -132,14 +130,15 @@ public class Cards {
     }
 
 
-    public void makeAnimationRight() {
-        animator.makeAnimationRight();
-        this.showControlDifficultButton(!this.hiddenControl);
-    }
 
-    public void makeAnimationLeft() {
-        this.animator.makeAnimationLeft();
-    }
+    //    public void makeAnimationRight() {
+//        animator.makeAnimationRight();
+//        this.showControlDifficultButton(!this.hiddenControl);
+//    }
+//
+//    public void makeAnimationLeft() {
+//        this.animator.makeAnimationLeft();
+//    }
 
 
 
