@@ -22,8 +22,7 @@ public class Deck {
     private TextView learnCardsNumberTextView;
     private TextView reviewCardsNumberTextView;
 
-    public Deck(int id) {
-        this.id = id;
+    public Deck() {
         this.title = "Novo baralho";
         this.newCardsNumber = 0;
         this.learnCardsNumber = 0;
