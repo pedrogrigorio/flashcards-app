@@ -1,16 +1,25 @@
 package com.example.flashcards_app.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flashcards_app.fragments.DecksFragment;
+import com.example.flashcards_app.activities.ReviewActivity;
+import com.example.flashcards_app.dialogs.AddCardsDialog;
+import com.example.flashcards_app.dialogs.DeleteDeckDialog;
+import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.models.Deck;
 
 import java.util.ArrayList;
@@ -20,10 +29,10 @@ import com.example.flashcards_app.R;
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
 
     private List<Deck> decks = new ArrayList<>();
-    private DecksFragment parentFragment;
+    private Context context;
 
-    public DeckAdapter(DecksFragment parentFragment) {
-        this.parentFragment = parentFragment;
+    public DeckAdapter(Context context) {
+        this.context = context;
     }
 
     @NonNull
@@ -38,9 +47,45 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
     public void onBindViewHolder(@NonNull DeckHolder holder, int position) {
         Deck currentDeck = decks.get(position);
         holder.titleTextView.setText(currentDeck.getTitle());
+        holder.newCardsNumberTextView.setText(currentDeck.getNewCardsNumber() + "");
+        holder.reviewCardsNumberTextView.setText(currentDeck.getReviewCardsNumber() + "");
+        holder.learnCardsNumberTextView.setText(currentDeck.getLearnCardsNumber() + "");
+
+        currentDeck.setDeckImage(holder.deckImage);
 
         holder.editButton.setOnClickListener(v -> {
-            parentFragment.showPopupMenu(parentFragment.getContext(), holder.editButton, currentDeck);
+            PopupMenu popup = new PopupMenu(v.getContext(), holder.editButton);
+            popup.inflate(R.menu.deck_options_menu);
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+                    FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
+
+                    if (id == R.id.item1) {
+                        AddCardsDialog dialog = new AddCardsDialog(currentDeck);
+                        dialog.show(manager, "edit_deck_popup");
+                        return true;
+                    } else if (id == R.id.item2) {
+                        EditDeckDialog dialog = new EditDeckDialog(currentDeck);
+                        dialog.show(manager, "edit_deck_popup");
+                        return true;
+                    } else if (id == R.id.item3) {
+                        DeleteDeckDialog dialog = new DeleteDeckDialog(currentDeck);
+                        dialog.show(manager, "delete_deck_popup");
+                        return true;
+                    }
+
+                    return false;
+                }
+            });
+
+            popup.show();
+        });
+
+        holder.reviewButton.setOnClickListener(v -> {
+            Intent in = new Intent(context, ReviewActivity.class);
+            context.startActivity(in);
         });
     }
 
@@ -63,15 +108,19 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         private TextView reviewCardsNumberTextView;
 
         private Button editButton;
+        private Button reviewButton;
 
         public DeckHolder(View itemView) {
             super(itemView);
             deckImage = itemView.findViewById(R.id.deck_img);
+
             titleTextView = itemView.findViewById(R.id.deck_title);
-            newCardsNumberTextView = itemView.findViewById(R.id.newCardsNumber);
-            learnCardsNumberTextView = itemView.findViewById(R.id.learnCardsNumber);
-            reviewCardsNumberTextView = itemView.findViewById(R.id.reviewCardsNumber);
+            newCardsNumberTextView = itemView.findViewById(R.id.new_cards_number);
+            learnCardsNumberTextView = itemView.findViewById(R.id.learn_cards_number);
+            reviewCardsNumberTextView = itemView.findViewById(R.id.review_cards_number);
+
             editButton = itemView.findViewById(R.id.btn_edit_deck);
+            reviewButton = itemView.findViewById(R.id.btn_review);
         }
     }
 }

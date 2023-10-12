@@ -30,6 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class EditDeckDialog extends AppCompatDialogFragment {
 
     Deck currentDeck;
+
     ImageView close;
     ImageView currentDeckImg;
     FloatingActionButton camButton;

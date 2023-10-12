@@ -34,14 +34,7 @@ import com.example.flashcards_app.activities.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
-
-    private LinearLayout linearLayout;
-
-    private int cardCount = 0;
-    private List<Deck> deckList = new ArrayList<>();
-
-    private Deck currentDeck;
+public class DecksFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +47,7 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        DeckAdapter adapter = new DeckAdapter(this);
+        DeckAdapter adapter = new DeckAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
         Button addButton = mainActivity.getCreateDeckButton();
@@ -141,32 +134,4 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
 //        cardCount++;
 //    }
 
-    public void showPopupMenu(Context context, View v, Deck deck) {
-        currentDeck = deck;
-        PopupMenu popup = new PopupMenu(context, v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.deck_options_menu);
-        popup.show();
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.item1) {
-            AddCardsDialog dialog = new AddCardsDialog(currentDeck);
-            dialog.show(getActivity().getSupportFragmentManager(), "edit_deck_popup");
-            return true;
-        } else if (id == R.id.item2) {
-            EditDeckDialog dialog = new EditDeckDialog(currentDeck);
-            dialog.show(getActivity().getSupportFragmentManager(), "edit_deck_popup");
-            return true;
-        } else if (id == R.id.item3) {
-            DeleteDeckDialog dialog = new DeleteDeckDialog(currentDeck);
-            dialog.show(getActivity().getSupportFragmentManager(), "delete_deck_popup");
-            return true;
-        }
-
-        return false;
-    }
 }
