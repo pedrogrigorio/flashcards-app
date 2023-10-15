@@ -14,14 +14,19 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.viewmodel.DeckViewModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 public class DeleteDeckDialog extends AppCompatDialogFragment {
 
     Deck currentDeck;
+    DeckViewModel deckViewModel;
+    int position;
 
-    public DeleteDeckDialog(Deck currentDeck) {
+    public DeleteDeckDialog(Deck currentDeck, DeckViewModel deckViewModel, int position) {
         this.currentDeck = currentDeck;
+        this.deckViewModel = deckViewModel;
+        this.position = position;
     }
 
     @Override
@@ -41,6 +46,7 @@ public class DeleteDeckDialog extends AppCompatDialogFragment {
         });
 
         exclude.setOnClickListener(v -> {
+            deckViewModel.deleteDeck(position);
             dismiss();
         });
 

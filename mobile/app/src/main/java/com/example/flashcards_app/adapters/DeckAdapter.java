@@ -30,6 +30,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
 
     private List<Deck> decks = new ArrayList<>();
     private Context context;
+    private OnItemClickListener listener;
 
     public DeckAdapter(Context context) {
         this.context = context;
@@ -46,12 +47,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
     @Override
     public void onBindViewHolder(@NonNull DeckHolder holder, int position) {
         Deck currentDeck = decks.get(position);
+        System.out.println("oi");
         holder.titleTextView.setText(currentDeck.getTitle());
         holder.newCardsNumberTextView.setText(currentDeck.getNewCardsNumber() + "");
         holder.reviewCardsNumberTextView.setText(currentDeck.getReviewCardsNumber() + "");
         holder.learnCardsNumberTextView.setText(currentDeck.getLearnCardsNumber() + "");
 
-        currentDeck.setDeckImage(holder.deckImage);
+//        currentDeck.setDeckImage(holder.deckImage);
 
         holder.editButton.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(v.getContext(), holder.editButton);
@@ -60,19 +62,15 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int id = item.getItemId();
-                    FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
 
                     if (id == R.id.item1) {
-                        AddCardsDialog dialog = new AddCardsDialog(currentDeck);
-                        dialog.show(manager, "edit_deck_popup");
+                        listener.onItemClick(currentDeck, 0, position);
                         return true;
                     } else if (id == R.id.item2) {
-                        EditDeckDialog dialog = new EditDeckDialog(currentDeck);
-                        dialog.show(manager, "edit_deck_popup");
+                        listener.onItemClick(currentDeck, 1, position);
                         return true;
                     } else if (id == R.id.item3) {
-                        DeleteDeckDialog dialog = new DeleteDeckDialog(currentDeck);
-                        dialog.show(manager, "delete_deck_popup");
+                        listener.onItemClick(currentDeck, 2, position);
                         return true;
                     }
 
@@ -94,23 +92,23 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         return decks.size();
     }
 
-    public void addDeck(Deck deck) {
-        decks.add(deck);
+    public void setDecks(List<Deck> decks) {
+        this.decks = decks;
         notifyDataSetChanged();
     }
 
-    class DeckHolder extends RecyclerView.ViewHolder {
-        private ImageView deckImage;
+    public class DeckHolder extends RecyclerView.ViewHolder {
+        ImageView deckImage;
 
-        private TextView titleTextView;
-        private TextView newCardsNumberTextView;
-        private TextView learnCardsNumberTextView;
-        private TextView reviewCardsNumberTextView;
+        TextView titleTextView;
+        TextView newCardsNumberTextView;
+        TextView learnCardsNumberTextView;
+        TextView reviewCardsNumberTextView;
 
-        private Button editButton;
-        private Button reviewButton;
+        Button editButton;
+        Button reviewButton;
 
-        public DeckHolder(View itemView) {
+        public DeckHolder(@NonNull View itemView) {
             super(itemView);
             deckImage = itemView.findViewById(R.id.deck_img);
 
@@ -123,4 +121,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
             reviewButton = itemView.findViewById(R.id.btn_review);
         }
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(Deck deck, int option, int position);
+    }
+
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
 }

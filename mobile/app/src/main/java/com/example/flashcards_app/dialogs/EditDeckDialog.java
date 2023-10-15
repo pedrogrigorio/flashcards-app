@@ -24,18 +24,18 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.viewmodel.DeckViewModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class EditDeckDialog extends AppCompatDialogFragment {
 
     Deck currentDeck;
+    onDialogResult dialogResult;
 
     ImageView close;
     ImageView currentDeckImg;
     FloatingActionButton camButton;
-    TextView cancel;
-    Button edit;
     EditText title;
 
     public EditDeckDialog(Deck currentDeck) {
@@ -49,33 +49,32 @@ public class EditDeckDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_edit_deck, null);
 
-        builder.setView(view);
+        builder.setView(view)
+                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Deck deck = new Deck();
+                        deck.setTitle(title.getText().toString());
+                        deck.setLearnCardsNumber(currentDeck.getLearnCardsNumber());
+                        deck.setNewCardsNumber(currentDeck.getNewCardsNumber());
+                        deck.setReviewCardsNumber(currentDeck.getReviewCardsNumber());
+
+                        dialogResult.finish(deck);
+                    }
+                });
 
         close = view.findViewById(R.id.edit_deck_close_popup);
-        cancel = view.findViewById(R.id.cancel_edit_deck);
-        edit = view.findViewById(R.id.btn_dialog_edit_deck);
         camButton = view.findViewById(R.id.btn_cam_edit_deck);
         currentDeckImg = view.findViewById(R.id.deck_img_edit_deck);
 
-        Drawable drawable = currentDeck.getDeckImage().getDrawable();
-        currentDeckImg.setImageDrawable(drawable);
+//        Drawable drawable = currentDeck.getDeckImage().getDrawable();
+//        currentDeckImg.setImageDrawable(drawable);
 
         title = view.findViewById(R.id.deck_title_edit_deck);
         title.setText(currentDeck.getTitle());
 
         close.setOnClickListener(v -> {
-            dismiss();
-        });
-
-        cancel.setOnClickListener(v -> {
-            dismiss();
-        });
-
-        edit.setOnClickListener(v -> {
-            ImageView deckImg = currentDeck.getDeckImage();
-            deckImg.setImageDrawable(currentDeckImg.getDrawable());
-
-            currentDeck.setTitle(title.getText().toString());
             dismiss();
         });
 
@@ -104,4 +103,14 @@ public class EditDeckDialog extends AppCompatDialogFragment {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
             }
         });
+
+    public interface onDialogResult {
+        void finish(Deck updatedDeck);
+    }
+
+    public void setDialogResult(onDialogResult dialogResult) {
+        this.dialogResult = dialogResult;
+    }
+
+
 }
