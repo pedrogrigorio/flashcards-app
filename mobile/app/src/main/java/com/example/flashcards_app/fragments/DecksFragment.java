@@ -40,10 +40,6 @@ import java.util.List;
 
 public class DecksFragment extends Fragment {
 
-    public static final int ADD_CARDS_REQUEST = 1;
-    public static final int EDIT_DECK_REQUEST = 2;
-    public static final int DELETE_DECK_REQUEST = 3;
-
     private DeckViewModel deckViewModel;
     private Context context;
 
@@ -56,8 +52,8 @@ public class DecksFragment extends Fragment {
         Button addButton = mainActivity.getCreateDeckButton();
         context = getActivity();
 
-        DeckAdapter adapter = new DeckAdapter(getActivity());
-        adapter.setListener(new DeckAdapter.OnItemClickListener() {
+        DeckAdapter adapter = new DeckAdapter();
+        adapter.setOptionListener(new DeckAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Deck deck, int option, int position) {
                 FragmentManager manager = getChildFragmentManager();
@@ -89,6 +85,14 @@ public class DecksFragment extends Fragment {
             }
         });
 
+        adapter.setReviewButtonListener(new DeckAdapter.onReviewButtonListener() {
+            @Override
+            public void onItemClick(Deck deck) {
+                Intent in = new Intent(context, ReviewActivity.class);
+                context.startActivity(in);
+            }
+        });
+
         RecyclerView recyclerView = view.findViewById(R.id.decks_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
@@ -108,7 +112,4 @@ public class DecksFragment extends Fragment {
 
         return view;
     }
-
-
-
 }

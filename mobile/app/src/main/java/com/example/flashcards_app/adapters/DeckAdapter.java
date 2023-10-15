@@ -29,12 +29,8 @@ import com.example.flashcards_app.R;
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
 
     private List<Deck> decks = new ArrayList<>();
-    private Context context;
-    private OnItemClickListener listener;
-
-    public DeckAdapter(Context context) {
-        this.context = context;
-    }
+    private OnItemClickListener optionListener;
+    private onReviewButtonListener reviewButtonListener;
 
     @NonNull
     @Override
@@ -64,13 +60,13 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
                     int id = item.getItemId();
 
                     if (id == R.id.item1) {
-                        listener.onItemClick(currentDeck, 0, position);
+                        optionListener.onItemClick(currentDeck, 0, position);
                         return true;
                     } else if (id == R.id.item2) {
-                        listener.onItemClick(currentDeck, 1, position);
+                        optionListener.onItemClick(currentDeck, 1, position);
                         return true;
                     } else if (id == R.id.item3) {
-                        listener.onItemClick(currentDeck, 2, position);
+                        optionListener.onItemClick(currentDeck, 2, position);
                         return true;
                     }
 
@@ -82,8 +78,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         });
 
         holder.reviewButton.setOnClickListener(v -> {
-            Intent in = new Intent(context, ReviewActivity.class);
-            context.startActivity(in);
+            reviewButtonListener.onItemClick(currentDeck);
+
+//            Intent in = new Intent(context, ReviewActivity.class);
+//            context.startActivity(in);
         });
     }
 
@@ -126,8 +124,16 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         void onItemClick(Deck deck, int option, int position);
     }
 
-    public void setListener(OnItemClickListener listener) {
-        this.listener = listener;
+    public void setOptionListener(OnItemClickListener optionListener) {
+        this.optionListener = optionListener;
+    }
+
+    public interface onReviewButtonListener {
+        void onItemClick(Deck deck);
+    }
+
+    public void setReviewButtonListener(onReviewButtonListener reviewButtonListener) {
+        this.reviewButtonListener = reviewButtonListener;
     }
 
 }
