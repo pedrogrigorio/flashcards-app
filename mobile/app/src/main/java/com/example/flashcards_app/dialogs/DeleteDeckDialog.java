@@ -2,6 +2,7 @@ package com.example.flashcards_app.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,13 +21,10 @@ import com.github.dhaval2404.imagepicker.ImagePicker;
 public class DeleteDeckDialog extends AppCompatDialogFragment {
 
     Deck currentDeck;
-    DeckViewModel deckViewModel;
-    int position;
+    onDialogResult dialogResult;
 
-    public DeleteDeckDialog(Deck currentDeck, DeckViewModel deckViewModel, int position) {
+    public DeleteDeckDialog(Deck currentDeck) {
         this.currentDeck = currentDeck;
-        this.deckViewModel = deckViewModel;
-        this.position = position;
     }
 
     @Override
@@ -36,20 +34,23 @@ public class DeleteDeckDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_delete_deck, null);
 
-        builder.setView(view);
-
-        TextView cancel = view.findViewById(R.id.cancel_delete_deck);
-        Button exclude = view.findViewById(R.id.btn_dialog_delete_deck);
-
-        cancel.setOnClickListener(v -> {
-            dismiss();
-        });
-
-        exclude.setOnClickListener(v -> {
-            deckViewModel.deleteDeck(position);
-            dismiss();
-        });
+        builder.setView(view)
+                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("EXCLUIR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialogResult.finish();
+                    }
+                });
 
         return builder.create();
+    }
+
+    public interface onDialogResult {
+        void finish();
+    }
+
+    public void setDialogResult(DeleteDeckDialog.onDialogResult dialogResult) {
+        this.dialogResult = dialogResult;
     }
 }

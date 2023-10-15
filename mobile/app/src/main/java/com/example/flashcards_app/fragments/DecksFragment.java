@@ -75,7 +75,13 @@ public class DecksFragment extends Fragment {
                     });
                     dialog.show(manager, "edit_deck_popup");
                 } else if (option == 2) {
-                    DeleteDeckDialog dialog = new DeleteDeckDialog(deck, deckViewModel, position);
+                    DeleteDeckDialog dialog = new DeleteDeckDialog(deck);
+                    dialog.setDialogResult(new DeleteDeckDialog.onDialogResult() {
+                        @Override
+                        public void finish() {
+                            deckViewModel.deleteDeck(position);
+                        }
+                    });
                     dialog.show(manager, "delete_deck_popup");
                 } else {
                     System.out.println("Error");

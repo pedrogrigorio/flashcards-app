@@ -3,6 +3,7 @@ package com.example.flashcards_app.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -47,10 +48,15 @@ public class AddCardsDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add_cards, null);
 
-        builder.setView(view);
+        builder.setView(view)
+                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("ADICIONAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO: implement add cards
+                    }
+                });
 
-        TextView cancel = view.findViewById(R.id.cancel_add_cards);
-        Button addCard = view.findViewById(R.id.btn_dialog_add_cards);
         Button colorPickerFrontCard = view.findViewById(R.id.btn_change_color_front_card);
         Button colorPickerBackCard = view.findViewById(R.id.btn_change_color_back_card);
         EditText frontCardEditText = view.findViewById(R.id.front_card_text);
@@ -63,14 +69,6 @@ public class AddCardsDialog extends AppCompatDialogFragment {
 
         colorPickerBackCard.setOnClickListener(v -> {
             showPopupMenu(colorPickerBackCard, backCardEditText);
-        });
-
-        cancel.setOnClickListener(v -> {
-            dismiss();
-        });
-
-        addCard.setOnClickListener(v -> {
-            dismiss();
         });
 
         return builder.create();
