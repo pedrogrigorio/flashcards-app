@@ -5,9 +5,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +30,12 @@ import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.viewmodel.DeckViewModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class EditDeckDialog extends AppCompatDialogFragment {
 
@@ -70,6 +79,9 @@ public class EditDeckDialog extends AppCompatDialogFragment {
 
 //        Drawable drawable = currentDeck.getDeckImage().getDrawable();
 //        currentDeckImg.setImageDrawable(drawable);
+        Picasso.get()
+                .load("https://i.pinimg.com/736x/64/fb/63/64fb63cf7acbad70b9ece908b5b1b351.jpg")
+                .into(currentDeckImg);
 
         title = view.findViewById(R.id.deck_title_edit_deck);
         title.setText(currentDeck.getTitle());
@@ -98,6 +110,8 @@ public class EditDeckDialog extends AppCompatDialogFragment {
             Intent data = result.getData();
             if (data != null && result.getResultCode() == Activity.RESULT_OK) {
                 Uri newImgUri = data.getData();
+                System.out.println("oi");
+                System.out.println(newImgUri);
                 currentDeckImg.setImageURI(newImgUri);
             } else {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();

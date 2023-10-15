@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private Button createDeck;
     private Button addFriends;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
