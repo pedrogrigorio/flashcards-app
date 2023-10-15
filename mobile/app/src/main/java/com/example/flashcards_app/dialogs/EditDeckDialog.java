@@ -40,6 +40,7 @@ import java.net.URL;
 public class EditDeckDialog extends AppCompatDialogFragment {
 
     Deck currentDeck;
+    Deck updatedDeck;
     onDialogResult dialogResult;
 
     ImageView close;
@@ -63,27 +64,26 @@ public class EditDeckDialog extends AppCompatDialogFragment {
                 .setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Deck deck = new Deck();
-                        deck.setTitle(title.getText().toString());
-                        deck.setLearnCardsNumber(currentDeck.getLearnCardsNumber());
-                        deck.setNewCardsNumber(currentDeck.getNewCardsNumber());
-                        deck.setReviewCardsNumber(currentDeck.getReviewCardsNumber());
-
-                        dialogResult.finish(deck);
+                        updatedDeck.setTitle(title.getText().toString());
+                        updatedDeck.setLearnCardsNumber(currentDeck.getLearnCardsNumber());
+                        updatedDeck.setNewCardsNumber(currentDeck.getNewCardsNumber());
+                        updatedDeck.setReviewCardsNumber(currentDeck.getReviewCardsNumber());
+                        dialogResult.finish(updatedDeck);
                     }
                 });
 
+        updatedDeck = new Deck();
         close = view.findViewById(R.id.edit_deck_close_popup);
         camButton = view.findViewById(R.id.btn_cam_edit_deck);
         currentDeckImg = view.findViewById(R.id.deck_img_edit_deck);
-
-//        Drawable drawable = currentDeck.getDeckImage().getDrawable();
-//        currentDeckImg.setImageDrawable(drawable);
-        Picasso.get()
-                .load("https://i.pinimg.com/736x/64/fb/63/64fb63cf7acbad70b9ece908b5b1b351.jpg")
-                .into(currentDeckImg);
-
         title = view.findViewById(R.id.deck_title_edit_deck);
+
+        if (!currentDeck.getImgSrc().isEmpty()) {
+            Picasso.get()
+                    .load(currentDeck.getImgSrc())
+                    .into(currentDeckImg);
+        }
+
         title.setText(currentDeck.getTitle());
 
         close.setOnClickListener(v -> {
@@ -110,9 +110,12 @@ public class EditDeckDialog extends AppCompatDialogFragment {
             Intent data = result.getData();
             if (data != null && result.getResultCode() == Activity.RESULT_OK) {
                 Uri newImgUri = data.getData();
-                System.out.println("oi");
-                System.out.println(newImgUri);
                 currentDeckImg.setImageURI(newImgUri);
+                // TODO: upload image on backend
+
+                // url_backend must be loaded by url given by backend
+                String url_backend = newImgUri.toString();
+                updatedDeck.setImgSrc(url_backend);
             } else {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
             }

@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 
 public class Deck {
+
+    private String imgSrc;
     private String title;
     private int newCardsNumber;
     private int learnCardsNumber;
@@ -19,6 +21,15 @@ public class Deck {
         this.newCardsNumber = 0;
         this.learnCardsNumber = 0;
         this.reviewCardsNumber = 0;
+        this.imgSrc = "";
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
     }
 
     public String getTitle() {

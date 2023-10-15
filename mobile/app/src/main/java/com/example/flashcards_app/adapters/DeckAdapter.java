@@ -25,6 +25,7 @@ import com.example.flashcards_app.models.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.flashcards_app.R;
+import com.squareup.picasso.Picasso;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
 
@@ -49,7 +50,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         holder.reviewCardsNumberTextView.setText(currentDeck.getReviewCardsNumber() + "");
         holder.learnCardsNumberTextView.setText(currentDeck.getLearnCardsNumber() + "");
 
-//        currentDeck.setDeckImage(holder.deckImage);
+        if (!currentDeck.getImgSrc().isEmpty()) {
+            Picasso.get()
+                    .load(currentDeck.getImgSrc())
+                    .into(holder.deckImage);
+        }
 
         holder.editButton.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(v.getContext(), holder.editButton);
@@ -79,9 +84,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
 
         holder.reviewButton.setOnClickListener(v -> {
             reviewButtonListener.onItemClick(currentDeck);
-
-//            Intent in = new Intent(context, ReviewActivity.class);
-//            context.startActivity(in);
         });
     }
 
