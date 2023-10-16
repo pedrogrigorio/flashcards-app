@@ -9,14 +9,24 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.repositories.DeckRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeckViewModel extends ViewModel {
     private MutableLiveData<List<Deck>> decksLiveData = new MutableLiveData<>();
+    private DeckRepository deckRepository;
+
+    public DeckViewModel() {
+        deckRepository = new DeckRepository();
+    }
 
     public LiveData<List<Deck>> getDecks() {
+        if (decksLiveData == null) {
+            decksLiveData = deckRepository.getAllDecks();
+        }
+
         return decksLiveData;
     }
 
