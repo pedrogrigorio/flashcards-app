@@ -17,11 +17,11 @@ public class Deck {
     private int reviewCardsNumber;
 
     public Deck() {
+        this.imgSrc = "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg";
         this.title = "Novo baralho";
         this.newCardsNumber = 0;
         this.learnCardsNumber = 0;
         this.reviewCardsNumber = 0;
-        this.imgSrc = "";
     }
 
     public Deck(String imgSrc, String title, int newCardsNumber, int learnCardsNumber, int reviewCardsNumber) {

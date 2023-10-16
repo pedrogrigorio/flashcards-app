@@ -44,13 +44,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
     @Override
     public void onBindViewHolder(@NonNull DeckHolder holder, int position) {
         Deck currentDeck = decks.get(position);
-        System.out.println("oi");
         holder.titleTextView.setText(currentDeck.getTitle());
         holder.newCardsNumberTextView.setText(currentDeck.getNewCardsNumber() + "");
         holder.reviewCardsNumberTextView.setText(currentDeck.getReviewCardsNumber() + "");
         holder.learnCardsNumberTextView.setText(currentDeck.getLearnCardsNumber() + "");
 
+        System.out.println("PRINT 1: " + position);
         if (!currentDeck.getImgSrc().isEmpty()) {
+            System.out.println("PRINT 2: " + position);
             Picasso.get()
                     .load(currentDeck.getImgSrc())
                     .into(holder.deckImage);
