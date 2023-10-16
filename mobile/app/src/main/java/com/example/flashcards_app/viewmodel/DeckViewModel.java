@@ -23,7 +23,9 @@ public class DeckViewModel extends ViewModel {
     }
 
     public LiveData<List<Deck>> getDecks() {
-        if (decksLiveData == null) {
+        System.out.println("PRINT: getDecks()");
+        if (decksLiveData.getValue() == null || decksLiveData.getValue().isEmpty()) {
+            System.out.println("entrou no if");
             decksLiveData = deckRepository.getAllDecks();
         }
 

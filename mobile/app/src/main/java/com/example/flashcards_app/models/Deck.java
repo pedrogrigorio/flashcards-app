@@ -24,6 +24,14 @@ public class Deck {
         this.imgSrc = "";
     }
 
+    public Deck(String imgSrc, String title, int newCardsNumber, int learnCardsNumber, int reviewCardsNumber) {
+        this.imgSrc = imgSrc;
+        this.title = title;
+        this.newCardsNumber = newCardsNumber;
+        this.learnCardsNumber = learnCardsNumber;
+        this.reviewCardsNumber = reviewCardsNumber;
+    }
+
     public String getImgSrc() {
         return imgSrc;
     }
