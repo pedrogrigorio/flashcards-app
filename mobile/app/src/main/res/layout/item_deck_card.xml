@@ -27,7 +27,7 @@
             app:layout_constraintVertical_bias="1.0">
 
             <TextView
-                android:id="@+id/deckTitle"
+                android:id="@+id/deck_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
@@ -51,7 +51,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/newCardsNumber"
+                        android:id="@+id/new_cards_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -72,7 +72,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/learnCardsNumber"
+                        android:id="@+id/learn_cards_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -92,7 +92,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/reviewCardsNumber"
+                        android:id="@+id/review_cards_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="0"

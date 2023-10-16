@@ -7,18 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".fragments.DecksFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/decksLinearLayout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/decks_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:paddingBottom="96dp"
+            android:clipToPadding="false"/>
 
 </FrameLayout>
