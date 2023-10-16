@@ -32,6 +32,9 @@ public class DeckViewModel extends ViewModel {
         return decksLiveData;
     }
 
+    /*
+    *   Methods to be implemented in repository
+    * =================================================== */
     public void insertDeck(Deck deck) {
         List<Deck> currentDecks = decksLiveData.getValue();
 
