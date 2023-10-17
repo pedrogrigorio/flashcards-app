@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +28,8 @@ import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.viewmodel.DeckViewModel;
 import com.example.flashcards_app.viewmodel.FriendViewModel;
 
+import java.util.List;
+
 public class FriendsFragment extends Fragment {
 
     private FriendViewModel friendViewModel;
@@ -48,12 +51,12 @@ public class FriendsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.friends_recycler_view);
         configRecyclerView();
 
-//        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-//        configFriendViewModel();
+        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        configFriendViewModel();
 
         Button addButton = mainActivity.getAddFriendsButton();
         addButton.setOnClickListener(v -> {
-            adapter.insertFriends(new Friend(0, "User", "user"));
+            friendViewModel.insertFriend(new Friend(0, "User", "user"));
         });
 
         return view;
@@ -70,6 +73,11 @@ public class FriendsFragment extends Fragment {
     }
 
     private void configFriendViewModel() {
-        // implement configFriendViewModel
+        friendViewModel.getFriends().observe(getActivity(), new Observer<List<Friend>>() {
+            @Override
+            public void onChanged(List<Friend> friends) {
+                adapter.setFriends(friends);
+            }
+        });
     }
 }

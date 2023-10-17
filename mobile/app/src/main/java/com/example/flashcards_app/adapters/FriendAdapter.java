@@ -58,11 +58,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         notifyDataSetChanged();
     }
 
-    public void insertFriends(Friend friend) {
-        friends.add(friend);
-        notifyDataSetChanged();
-    }
-
     public class FriendHolder extends RecyclerView.ViewHolder {
 
         TextView name;
