@@ -2,21 +2,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/friendsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.FriendsFragment">
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friends_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp"
+        android:paddingBottom="96dp"
+        android:clipToPadding="false" />
 
-        <LinearLayout
-            android:id="@+id/friendsLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical" />
-
-    </ScrollView>
 </FrameLayout>

@@ -6,10 +6,8 @@ public class Friend {
 
     int id;
     String name;
-    TextView nameView;
 
-    public Friend(int id) {
-        this.id = id;
+    public Friend() {
     }
 
     public String getName() {
@@ -20,11 +18,5 @@ public class Friend {
         this.name = name;
     }
 
-    public TextView getNameView() {
-        return nameView;
-    }
 
-    public void setNameView(TextView nameView) {
-        this.nameView = nameView;
-    }
 }

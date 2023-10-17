@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 public class Deck {
 
+    private int id;
     private String imgSrc;
     private String title;
     private int newCardsNumber;
