@@ -23,6 +23,7 @@ import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.MainActivity;
 import com.example.flashcards_app.adapters.DeckAdapter;
 import com.example.flashcards_app.adapters.FriendAdapter;
+import com.example.flashcards_app.dialogs.DeleteFriendDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.viewmodel.DeckViewModel;
@@ -63,7 +64,19 @@ public class FriendsFragment extends Fragment {
     }
 
     private void configAdapter() {
-        // implement configAdapter
+        adapter.setDeleteFriendListener(new FriendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Friend friend, int position) {
+                DeleteFriendDialog dialog = new DeleteFriendDialog(friend);
+                dialog.setDialogResult(new DeleteFriendDialog.onDialogResult() {
+                    @Override
+                    public void finish() {
+                        friendViewModel.deleteFriend(position);
+                    }
+                });
+                dialog.show(getChildFragmentManager(), "delete friend popup");
+            }
+        });
     }
 
     private void configRecyclerView() {

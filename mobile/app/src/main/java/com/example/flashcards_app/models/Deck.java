@@ -33,6 +33,14 @@ public class Deck {
         this.reviewCardsNumber = reviewCardsNumber;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getImgSrc() {
         return imgSrc;
     }

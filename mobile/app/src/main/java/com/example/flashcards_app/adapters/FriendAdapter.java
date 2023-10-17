@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.Friend;
 import com.squareup.picasso.Picasso;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHolder> {
 
     private List<Friend> friends = new ArrayList<>();
+    private OnItemClickListener deleteFriendListener;
 
     @NonNull
     @Override
@@ -43,7 +45,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         }
 
         holder.deleteFriend.setOnClickListener(v -> {
-            System.out.println("PRINT: deleteFriend clicked");
+            deleteFriendListener.onItemClick(currentFriend, position);
         });
 
     }
@@ -73,5 +75,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
             friendImage = itemView.findViewById(R.id.friend_img);
             deleteFriend = itemView.findViewById(R.id.btn_delete_friend);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Friend friend, int position);
+    }
+
+    public void setDeleteFriendListener(OnItemClickListener listener) {
+        this.deleteFriendListener = listener;
     }
 }

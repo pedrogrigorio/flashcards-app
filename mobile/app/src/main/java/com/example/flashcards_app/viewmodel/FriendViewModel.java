@@ -37,4 +37,16 @@ public class FriendViewModel extends ViewModel {
 
         friendsLiveData.setValue(currentFriends);
     }
+
+    public void deleteFriend(int position) {
+        List<Friend> currentFriends = friendsLiveData.getValue();
+
+        if (currentFriends == null) {
+            currentFriends = new ArrayList<>();
+        }
+
+        currentFriends.remove(position);
+
+        friendsLiveData.setValue(currentFriends);
+    }
 }
