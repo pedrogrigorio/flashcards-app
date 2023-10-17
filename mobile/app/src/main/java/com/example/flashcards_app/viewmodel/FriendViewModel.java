@@ -20,8 +20,7 @@ public class FriendViewModel extends ViewModel {
 
     public LiveData<List<Friend>> getFriends() {
         if (friendsLiveData.getValue() == null || friendsLiveData.getValue().isEmpty()) {
-            //friendsLiveData = friendRepository.getAllFriends();
-            System.out.println("Fetch data");
+            friendsLiveData = friendRepository.getAllFriends();
         }
 
         return friendsLiveData;

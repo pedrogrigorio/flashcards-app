@@ -26,7 +26,6 @@ public class DeckRepository {
     public MutableLiveData<List<Deck>> getAllDecks() {
         MutableLiveData<List<Deck>> decksLiveData = new MutableLiveData<>();
 
-        System.out.println("PRINT: dentro da função no DeckRepository");
         Call<List<Deck>> call = deckService.getAllDecks();
         call.enqueue(new Callback<List<Deck>>() {
             @Override
