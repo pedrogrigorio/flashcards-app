@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.TypedValue;
@@ -47,12 +48,12 @@ public class FriendsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.friends_recycler_view);
         configRecyclerView();
 
-        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        configFriendViewModel();
+//        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+//        configFriendViewModel();
 
         Button addButton = mainActivity.getAddFriendsButton();
         addButton.setOnClickListener(v -> {
-//            addFriends();
+            adapter.insertFriends(new Friend(0, "User", "user"));
         });
 
         return view;
@@ -63,7 +64,9 @@ public class FriendsFragment extends Fragment {
     }
 
     private void configRecyclerView() {
-        // implement configRecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
     }
 
     private void configFriendViewModel() {
