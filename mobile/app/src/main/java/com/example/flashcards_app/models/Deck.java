@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 public class Deck {
 
+    private int id;
     private String imgSrc;
     private String title;
     private int newCardsNumber;
@@ -17,11 +18,11 @@ public class Deck {
     private int reviewCardsNumber;
 
     public Deck() {
+        this.imgSrc = "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg";
         this.title = "Novo baralho";
         this.newCardsNumber = 0;
         this.learnCardsNumber = 0;
         this.reviewCardsNumber = 0;
-        this.imgSrc = "";
     }
 
     public Deck(String imgSrc, String title, int newCardsNumber, int learnCardsNumber, int reviewCardsNumber) {
@@ -30,6 +31,14 @@ public class Deck {
         this.newCardsNumber = newCardsNumber;
         this.learnCardsNumber = learnCardsNumber;
         this.reviewCardsNumber = reviewCardsNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getImgSrc() {

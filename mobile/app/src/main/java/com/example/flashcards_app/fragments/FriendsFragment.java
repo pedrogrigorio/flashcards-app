@@ -1,9 +1,14 @@
 package com.example.flashcards_app.fragments;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,60 +21,76 @@ import android.widget.TextView;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.MainActivity;
+import com.example.flashcards_app.adapters.DeckAdapter;
+import com.example.flashcards_app.adapters.FriendAdapter;
+import com.example.flashcards_app.dialogs.DeleteFriendDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.Friend;
+import com.example.flashcards_app.viewmodel.DeckViewModel;
+import com.example.flashcards_app.viewmodel.FriendViewModel;
+
+import java.util.List;
 
 public class FriendsFragment extends Fragment {
 
-    LinearLayout linearLayout;
-    int friendCount = 0;
+    private FriendViewModel friendViewModel;
+    private RecyclerView recyclerView;
+    private FriendAdapter adapter;
+    private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        linearLayout = view.findViewById(R.id.friendsLinearLayout);
+        context = getActivity();
+
+        adapter = new FriendAdapter();
+        configAdapter();
+
+        recyclerView = view.findViewById(R.id.friends_recycler_view);
+        configRecyclerView();
+
+        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        configFriendViewModel();
 
         Button addButton = mainActivity.getAddFriendsButton();
         addButton.setOnClickListener(v -> {
-            addFriends();
+            friendViewModel.insertFriend(new Friend(0, "User", "user"));
         });
 
         return view;
     }
 
-    public void addFriends() {
-        View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.item_friend_card, null);
+    private void configAdapter() {
+        adapter.setDeleteFriendListener(new FriendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Friend friend, int position) {
+                DeleteFriendDialog dialog = new DeleteFriendDialog(friend);
+                dialog.setDialogResult(new DeleteFriendDialog.onDialogResult() {
+                    @Override
+                    public void finish() {
+                        friendViewModel.deleteFriend(position);
+                    }
+                });
+                dialog.show(getChildFragmentManager(), "delete friend popup");
+            }
+        });
+    }
 
-        // Layout config
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
+    private void configRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+    }
 
-        Resources r = getContext().getResources();
-        int margin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                24,
-                r.getDisplayMetrics()
-        );
-
-        layoutParams.setMargins(margin, 0, margin, margin);
-        cardView.setLayoutParams(layoutParams);
-
-        /* Create object */
-        Friend friend = new Friend(friendCount++);
-
-        TextView nameTextView = cardView.findViewById(R.id.friend_name);
-        int nameTextViewUniqueId = View.generateViewId();
-        nameTextView.setId(nameTextViewUniqueId);
-
-        ImageView imgView = cardView.findViewById(R.id.friend_img);
-        int imgViewUniqueId = View.generateViewId();
-        imgView.setId(imgViewUniqueId);
-
-        friend.setNameView(nameTextView);
-        linearLayout.addView(cardView);
-    };
+    private void configFriendViewModel() {
+        friendViewModel.getFriends().observe(getActivity(), new Observer<List<Friend>>() {
+            @Override
+            public void onChanged(List<Friend> friends) {
+                adapter.setFriends(friends);
+            }
+        });
+    }
 }

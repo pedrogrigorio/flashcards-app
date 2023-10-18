@@ -26,13 +26,12 @@ public class DeckRepository {
     public MutableLiveData<List<Deck>> getAllDecks() {
         MutableLiveData<List<Deck>> decksLiveData = new MutableLiveData<>();
 
-        System.out.println("PRINT: dentro da função no DeckRepository");
         Call<List<Deck>> call = deckService.getAllDecks();
         call.enqueue(new Callback<List<Deck>>() {
             @Override
             public void onResponse(Call<List<Deck>> call, Response<List<Deck>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    System.out.println("PRINT: resposta deu certo");
+                    System.out.println("PRINT: requisition OK");
                     decksLiveData.setValue(response.body());
                 } else {
                     // error treatment
@@ -42,7 +41,7 @@ public class DeckRepository {
 
             @Override
             public void onFailure(Call<List<Deck>> call, Throwable t) {
-                System.out.println("PRINT: falha na requisição " + t.getMessage());
+                System.out.println("PRINT: requisition fail " + t.getMessage());
                 t.printStackTrace();
             }
         });

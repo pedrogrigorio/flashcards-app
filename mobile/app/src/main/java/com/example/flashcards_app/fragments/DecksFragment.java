@@ -41,6 +41,8 @@ import java.util.List;
 public class DecksFragment extends Fragment {
 
     private DeckViewModel deckViewModel;
+    private RecyclerView recyclerView;
+    private DeckAdapter adapter;
     private Context context;
 
     @Override
@@ -49,10 +51,26 @@ public class DecksFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_decks, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
-        Button addButton = mainActivity.getCreateDeckButton();
         context = getActivity();
 
-        DeckAdapter adapter = new DeckAdapter();
+        adapter = new DeckAdapter();
+        configAdapter();
+
+        recyclerView = view.findViewById(R.id.decks_recycler_view);
+        configRecyclerView();
+
+        deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
+        configDeckViewModel();
+
+        Button addButton = mainActivity.getCreateDeckButton();
+        addButton.setOnClickListener(v -> {
+            deckViewModel.insertDeck(new Deck());
+        });
+
+        return view;
+    }
+
+    private void configAdapter() {
         adapter.setOptionListener(new DeckAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Deck deck, int option, int position) {
@@ -92,24 +110,20 @@ public class DecksFragment extends Fragment {
                 context.startActivity(in);
             }
         });
+    }
 
-        RecyclerView recyclerView = view.findViewById(R.id.decks_recycler_view);
+    private void configRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+    }
 
-        deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
+    private void configDeckViewModel() {
         deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
             @Override
             public void onChanged(List<Deck> decks) {
                 adapter.setDecks(decks);
             }
         });
-
-        addButton.setOnClickListener(v -> {
-            deckViewModel.insertDeck(new Deck());
-        });
-
-        return view;
     }
 }

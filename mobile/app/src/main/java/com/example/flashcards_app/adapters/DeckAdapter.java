@@ -44,7 +44,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
     @Override
     public void onBindViewHolder(@NonNull DeckHolder holder, int position) {
         Deck currentDeck = decks.get(position);
-        System.out.println("oi");
         holder.titleTextView.setText(currentDeck.getTitle());
         holder.newCardsNumberTextView.setText(currentDeck.getNewCardsNumber() + "");
         holder.reviewCardsNumberTextView.setText(currentDeck.getReviewCardsNumber() + "");
