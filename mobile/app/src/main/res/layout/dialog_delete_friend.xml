@@ -16,16 +16,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/front_card_title"
-            android:layout_width="wrap_content"
+            android:id="@+id/delete_friend_message"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
+            android:layout_marginEnd="24dp"
             android:layout_weight="1"
-            android:text="Tem certeza que deseja excluir este baralho?"
+            android:text="Tem certeza que deseja remover este amigo?"
             android:textAlignment="textStart"
             android:textSize="14sp"
+            android:lines="3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

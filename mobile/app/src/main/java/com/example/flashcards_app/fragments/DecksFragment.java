@@ -6,11 +6,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,30 +22,28 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.flashcards_app.activities.NotificationActivity;
-import com.example.flashcards_app.activities.ProfileActivity;
 import com.example.flashcards_app.activities.ReviewActivity;
+import com.example.flashcards_app.adapters.DeckAdapter;
+import com.example.flashcards_app.dialogs.AddCardsDialog;
+import com.example.flashcards_app.dialogs.DeleteDeckDialog;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.MainActivity;
+import com.example.flashcards_app.viewmodel.DeckViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
+public class DecksFragment extends Fragment {
 
-    private LinearLayout linearLayout;
-    private ConstraintLayout mainActivityRootLayout;
-
-    private int cardCount = 0;
-    private List<Deck> deckList = new ArrayList<>();
-
-    private Deck currentDeck;
+    private DeckViewModel deckViewModel;
+    private RecyclerView recyclerView;
+    private DeckAdapter adapter;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,171 +51,79 @@ public class DecksFragment extends Fragment implements PopupMenu.OnMenuItemClick
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_decks, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
+        context = getActivity();
 
-        linearLayout = view.findViewById(R.id.decksLinearLayout);
-        mainActivityRootLayout = mainActivity.getRootLayout();
+        adapter = new DeckAdapter();
+        configAdapter();
+
+        recyclerView = view.findViewById(R.id.decks_recycler_view);
+        configRecyclerView();
+
+        deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
+        configDeckViewModel();
 
         Button addButton = mainActivity.getCreateDeckButton();
-
         addButton.setOnClickListener(v -> {
-            addNewCard();
+            deckViewModel.insertDeck(new Deck());
         });
 
         return view;
     }
 
-    private void addNewCard() {
-        /* Inflar layout */
-        View cardView = LayoutInflater.from(requireContext()).inflate(R.layout.item_card_layout, null);
+    private void configAdapter() {
+        adapter.setOptionListener(new DeckAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Deck deck, int option, int position) {
+                FragmentManager manager = getChildFragmentManager();
 
-        // Layout config
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-
-        Resources r = getContext().getResources();
-        int margin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                24,
-                r.getDisplayMetrics()
-        );
-
-        layoutParams.setMargins(margin, 0, margin, margin);
-        cardView.setLayoutParams(layoutParams);
-
-        /* Create object */
-        Deck deck = new Deck(cardCount);
-
-        // TextViews References
-        TextView deckTitle = cardView.findViewById(R.id.deckTitle);
-        int uniqueTitleId = View.generateViewId();
-        deckTitle.setId(uniqueTitleId);
-
-        TextView newCardsNumber = cardView.findViewById(R.id.newCardsNumber);
-        int newCardsNumberUniqueId = View.generateViewId();
-        newCardsNumber.setId(newCardsNumberUniqueId);
-
-        TextView learnCardsNumber = cardView.findViewById(R.id.learnCardsNumber);
-        int learnCardsNumberUniqueId = View.generateViewId();
-        learnCardsNumber.setId(learnCardsNumberUniqueId);
-
-        TextView reviewCardsNumber = cardView.findViewById(R.id.reviewCardsNumber);
-        int reviewCardsNumberUniqueId = View.generateViewId();
-        reviewCardsNumber.setId(reviewCardsNumberUniqueId);
-
-        ImageView deckImg = cardView.findViewById(R.id.deck_img);
-        int imgUniqueId = View.generateViewId();
-        deckImg.setId(imgUniqueId);
-
-        deck.setTitleTextView(deckTitle);
-        deck.setNewCardsNumberTextView(newCardsNumber);
-        deck.setLearnCardsNumberTextView(learnCardsNumber);
-        deck.setReviewCardsNumberTextView(reviewCardsNumber);
-        deck.setDeckImage(deckImg);
-
-        // Buttons reference and onClickListener
-        AppCompatButton editButton = cardView.findViewById(R.id.btn_edit_deck);
-        int uniqueEditButtonId = View.generateViewId();
-        editButton.setId(uniqueEditButtonId);
-
-        editButton.setOnClickListener(v -> {
-            showPopupMenu(requireContext(), editButton, deck);
+                if (option == 0) {
+                    AddCardsDialog dialog = new AddCardsDialog(deck);
+                    dialog.show(manager, "edit_deck_popup");
+                } else if (option == 1) {
+                    EditDeckDialog dialog = new EditDeckDialog(deck);
+                    dialog.setDialogResult(new EditDeckDialog.onDialogResult() {
+                        @Override
+                        public void finish(Deck updatedDeck) {
+                            deckViewModel.updateDeck(updatedDeck, position);
+                        }
+                    });
+                    dialog.show(manager, "edit_deck_popup");
+                } else if (option == 2) {
+                    DeleteDeckDialog dialog = new DeleteDeckDialog(deck);
+                    dialog.setDialogResult(new DeleteDeckDialog.onDialogResult() {
+                        @Override
+                        public void finish() {
+                            deckViewModel.deleteDeck(position);
+                        }
+                    });
+                    dialog.show(manager, "delete_deck_popup");
+                } else {
+                    System.out.println("Error");
+                }
+            }
         });
 
-        AppCompatButton reviewButton = cardView.findViewById(R.id.btn_review);
-        int uniqueReviewButtonId = View.generateViewId();
-        reviewButton.setId(uniqueReviewButtonId);
-
-        reviewButton.setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "review deck: " + deck.getId(), Toast.LENGTH_SHORT).show();
-            Intent in = new Intent(getActivity(), ReviewActivity.class);
-            startActivity(in);
-        });
-
-        // Persist
-        linearLayout.addView(cardView);
-        deckList.add(deck);
-        cardCount++;
-    }
-
-    public void showPopupMenu(Context context, View v, Deck deck) {
-        currentDeck = deck;
-        PopupMenu popup = new PopupMenu(context, v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.deck_options_menu);
-        popup.show();
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.item1) {
-            showAddCardsPopupWindow();
-            Toast.makeText(requireContext(), "Add cards in deck " + currentDeck.getId(), Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (id == R.id.item2) {
-            EditDeckDialog dialog = new EditDeckDialog(currentDeck);
-            dialog.show(getActivity().getSupportFragmentManager(), "edit_deck_popup");
-            return true;
-        } else if (id == R.id.item3) {
-            showDeleteDeckPopupWindow();
-            Toast.makeText(requireContext(), "Delete deck " + currentDeck.getId(), Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return false;
-    }
-
-    public void showDeleteDeckPopupWindow() {
-        View view = View.inflate(requireContext(), R.layout.dialog_delete_deck, null);
-        View outDialog = view.findViewById(R.id.out_dialog_delete_deck);
-        TextView cancel = view.findViewById(R.id.cancel_delete_deck);
-        Button exclude = view.findViewById(R.id.btn_dialog_delete_deck);
-
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-
-        popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
-
-        exclude.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        cancel.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        outDialog.setOnClickListener(v -> {
-            popupWindow.dismiss();
+        adapter.setReviewButtonListener(new DeckAdapter.onReviewButtonListener() {
+            @Override
+            public void onItemClick(Deck deck) {
+                Intent in = new Intent(context, ReviewActivity.class);
+                context.startActivity(in);
+            }
         });
     }
 
-    public void showAddCardsPopupWindow() {
-        View view = View.inflate(requireContext(), R.layout.dialog_add_cards, null);
-        View outDialog = view.findViewById(R.id.out_dialog_add_cards);
-        TextView cancel = view.findViewById(R.id.cancel_add_cards);
-        Button addCard = view.findViewById(R.id.btn_dialog_add_cards);
+    private void configRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+    }
 
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        PopupWindow popupWindow = new PopupWindow(view, width, height, false);
-
-        popupWindow.showAtLocation(mainActivityRootLayout, Gravity.CENTER, 0, 0);
-
-        addCard.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        cancel.setOnClickListener(v -> {
-            popupWindow.dismiss();
-        });
-
-        outDialog.setOnClickListener(v -> {
-            popupWindow.dismiss();
+    private void configDeckViewModel() {
+        deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
+            @Override
+            public void onChanged(List<Deck> decks) {
+                adapter.setDecks(decks);
+            }
         });
     }
 }
