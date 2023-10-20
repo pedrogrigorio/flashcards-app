@@ -17,6 +17,7 @@ public class LoadDataCards {
         cardSchemes.add(new CardScheme(3,"Thank you", "Obrigado"));
         cardSchemes.add(new CardScheme(4,"I love you", "Eu amo você"));
         this.setAmount(cardSchemes.size());
+        this.currentBoundary = 0;
 
     }
     public String[] getDataCard(int request) {

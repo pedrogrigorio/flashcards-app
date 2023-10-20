@@ -43,7 +43,7 @@ public class Cards {
         this.audioCard         =  new AudioCard(context);
         this.loadDataCards      = new LoadDataCards();
         this.loadDataCards.LoadCards();
-
+        this.updateCard(1);
     }
 
 

@@ -1,10 +1,12 @@
 package com.example.flashcards_app.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.view.View;
@@ -130,9 +132,27 @@ public class ReviewActivity extends AppCompatActivity {
         this.progressBarCards.setAmount(this.card.getCardAmount());
     }
 
+    private void alertDialogEndCard() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Você finalizou seus estudos por hoje. Parabêns!");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+
+        });
+        AlertDialog dialog = builder.create();
+        dialog.create();
+    }
+
     private void updateIndexCardControl() {
-        this.indexCardControl+=1;
-        this.progressBarCards.setCurrent(this.indexCardControl);
+        if (indexCardControl > this.card.getCardAmount()) {
+            this.alertDialogEndCard();
+        } else {
+            this.indexCardControl+=1;
+            this.progressBarCards.setCurrent(this.indexCardControl);
+        }
     }
 
 
