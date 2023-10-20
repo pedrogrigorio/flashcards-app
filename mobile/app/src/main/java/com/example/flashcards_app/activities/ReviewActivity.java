@@ -28,7 +28,7 @@ public class ReviewActivity extends AppCompatActivity {
     private Animator animator;
     private ProgressBarCards progressBarCards;
     private int count = 0;
-    private int currentCard = 1;
+    private int indexCardControl = 1;
     private boolean hiddenControl = false;
 
 
@@ -67,18 +67,14 @@ public class ReviewActivity extends AppCompatActivity {
                 findViewById(R.id.backCardViewText));
 
 
-
-
         this.progressBarCards = new ProgressBarCards(findViewById(R.id.progressText), findViewById(R.id.progressBar));
-        this.progressBarCards.setAmount(20);
-
-        this.card.showControlDifficultButton(false);
+        this.setProgressBarParameters();
 
 
         easyButton.setOnClickListener(v-> {
+            this.updateIndexCardControl();
             this.card.easyButtonCommand();
-            this.count+=1;
-            this.progressBarCards.setCurrent(this.count);
+            this.animator.makeAnimationRight();
         });
 
         goodButton.setOnClickListener(v-> {
@@ -122,6 +118,14 @@ public class ReviewActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    private void setProgressBarParameters() {
+        this.progressBarCards.setAmount(this.card.getCardAmount());
+    }
+
+    private void updateIndexCardControl() {
+        this.indexCardControl+=1;
+        this.progressBarCards.setCurrent(this.indexCardControl);
+    }
 
 
 }

@@ -32,10 +32,11 @@ public class LoadDataCards {
 
     }
 
-    public void setAmount(int amount) {
+    private void setAmount(int amount) {
         this.amount = amount;
     }
 
+    public int getAmount() { return this.amount; }
     public int getCurrentBoundary() {
         return this.currentBoundary;
     }

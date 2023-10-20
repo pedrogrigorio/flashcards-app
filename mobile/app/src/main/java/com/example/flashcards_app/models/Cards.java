@@ -46,7 +46,9 @@ public class Cards {
 
     }
 
-    public void easyButtonCommand() {
+
+    public int getCardAmount() { return this.loadDataCards.getAmount(); }
+    public void easyButtonCommand(int index) {
 
     }
 
