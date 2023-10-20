@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout rootLayout;
     private ActivityMainBinding binding;
     private Button createDeck;
+    private Button addFriends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         createDeck = findViewById(R.id.btn_create_deck);
+        addFriends = findViewById(R.id.btn_add_friends);
 
         configTabLayout();
     }
@@ -88,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
         return createDeck;
     }
 
-    public ConstraintLayout getRootLayout() {
-        return rootLayout;
+    public Button getAddFriendsButton() {
+        return addFriends;
     }
 
 }

@@ -5,9 +5,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,17 +27,25 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.viewmodel.DeckViewModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class EditDeckDialog extends AppCompatDialogFragment {
 
     Deck currentDeck;
+    Deck updatedDeck;
+    onDialogResult dialogResult;
+
     ImageView close;
     ImageView currentDeckImg;
     FloatingActionButton camButton;
-    TextView cancel;
-    Button edit;
     EditText title;
 
     public EditDeckDialog(Deck currentDeck) {
@@ -48,33 +59,34 @@ public class EditDeckDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_edit_deck, null);
 
-        builder.setView(view);
+        builder.setView(view)
+                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        updatedDeck.setTitle(title.getText().toString());
+                        updatedDeck.setLearnCardsNumber(currentDeck.getLearnCardsNumber());
+                        updatedDeck.setNewCardsNumber(currentDeck.getNewCardsNumber());
+                        updatedDeck.setReviewCardsNumber(currentDeck.getReviewCardsNumber());
+                        dialogResult.finish(updatedDeck);
+                    }
+                });
 
+        updatedDeck = new Deck();
         close = view.findViewById(R.id.edit_deck_close_popup);
-        cancel = view.findViewById(R.id.cancel_edit_deck);
-        edit = view.findViewById(R.id.btn_dialog_edit_deck);
         camButton = view.findViewById(R.id.btn_cam_edit_deck);
         currentDeckImg = view.findViewById(R.id.deck_img_edit_deck);
-
-        Drawable drawable = currentDeck.getDeckImage().getDrawable();
-        currentDeckImg.setImageDrawable(drawable);
-
         title = view.findViewById(R.id.deck_title_edit_deck);
+
+        if (!currentDeck.getImgSrc().isEmpty()) {
+            Picasso.get()
+                    .load(currentDeck.getImgSrc())
+                    .into(currentDeckImg);
+        }
+
         title.setText(currentDeck.getTitle());
 
         close.setOnClickListener(v -> {
-            dismiss();
-        });
-
-        cancel.setOnClickListener(v -> {
-            dismiss();
-        });
-
-        edit.setOnClickListener(v -> {
-            ImageView deckImg = currentDeck.getDeckImage();
-            deckImg.setImageDrawable(currentDeckImg.getDrawable());
-
-            currentDeck.setTitle(title.getText().toString());
             dismiss();
         });
 
@@ -99,8 +111,23 @@ public class EditDeckDialog extends AppCompatDialogFragment {
             if (data != null && result.getResultCode() == Activity.RESULT_OK) {
                 Uri newImgUri = data.getData();
                 currentDeckImg.setImageURI(newImgUri);
+                // TODO: upload image on backend
+
+                // url_backend must be loaded by url given by backend
+                String url_backend = newImgUri.toString();
+                updatedDeck.setImgSrc(url_backend);
             } else {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
             }
         });
+
+    public interface onDialogResult {
+        void finish(Deck updatedDeck);
+    }
+
+    public void setDialogResult(onDialogResult dialogResult) {
+        this.dialogResult = dialogResult;
+    }
+
+
 }

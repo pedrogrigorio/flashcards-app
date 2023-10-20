@@ -8,4 +8,9 @@
     <color name="purple_light">#BC85AC</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="gray">#C3C3C3</color>
+    <color name="green">#005500</color>
+    <color name="green_light">#00FF00</color>
+    <color name="yellow">#AAFF00</color>
+    <color name="blue">#0000ff</color>
+    <color name="orange">#ff5500</color>
 </resources>
