@@ -73,16 +73,23 @@ public class ReviewActivity extends AppCompatActivity {
 
         easyButton.setOnClickListener(v-> {
             this.updateIndexCardControl();
-            this.card.easyButtonCommand();
-            this.animator.makeAnimationRight();
+            if (this.card.easyButtonCommand(this.indexCardControl)) {
+                this.animator.makeAnimationRight();
+            }
         });
 
         goodButton.setOnClickListener(v-> {
-            this.card.goodButtonCommand();
+            this.card.goodButtonCommand(indexCardControl);
+            if (this.card.goodButtonCommand(this.indexCardControl)) {
+                this.animator.makeAnimationRight();
+            }
         });
 
         hardButton.setOnClickListener(v-> {
-            this.card.hardButtonCommand();
+            this.card.goodButtonCommand(indexCardControl);
+            if (this.card.hardButtonCommand(this.indexCardControl)) {
+                this.animator.makeAnimationRight();
+            }
         });
 
         audioButton.setOnClickListener(v-> {
@@ -94,7 +101,8 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         rightClickableRegionFront.setOnClickListener(v->{
-           this.animator.makeAnimationLeft();
+            this.animator.makeAnimationRight();
+            this.card.showControlDifficultButton(!hiddenControl);
         });
 
         leftClickableRegionFront.setOnClickListener(v->{

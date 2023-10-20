@@ -48,15 +48,19 @@ public class Cards {
 
 
     public int getCardAmount() { return this.loadDataCards.getAmount(); }
-    public void easyButtonCommand(int index) {
-
+    public boolean easyButtonCommand(int index) {
+        this.showControlDifficultButton(false);
+        return this.updateCard(index);
     }
 
-    public void goodButtonCommand() {
+    public boolean goodButtonCommand(int index) {
+        this.showControlDifficultButton(false);
+        return this.updateCard(index);
     }
 
-    public void hardButtonCommand() {
-
+    public boolean hardButtonCommand(int index) {
+        this.showControlDifficultButton(false);
+        return this.updateCard(index);
     }
 
     public void showControlDifficultButton(boolean show) {
@@ -77,13 +81,15 @@ public class Cards {
         this.audioCard.speak(this.frontCardText.getText().toString());
     }
 
-    public void updateCard(int request) {
+    private boolean updateCard(int request) {
         String[] data = this.loadDataCards.getDataCard(request);
-        if (data == null) return;
+        if (data == null) return false;
         else {
             this.setFrontCardText(data[0]);
             this.setBackCardText(data[1]);
         }
+
+        return true;
     }
     private void setFrontCardText(String frontCardText) { this.frontCardText.setText(frontCardText); }
     private void setBackCardText(String backCardText) {this.backCardText.setText(backCardText); }
