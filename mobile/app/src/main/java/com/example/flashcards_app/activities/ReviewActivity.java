@@ -49,18 +49,13 @@ public class ReviewActivity extends AppCompatActivity {
         View rightClickableRegionBack = findViewById(R.id.rightClickableRegionBack);
 
 
-        this.card = new Cards(this ,findViewById(R.id.frontCardViewText),
-                findViewById(R.id.backCardViewText),
+        this.card = new Cards(this,
                 findViewById(R.id.frontCardText),
                 findViewById(R.id.backCardText),
                 easyButton,
                 goodButton,
                 hardButton,
-                audioButton,
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_anticlockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_anticlockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise));
+                audioButton);
 
 
         this.animator = new Animator(this,
