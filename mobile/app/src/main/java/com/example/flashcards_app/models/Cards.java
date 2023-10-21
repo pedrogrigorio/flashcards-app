@@ -22,7 +22,6 @@ public class Cards {
     private Button hardButton;
     private Button audioButton;
     private  LoadDataCards loadDataCards;
-    private Animator animator;
 
 
 
@@ -41,9 +40,10 @@ public class Cards {
         this.audioButton       = audioButton;
         this.backCardText      = backCardText;
         this.audioCard         =  new AudioCard(context);
-        this.loadDataCards      = new LoadDataCards();
+        this.loadDataCards     =  new LoadDataCards();
         this.loadDataCards.LoadCards();
         this.updateCard(1);
+        this.showControlDifficultButton(false);
     }
 
 

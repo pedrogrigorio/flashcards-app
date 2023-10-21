@@ -99,7 +99,8 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         leftClickableRegionBack.setOnClickListener(v->{
-
+            this.animator.makeAnimationLeft();
+            this.card.showControlDifficultButton(!hiddenControl);
         });
 
         rightClickableRegionFront.setOnClickListener(v->{
@@ -108,14 +109,17 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         leftClickableRegionFront.setOnClickListener(v->{
-            this.animator.makeAnimationRight();
-            this.card.showControlDifficultButton(!hiddenControl);
+
         });
 
         rightClickableRegionBack.setOnClickListener(v->{
-          
+
         });
 
+        microphoneButton.setOnClickListener(v -> {
+            this.animator.makeAnimationRight();
+            this.card.showControlDifficultButton(!hiddenControl);
+        });
 
     }
 

@@ -26,7 +26,7 @@ public class Animator {
     private float scale;
     private View frontCardViewText;
     private View backCardViewText;
-    private boolean turnControl;
+    private boolean turnControl = true;
 
     public Animator(Context context,
                     AnimatorSet frontAnimAntiClockWise,
@@ -74,6 +74,7 @@ public class Animator {
                 this.setVisibilityFrontCard();
             }
             break;
+
             case 2:
                 if (this.turnControl) {
                 this.frontAnimAntiClockWise.setTarget(this.frontCardViewText);
@@ -86,13 +87,18 @@ public class Animator {
                 this.frontAnimAntiClockWise.setTarget(this.backCardViewText);
                 this.backAnimAntiClockWise.setTarget(this.frontCardViewText);
                 backAnimAntiClockWise.start();
+
                 frontAnimAntiClockWise.start();
                 this.turnControl = true;
                 this.setVisibilityFrontCard();
             }
+
             break;
         }
     }
+
+
+
 
 
     public void makeAnimationLeft() {
