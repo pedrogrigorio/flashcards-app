@@ -1,19 +1,22 @@
+/*
+* @Created by: Richard Lira
+* @Date: 21/10/2023
+* @Function:
+* Classe responsável por implementar o código adapter para a tela que adiciona novos amigos.
+*
+* */
+
 package com.example.flashcards_app.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.User;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
