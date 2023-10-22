@@ -1,6 +1,7 @@
 package com.example.flashcards_app.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.activities.AddingFriendsActivity;
 import com.example.flashcards_app.activities.MainActivity;
 import com.example.flashcards_app.adapters.DeckAdapter;
 import com.example.flashcards_app.adapters.FriendAdapter;
@@ -56,9 +58,15 @@ public class FriendsFragment extends Fragment {
         configFriendViewModel();
 
         Button addButton = mainActivity.getAddFriendsButton();
+//        addButton.setOnClickListener(v -> {
+//            friendViewModel.insertFriend(new Friend(0, "User", "user"));
+//        });
+
         addButton.setOnClickListener(v -> {
-            friendViewModel.insertFriend(new Friend(0, "User", "user"));
+            Intent intent = new Intent(getActivity(), AddingFriendsActivity.class);
+            startActivity(intent);
         });
+
 
         return view;
     }

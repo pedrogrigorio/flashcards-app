@@ -22,9 +22,21 @@ public class AddFriendViewModel extends ViewModel {
 
 
     public LiveData<List<User>> getAddFriends() {
-        if (addFriendsLiveData.getValue() == null || addFriendsLiveData.getValue().isEmpty()) {
-            addFriendsLiveData = addFriendRepository.getNewFriendsToAdd();
-        }
+//        if (addFriendsLiveData.getValue() == null || addFriendsLiveData.getValue().isEmpty()) {
+//            addFriendsLiveData = addFriendRepository.getNewFriendsToAdd();
+//        }
+
+        MutableLiveData<List<User>> tempDataLive = new MutableLiveData<>();
+
+        List<User> tempData = new ArrayList<>();
+
+        tempData.add(new User("Richard", "@ShapeBolado"));
+        tempData.add(new User("Pedro", "@EmBuscaDos140KG"));
+        tempData.add(new User("Jobscleyson", "@BusãoDeOuro"));
+
+        tempDataLive.setValue(tempData);
+        addFriendsLiveData = tempDataLive;
+
 
         return addFriendsLiveData;
     }

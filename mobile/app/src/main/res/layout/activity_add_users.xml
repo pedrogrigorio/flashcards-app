@@ -13,6 +13,13 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/item_user_friends" />
 
+    <Button
+        android:id="@+id/add_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quebra tudo"
+        tools:layout_editor_absoluteX="255dp"
+        tools:layout_editor_absoluteY="667dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
