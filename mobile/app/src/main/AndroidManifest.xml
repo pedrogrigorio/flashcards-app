@@ -19,6 +19,9 @@
             android:name=".activities.NotificationActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.AddingFriendsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ProfileActivity"
             android:exported="false" />
         <activity
@@ -33,6 +36,7 @@
         <activity
             android:name=".activities.ReviewActivity"
             android:exported="false"/>
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
