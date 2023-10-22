@@ -4,7 +4,7 @@
 
 ## 📕 About
 
-This repo contains an flashcards app made with Java for Android. If you like it please give it a star :)
+This repo contains a work in progress of a flashcards app made with Java for Android. If you like it please give it a star :)
 
 ## 🔧 Tools
 - [Java](https://docs.oracle.com/en/java/)
