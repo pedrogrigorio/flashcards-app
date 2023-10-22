@@ -11,10 +11,6 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Animator;
