@@ -11,7 +11,7 @@
         android:id="@+id/users_recycle_view"
         android:layout_width="match_parent"
         android:layout_height="800dp"
-        app:layout_marginTop="100dp"
+       
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="40dp"
         tools:listitem="@layout/item_user_friends" />
