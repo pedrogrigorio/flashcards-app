@@ -30,9 +30,9 @@ public class AddFriendViewModel extends ViewModel {
 
         List<User> tempData = new ArrayList<>();
 
-        tempData.add(new User("Bolado", "@ShapeBolado"));
-        tempData.add(new User("Pedro", "@EmBuscaDos140KG"));
-        tempData.add(new User("Jobscleyson", "@BusãoDeOuro"));
+        tempData.add(new User("Em busca do shape inexplicavel", "@ShapeBolado"));
+        tempData.add(new User("Maromberio raiz", "@EmBuscaDos140KG"));
+        tempData.add(new User("Buscando 170kg", "@PeitroalArnold"));
 
         tempDataLive.setValue(tempData);
         addFriendsLiveData = tempDataLive;
