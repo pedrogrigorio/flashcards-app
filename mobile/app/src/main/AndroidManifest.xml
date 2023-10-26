@@ -19,7 +19,7 @@
             android:name=".activities.NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AddingFriendsActivity"
+            android:name=".activities.AddUserActivity"
             android:exported="false" />
         <activity
             android:name=".activities.ProfileActivity"

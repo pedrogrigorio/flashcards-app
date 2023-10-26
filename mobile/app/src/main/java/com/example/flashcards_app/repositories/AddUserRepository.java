@@ -2,7 +2,7 @@ package com.example.flashcards_app.repositories;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.flashcards_app.api.AddingFriendsService;
+import com.example.flashcards_app.api.AddingUserService;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.util.RetrofitClient;
 
@@ -12,19 +12,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddFriendRepository {
+public class AddUserRepository {
 
-    private AddingFriendsService addingFriendsService;
+    private AddingUserService addingUserService;
 
 
-    public AddFriendRepository() {
-        addingFriendsService = RetrofitClient.getRetrofitInstance().create(AddingFriendsService.class);
+    public AddUserRepository() {
+        addingUserService = RetrofitClient.getRetrofitInstance().create(AddingUserService.class);
     }
 
     public MutableLiveData<List<User>> getNewFriendsToAdd() {
         MutableLiveData<List<User>> friendsAddLiveData = new MutableLiveData<>();
 
-        Call<List<User>> call = addingFriendsService.getAllFriends();
+        Call<List<User>> call = addingUserService.getAllFriends();
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddingFriendsActivity">
+    tools:context=".activities.AddUserActivity">
 
 
     <LinearLayout
@@ -55,7 +55,7 @@
         tools:layout_editor_absoluteY="40dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_user_friends" />
+        tools:listitem="@layout/item_user" />
 
     <Button
         android:id="@+id/add_user_button"

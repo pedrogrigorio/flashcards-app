@@ -4,20 +4,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.models.User;
-import com.example.flashcards_app.repositories.AddFriendRepository;
+import com.example.flashcards_app.repositories.AddUserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddFriendViewModel extends ViewModel {
+public class AddUserViewModel extends ViewModel {
 
     private MutableLiveData<List<User>> addFriendsLiveData = new MutableLiveData<>();
-    private AddFriendRepository addFriendRepository;
+    private AddUserRepository addUserRepository;
 
-    public AddFriendViewModel() {
-        addFriendRepository = new AddFriendRepository();
+    public AddUserViewModel() {
+        addUserRepository = new AddUserRepository();
     }
 
 

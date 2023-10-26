@@ -10,18 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcards_app.R;
-import com.example.flashcards_app.adapters.AddFriendAdapter;
-import com.example.flashcards_app.models.Friend;
+import com.example.flashcards_app.adapters.AddUserAdapter;
 import com.example.flashcards_app.models.User;
-import com.example.flashcards_app.viewmodel.AddFriendViewModel;
+import com.example.flashcards_app.viewmodel.AddUserViewModel;
 
 import java.util.List;
 
-public class AddingFriendsActivity extends AppCompatActivity {
+public class AddUserActivity extends AppCompatActivity {
 
-    private AddFriendViewModel addFriendViewModel;
+    private AddUserViewModel addUserViewModel;
     private RecyclerView recyclerView;
-    private AddFriendAdapter adapter;
+    private AddUserAdapter adapter;
 
 
 
@@ -33,16 +32,16 @@ public class AddingFriendsActivity extends AppCompatActivity {
 
 
 
-        adapter = new AddFriendAdapter();
+        adapter = new AddUserAdapter();
 
         recyclerView = findViewById(R.id.users_recycle_view);
         ConfigRecyclerView();
-        addFriendViewModel = new ViewModelProvider(this).get(AddFriendViewModel.class);
+        addUserViewModel = new ViewModelProvider(this).get(AddUserViewModel.class);
         configUserViewModel();
 
         Button addButton = findViewById(R.id.add_user_button);
         addButton.setOnClickListener(v -> {
-            addFriendViewModel.insertFriend(new User("User", "User@"));
+            addUserViewModel.insertFriend(new User("User", "User@"));
         });
 
     }
@@ -55,7 +54,7 @@ public class AddingFriendsActivity extends AppCompatActivity {
     }
 
     public void configUserViewModel() {
-        addFriendViewModel.getAddFriends().observe(this, new Observer<List<User>>() {
+        addUserViewModel.getAddFriends().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
                 adapter.setUsers(users);

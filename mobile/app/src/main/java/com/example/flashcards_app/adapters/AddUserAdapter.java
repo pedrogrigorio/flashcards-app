@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.AddFriendHolder> {
+public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFriendHolder> {
 
 
     private List<User> users = new ArrayList<>();
@@ -28,7 +28,7 @@ public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.AddF
     @NonNull
     @Override
     public AddFriendHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_friends, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
         return new AddFriendHolder(itemView);
     }
 
