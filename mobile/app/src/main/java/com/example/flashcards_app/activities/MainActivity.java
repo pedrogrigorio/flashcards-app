@@ -2,22 +2,15 @@ package com.example.flashcards_app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.flashcards_app.databinding.ActivityMainBinding;
 import com.example.flashcards_app.fragments.DecksFragment;
-import com.example.flashcards_app.fragments.FriendsFragment;
+import com.example.flashcards_app.fragments.UserFragment;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -49,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPager.setAdapter(adapter);
 
         adapter.addFragment(new DecksFragment(), "Baralhos");
-        adapter.addFragment(new FriendsFragment(), "Amigos");
+        adapter.addFragment(new UserFragment(), "Amigos");
 
         binding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
         binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

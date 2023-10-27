@@ -1,29 +1,33 @@
 package com.example.flashcards_app.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.models.Animator;
+import com.example.flashcards_app.models.Cards;
+import com.example.flashcards_app.models.AudioCard;
+import com.example.flashcards_app.models.ProgressBarCards;
 
 
 public class ReviewActivity extends AppCompatActivity {
 
-    private AnimatorSet frontAnim;
-
-    private AnimatorSet backAnim;
-
-    private Boolean isFront = true;
-
-    private Float scale;
+    private Cards card;
+    private AudioCard audioCard;
+    private Animator animator;
+    private ProgressBarCards progressBarCards;
+    private int count = 0;
+    private int indexCardControl = 1;
+    private boolean hiddenControl = false;
 
 
     @Override
@@ -31,64 +35,125 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        writeFrontTextCardView();
-        writeBackTextCardView();
 
-        Button microphoneButton = findViewById(R.id.microphone_button);
-        microphoneButton.setOnClickListener(v -> {
-           microphoneUserSpeaker();
+        Button microphoneButton  = findViewById(R.id.microphone_button);
+        Button easyButton        = findViewById(R.id.easy_button);
+        Button goodButton        = findViewById(R.id.good_button);
+        Button hardButton        = findViewById(R.id.hard_button);
+        Button audioButton       = findViewById(R.id.audio_button);
+        View leftClickableRegionFront = findViewById(R.id.leftClickableRegionFront);
+        View rightClickableRegionFront = findViewById(R.id.rightClickableRegionFront);
+        View leftClickableRegionBack = findViewById(R.id.leftClickableRegionBack);
+        View rightClickableRegionBack = findViewById(R.id.rightClickableRegionBack);
+
+
+        this.card = new Cards(this,
+                findViewById(R.id.frontCardText),
+                findViewById(R.id.backCardText),
+                easyButton,
+                goodButton,
+                hardButton,
+                audioButton);
+
+
+        this.animator = new Animator(this,
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_anticlockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_anticlockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise),
+                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise),
+                findViewById(R.id.frontCardViewText),
+                findViewById(R.id.backCardViewText));
+
+
+        this.progressBarCards = new ProgressBarCards(findViewById(R.id.progressText), findViewById(R.id.progressBar));
+        this.setProgressBarParameters();
+
+
+        easyButton.setOnClickListener(v-> {
+            this.updateIndexCardControl();
+            if (this.card.easyButtonCommand(this.indexCardControl)) {
+                this.animator.makeAnimationRight();
+            }
         });
 
+        goodButton.setOnClickListener(v-> {
+            this.card.goodButtonCommand(indexCardControl);
+            if (this.card.goodButtonCommand(this.indexCardControl)) {
+                this.animator.makeAnimationRight();
+            }
+        });
 
+        hardButton.setOnClickListener(v-> {
+            this.card.goodButtonCommand(indexCardControl);
+            if (this.card.hardButtonCommand(this.indexCardControl)) {
+                this.animator.makeAnimationRight();
+            }
+        });
+
+        audioButton.setOnClickListener(v-> {
+            this.card.audioSpeak();
+        });
+
+        leftClickableRegionBack.setOnClickListener(v->{
+            this.animator.makeAnimationLeft();
+            this.card.showControlDifficultButton(!hiddenControl);
+        });
+
+        rightClickableRegionFront.setOnClickListener(v->{
+            this.animator.makeAnimationRight();
+            this.card.showControlDifficultButton(!hiddenControl);
+        });
+
+        leftClickableRegionFront.setOnClickListener(v->{
+
+        });
+
+        rightClickableRegionBack.setOnClickListener(v->{
+
+        });
+
+        microphoneButton.setOnClickListener(v -> {
+            this.animator.makeAnimationRight();
+            this.card.showControlDifficultButton(!hiddenControl);
+        });
 
     }
 
-    // Method for use as 'text writer' in front card
-    public void writeFrontTextCardView() {
-        TextView frontCardText = findViewById(R.id.frontCardText);
-        frontCardText.setText("Front card");
+
+    @Override
+    protected void onDestroy() {
+        if (this.audioCard != null) {
+            this.audioCard.shutDown();
+        }
+        super.onDestroy();
     }
 
-    // Method for use as 'text writer' in front card
-    public void writeBackTextCardView() {
-        TextView backCardText = findViewById(R.id.backCardText);
-        backCardText.setText("Back card");
+    private void setProgressBarParameters() {
+        this.progressBarCards.setAmount(this.card.getCardAmount());
     }
 
-    // Method for listening native speaker audio
-    public void audioTextSpeaker() {
+    private void alertDialogEndCard() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Você finalizou seus estudos por hoje. Parabêns!");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
 
+        });
+        AlertDialog dialog = builder.create();
+        dialog.create();
     }
 
-    // Method for user speaker text in your microphone
-    public void microphoneUserSpeaker() {
-
-        scale = getResources().getDisplayMetrics().density;
-        View backCardViewText = findViewById(R.id.backCardViewText);
-        View frontCardViewText = findViewById(R.id.frontCardViewText);
-        backCardViewText.setCameraDistance(8000*scale);
-        frontCardViewText.setCameraDistance(8000*scale);
-
-        frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator);
-        backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator);
-
-
-        if (isFront) {
-            frontAnim.setTarget(frontCardViewText);
-            backAnim.setTarget(backCardViewText);
-            frontAnim.start();
-            backAnim.start();
-            isFront = false;
+    private void updateIndexCardControl() {
+        if (indexCardControl > this.card.getCardAmount()) {
+            this.alertDialogEndCard();
         } else {
-            frontAnim.setTarget(backCardViewText);
-            backAnim.setTarget(frontCardViewText);
-            backAnim.start();
-            frontAnim.start();
-            isFront = true;
+            this.indexCardControl+=1;
+            this.progressBarCards.setCurrent(this.indexCardControl);
         }
     }
-
-
 
 
 }
