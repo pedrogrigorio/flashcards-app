@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="374dp"
+        android:layout_height="97dp"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/friend_img"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                app:shapeAppearanceOverlay="@style/circular"
+                app:srcCompat="@drawable/user_img" />
+
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/TextFriendName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:singleLine="true"
+                    android:text="Junior dos santos medeiros da silva"
+                    android:textColor="#472C54"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/TextFriendUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true"
+                    android:text="JuniorSantosMedeiros_199@"
+                    android:textColor="#BC85AC"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/userFriendAction"
+                android:layout_width="24dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                app:srcCompat="@drawable/trash" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?actionBarDivider"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
