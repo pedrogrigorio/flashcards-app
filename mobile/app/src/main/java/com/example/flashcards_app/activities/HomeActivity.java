@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -22,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     TabLayout tabLayout;
     Button createDeck;
     Button addFriends;
+    ImageView profileImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,11 @@ public class HomeActivity extends AppCompatActivity {
         addFriends = findViewById(R.id.btn_add_friends);
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
+        profileImg = findViewById(R.id.profile_img);
+
+        profileImg.setOnClickListener(v -> {
+            accessProfile();
+        });
 
         configTabLayout();
     }
@@ -66,13 +73,13 @@ public class HomeActivity extends AppCompatActivity {
 
     /* Change page methods */
 
-    public void accessProfile(View v) {
-        Intent in = new Intent(HomeActivity.this, ProfileActivity.class);
+    public void accessProfile() {
+        Intent in = new Intent(this, ProfileActivity.class);
         startActivity(in);
     }
 
     public void accessNotifications(View v) {
-        Intent in = new Intent(HomeActivity.this, NotificationActivity.class);
+        Intent in = new Intent(this, NotificationActivity.class);
         startActivity(in);
     }
 

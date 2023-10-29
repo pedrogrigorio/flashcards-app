@@ -13,11 +13,12 @@ import android.widget.ImageView;
 import com.example.flashcards_app.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileActivity extends AppCompatActivity {
 
     ImageView profilePhoto;
-    Button camButton;
+    FloatingActionButton camButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
                     .start();
         });
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
 
     }
 

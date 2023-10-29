@@ -74,7 +74,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginRight="28dp"
-            android:onClick="accessProfile"
+            android:onClick="accessNotifications"
             app:srcCompat="@drawable/user_img" />
 
         <LinearLayout
