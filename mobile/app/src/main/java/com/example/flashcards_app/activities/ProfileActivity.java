@@ -7,17 +7,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.flashcards_app.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProfileActivity extends AppCompatActivity {
 
     ImageView profilePhoto;
-    FloatingActionButton camButton;
+    Button camButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void accessMainScreen(View view) {
-        Intent in = new Intent(ProfileActivity.this, MainActivity.class);
+        Intent in = new Intent(ProfileActivity.this, HomeActivity.class);
         startActivity(in);
     }
 }

@@ -4,30 +4,36 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.flashcards_app.R;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     Button signup;
     Button signin;
-
+    ImageView back;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         signup = findViewById(R.id.btn_signup);
         signin = findViewById(R.id.btn_signin);
+        back = findViewById(R.id.btn_back);
+
+        back.setOnClickListener(v -> {
+            accessMainActivity();
+        });
 
         signup.setOnClickListener(v -> {
             accessRegisterScreen();
         });
 
         signin.setOnClickListener(v -> {
-            accessLoginScreen();
+            accessHomeActivity();
         });
     }
 
@@ -36,8 +42,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    private void accessLoginScreen() {
-        Intent in = new Intent(this, LoginActivity.class);
+    private void accessMainActivity() {
+        Intent in = new Intent(this, MainActivity.class);
+        startActivity(in);
+    }
+
+    private void accessHomeActivity() {
+        Intent in = new Intent(this, HomeActivity.class);
         startActivity(in);
     }
 }

@@ -17,7 +17,7 @@ import android.widget.Button;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.AddUserActivity;
-import com.example.flashcards_app.activities.MainActivity;
+import com.example.flashcards_app.activities.HomeActivity;
 import com.example.flashcards_app.adapters.FriendAdapter;
 import com.example.flashcards_app.dialogs.DeleteFriendDialog;
 import com.example.flashcards_app.models.Friend;
@@ -37,7 +37,7 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
+        HomeActivity homeActivity = (HomeActivity) getActivity();
         context = getActivity();
 
         adapter = new FriendAdapter();
@@ -49,7 +49,7 @@ public class UserFragment extends Fragment {
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
         configFriendViewModel();
 
-        Button addButton = mainActivity.getAddFriendsButton();
+        Button addButton = homeActivity.getAddFriendsButton();
 //        addButton.setOnClickListener(v -> {
 //            friendViewModel.insertFriend(new Friend(0, "User", "user"));
 //        });
