@@ -1,90 +1,43 @@
 package com.example.flashcards_app.activities;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.viewpager2.widget.ViewPager2;
-
-import com.example.flashcards_app.fragments.DecksFragment;
-import com.example.flashcards_app.fragments.UserFragment;
 import com.example.flashcards_app.R;
-import com.example.flashcards_app.adapters.ViewPagerAdapter;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
 
-    ConstraintLayout rootLayout;
-    private ActivityMainBinding binding;
-    private Button createDeck;
-    private Button addFriends;
+    Button signup;
+    Button signin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rootLayout = findViewById(R.id.root_layout);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        signup = findViewById(R.id.btn_signup);
+        signin = findViewById(R.id.btn_signin);
 
-        createDeck = findViewById(R.id.btn_create_deck);
-        addFriends = findViewById(R.id.btn_add_friends);
-
-        configTabLayout();
-    }
-
-    private void configTabLayout() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
-        binding.viewPager.setAdapter(adapter);
-
-        adapter.addFragment(new DecksFragment(), "Baralhos");
-        adapter.addFragment(new UserFragment(), "Amigos");
-
-        binding.viewPager.setOffscreenPageLimit(adapter.getItemCount());
-        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 0) {
-                    binding.btnAddFriends.setVisibility(View.INVISIBLE);
-                    binding.btnCreateDeck.setVisibility(View.VISIBLE);
-                } else if (position == 1) {
-                    binding.btnCreateDeck.setVisibility(View.INVISIBLE);
-                    binding.btnAddFriends.setVisibility(View.VISIBLE);
-                }
-            }
+        signup.setOnClickListener(v -> {
+            accessRegisterScreen();
         });
 
-        TabLayoutMediator mediator = new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {
-
-            tab.setText(adapter.getTitle(position));
+        signin.setOnClickListener(v -> {
+            accessLoginScreen();
         });
-
-        mediator.attach();
     }
 
-    /* Change page methods */
-
-    public void accessProfile(View v) {
-        Intent in = new Intent(MainActivity.this, ProfileActivity.class);
+    private void accessRegisterScreen() {
+        Intent in = new Intent(this, RegisterActivity.class);
         startActivity(in);
     }
 
-    public void accessNotifications(View v) {
-        Intent in = new Intent(MainActivity.this, NotificationActivity.class);
+    private void accessLoginScreen() {
+        Intent in = new Intent(this, LoginActivity.class);
         startActivity(in);
     }
-
-    /* Get view elements */
-    public Button getCreateDeckButton() {
-        return createDeck;
-    }
-
-    public Button getAddFriendsButton() {
-        return addFriends;
-    }
-
 }

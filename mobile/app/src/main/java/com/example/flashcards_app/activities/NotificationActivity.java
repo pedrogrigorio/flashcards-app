@@ -17,7 +17,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     public void acessMainScreen(View view) {
-        Intent in = new Intent(NotificationActivity.this, MainActivity.class);
+        Intent in = new Intent(NotificationActivity.this, HomeActivity.class);
         startActivity(in);
     }
 }

@@ -2,10 +2,8 @@ package com.example.flashcards_app.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
@@ -13,17 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.flashcards_app.activities.ReviewActivity;
 import com.example.flashcards_app.adapters.DeckAdapter;
@@ -32,10 +23,9 @@ import com.example.flashcards_app.dialogs.DeleteDeckDialog;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.R;
-import com.example.flashcards_app.activities.MainActivity;
+import com.example.flashcards_app.activities.HomeActivity;
 import com.example.flashcards_app.viewmodel.DeckViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DecksFragment extends Fragment {
@@ -50,7 +40,7 @@ public class DecksFragment extends Fragment {
                                 Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_decks, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
+        HomeActivity homeActivity = (HomeActivity) getActivity();
         context = getActivity();
 
         adapter = new DeckAdapter();
@@ -62,7 +52,7 @@ public class DecksFragment extends Fragment {
         deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
         configDeckViewModel();
 
-        Button addButton = mainActivity.getCreateDeckButton();
+        Button addButton = homeActivity.getCreateDeckButton();
         addButton.setOnClickListener(v -> {
             deckViewModel.insertDeck(new Deck());
         });
