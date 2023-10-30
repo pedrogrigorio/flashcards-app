@@ -117,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@+id/cards_reviewed_number" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -144,12 +144,12 @@
         app:srcCompat="@drawable/mortarboard" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/day_streak"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
-        android:text="20 dias"
+        android:text="20"
         android:textColor="@color/purple"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -158,18 +158,18 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/cards_reviewed_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
-        android:text="1820 cards"
+        android:text="1820"
         android:textColor="@color/purple"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/day_streak" />
 
     <TextView
         android:id="@+id/textView14"
@@ -177,12 +177,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="20dp"
-        android:text="seguidos!"
+        android:text="dias seguidos!"
         android:textColor="@color/purple_light"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintStart_toEndOf="@+id/day_streak"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
@@ -191,12 +191,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="15dp"
-        android:text="revisados no total!"
+        android:text="cards revisados no total!"
         android:textColor="@color/purple_light"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintStart_toEndOf="@+id/cards_reviewed_number"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
 <!--    <fragment-->

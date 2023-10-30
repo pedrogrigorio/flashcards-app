@@ -23,15 +23,18 @@ import com.example.flashcards_app.viewmodel.ProfileViewModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
 
     User user;
-    ImageView profilePhoto;
+    ImageView profileImg;
     FloatingActionButton camButton;
     ImageView editNameButton;
     TextView name;
     TextView username;
+    TextView dayStreak;
+    TextView reviewedCardsNumber;
 
     ProfileViewModel profileViewModel;
 
@@ -40,13 +43,13 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        profilePhoto = findViewById(R.id.profile_img);
+        profileImg = findViewById(R.id.profile_img);
         camButton = findViewById(R.id.btn_cam);
         editNameButton = findViewById(R.id.btn_edit_name);
         name = findViewById(R.id.name);
         username = findViewById(R.id.username);
-
-        user = new User("", "");
+        dayStreak = findViewById(R.id.day_streak);
+        reviewedCardsNumber = findViewById(R.id.cards_reviewed_number);
 
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         configProfileViewModel();
@@ -78,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri uri = data.getData();
-        profilePhoto.setImageURI(uri);
+        profileImg.setImageURI(uri);
     }
 
     public void accessMainScreen(View view) {
@@ -91,9 +94,21 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onChanged(User updatedProfile) {
                 user = updatedProfile;
-                name.setText(user.getName());
-                username.setText(user.getUsername());
+                updateView();
             }
         });
+    }
+
+    private void updateView() {
+        name.setText(user.getName());
+        username.setText(user.getUsername());
+        dayStreak.setText(user.getDayStreak() + "");
+        reviewedCardsNumber.setText(user.getCardsReviewed() + "");
+
+        if (!user.getImgSrc().isEmpty()) {
+            Picasso.get()
+                    .load(user.getImgSrc())
+                    .into(profileImg);
+        }
     }
 }
