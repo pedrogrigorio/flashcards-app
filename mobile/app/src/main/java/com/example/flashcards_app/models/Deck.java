@@ -18,6 +18,7 @@ public class Deck {
     private int reviewCardsNumber;
 
     public Deck() {
+        this.id = 0;
         this.imgSrc = "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg";
         this.title = "Novo baralho";
         this.newCardsNumber = 0;
