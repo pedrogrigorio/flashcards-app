@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewNotification"
+        android:layout_width="374dp"
+        android:layout_height="97dp"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/notification_img"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                app:shapeAppearanceOverlay="@style/circular"
+                app:srcCompat="@drawable/user_img"/>
+
+
+
+            <LinearLayout
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/TextNotificationName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="Junior dos Santos Medeiro da Silva"
+                    android:textColor="#472C54"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/AcceptButtonNotification"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/background_notifications_button"
+                android:drawableTop="@drawable/accept"
+                android:paddingTop="13dp"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/NegativeButtonNotification"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_gravity="center"
+                android:background="@drawable/background_notifications_button"
+                android:drawableTop="@drawable/cancel"
+                android:paddingTop="13dp"
+                />
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+    
+
+</androidx.constraintlayout.widget.ConstraintLayout>
