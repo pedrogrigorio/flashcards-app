@@ -2,6 +2,8 @@ package com.example.flashcards_app.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,6 +18,8 @@ import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.dialogs.EditNameDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.viewmodel.FriendViewModel;
+import com.example.flashcards_app.viewmodel.ProfileViewModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +31,9 @@ public class ProfileActivity extends AppCompatActivity {
     FloatingActionButton camButton;
     ImageView editNameButton;
     TextView name;
+    TextView username;
+
+    ProfileViewModel profileViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +44,19 @@ public class ProfileActivity extends AppCompatActivity {
         camButton = findViewById(R.id.btn_cam);
         editNameButton = findViewById(R.id.btn_edit_name);
         name = findViewById(R.id.name);
+        username = findViewById(R.id.username);
 
-        user = new User("User23", "user3");
-        name.setText(user.getName());
+        user = new User("", "");
+
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        configProfileViewModel();
 
         editNameButton.setOnClickListener(v -> {
             EditNameDialog dialog = new EditNameDialog(user);
             dialog.setDialogResult(new EditNameDialog.onDialogResult() {
                 @Override
                 public void finish(User updatedProfile) {
-                    user = updatedProfile;
-                    name.setText(user.getName());
-//                    profileViewModel.updateProfile(updatedProfile);
+                    profileViewModel.updateProfile(updatedProfile);
                 }
             });
             dialog.show(getSupportFragmentManager(), "edit_name_popup");
@@ -76,5 +84,16 @@ public class ProfileActivity extends AppCompatActivity {
     public void accessMainScreen(View view) {
         Intent in = new Intent(ProfileActivity.this, HomeActivity.class);
         startActivity(in);
+    }
+
+    private void configProfileViewModel() {
+        profileViewModel.getProfile().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User updatedProfile) {
+                user = updatedProfile;
+                name.setText(user.getName());
+                username.setText(user.getUsername());
+            }
+        });
     }
 }
