@@ -97,6 +97,7 @@ public class DecksFragment extends Fragment {
         adapter.setReviewButtonListener(new DeckAdapter.onReviewButtonListener() {
             @Override
             public void onItemClick(Deck deck) {
+                // TODO: uncomment this code later
 //                if (deck.getLearnCardsNumber() == 0 && deck.getNewCardsNumber() == 0 && deck.getReviewCardsNumber() == 0) {
 //                    Toast.makeText(context, "Todos os cards já foram revisados", Toast.LENGTH_SHORT).show();
 //                    return;

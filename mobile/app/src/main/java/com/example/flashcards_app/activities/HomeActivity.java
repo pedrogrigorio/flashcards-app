@@ -23,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     Button createDeck;
     Button addFriends;
     ImageView profileImg;
+    ImageView settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,11 @@ public class HomeActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
         profileImg = findViewById(R.id.profile_img);
+        settings = findViewById(R.id.settings);
+
+        settings.setOnClickListener(v -> {
+            accessSettingsScreen();
+        });
 
         profileImg.setOnClickListener(v -> {
             accessProfile();
@@ -72,13 +78,18 @@ public class HomeActivity extends AppCompatActivity {
 
     /* Change page methods */
 
-    public void accessProfile() {
+    private void accessProfile() {
         Intent in = new Intent(this, ProfileActivity.class);
         startActivity(in);
     }
 
-    public void accessNotifications(View v) {
+    private void accessNotifications(View v) {
         Intent in = new Intent(this, NotificationActivity.class);
+        startActivity(in);
+    }
+
+    private void accessSettingsScreen() {
+        Intent in = new Intent(this, SettingsActivity.class);
         startActivity(in);
     }
 
