@@ -106,13 +106,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Usuário">
+                android:hint="Usuário"
+                app:startIconDrawable="@drawable/person_icon">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
-                    android:inputType="textMultiLine"
+                    android:inputType="text|textPersonName"
                     android:lines="1"
                     android:overScrollMode="always"
                     android:scrollbarStyle="insideInset"
@@ -138,13 +139,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email">
+                android:hint="Email"
+                app:startIconDrawable="@drawable/email_icon">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
-                    android:inputType="textMultiLine"
+                    android:inputType="text|textEmailAddress"
                     android:lines="1"
                     android:overScrollMode="always"
                     android:scrollbarStyle="insideInset"
@@ -170,13 +172,17 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Senha">
+                android:hint="Senha"
+                app:endIconMode="password_toggle"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/lock_icon">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eTextPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
-                    android:inputType="textMultiLine"
+                    android:inputType="text|textPassword"
                     android:lines="1"
                     android:overScrollMode="always"
                     android:scrollbarStyle="insideInset"
@@ -198,7 +204,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/background_button_shadow"
         android:padding="14dp"
