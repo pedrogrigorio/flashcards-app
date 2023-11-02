@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="btn_primary">#D03C45</color>
+    <color name="btn_primary_pressed">#FF5252</color>
+    <color name="btn_primary_disabled">#B1B1B1</color>
+    <color name="btn_secondary">#887E7E</color>
+    <color name="titles">#333333</color>
+    <color name="gray">#B1B1B1</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E13434</color>
@@ -7,7 +13,6 @@
     <color name="purple">#472C54</color>
     <color name="purple_light">#BC85AC</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="gray">#C3C3C3</color>
     <color name="green">#005500</color>
     <color name="green_light">#00FF00</color>
     <color name="yellow">#AAFF00</color>

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,7 +20,7 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
     Button signup;
-    Button signin;
+    Button signing;
     ImageView back;
     TextInputLayout username;
     TextInputLayout email;
@@ -34,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         signup = findViewById(R.id.btn_signup);
-        signin = findViewById(R.id.btn_signin);
+        signing = findViewById(R.id.btn_signing);
         back = findViewById(R.id.btn_back);
         username = findViewById(R.id.username_field);
         email = findViewById(R.id.email_field);
@@ -90,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
             accessLoginScreen();
         });
 
-        signin.setOnClickListener(v -> {
+        signing.setOnClickListener(v -> {
             accessLoginScreen();
         });
     }

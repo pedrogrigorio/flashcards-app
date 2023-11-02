@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,7 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 public class LoginActivity extends AppCompatActivity {
 
     Button signup;
-    Button signin;
+    Button signing;
     ImageView back;
     TextInputLayout username_email;
     TextInputLayout password;
@@ -26,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         signup = findViewById(R.id.btn_signup);
-        signin = findViewById(R.id.btn_signin);
+        signing = findViewById(R.id.btn_signing);
         back = findViewById(R.id.btn_back);
         username_email = findViewById(R.id.username_field);
         password = findViewById(R.id.password_field);
@@ -39,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             accessRegisterScreen();
         });
 
-        signin.setOnClickListener(v -> {
+        signing.setOnClickListener(v -> {
             accessHomeActivity();
         });
     }
