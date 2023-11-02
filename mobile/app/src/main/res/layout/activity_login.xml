@@ -98,7 +98,7 @@
         android:layout_marginEnd="24dp"
         android:text="Esqueci minha senha"
         android:textAlignment="textStart"
-        android:textColor="@color/btn_secondary"
+        android:textColor="@color/outlines"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
@@ -194,9 +194,6 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/btn_primary"
-        android:padding="14dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
         android:text="ENTRAR"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -229,7 +226,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/btn_secondary" />
+                android:background="@color/outlines" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -238,13 +235,13 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="ou"
-                android:textColor="@color/btn_secondary" />
+                android:textColor="@color/outlines" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/btn_secondary" />
+                android:background="@color/outlines" />
 
         </LinearLayout>
     </FrameLayout>
@@ -257,12 +254,9 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/btn_secondary"
-        android:padding="14dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
         android:text="Registrar"
         android:textAllCaps="false"
-        android:textColor="@color/btn_secondary"
+        android:textColor="@drawable/btn_secondary"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

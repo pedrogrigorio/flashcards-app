@@ -224,8 +224,8 @@
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_signing"
         app:layout_constraintEnd_toEndOf="parent"
@@ -245,7 +245,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/btn_secondary" />
+                android:background="@color/outlines" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -254,13 +254,13 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:text="ou"
-                android:textColor="@color/btn_secondary" />
+                android:textColor="@color/outlines" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/btn_secondary" />
+                android:background="@color/outlines" />
 
         </LinearLayout>
     </FrameLayout>
@@ -276,7 +276,7 @@
         android:background="@drawable/btn_secondary"
         android:text="Entrar"
         android:textAllCaps="false"
-        android:textColor="@color/btn_secondary"
+        android:textColor="@drawable/btn_secondary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

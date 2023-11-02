@@ -3,8 +3,12 @@
     <color name="btn_primary">#D03C45</color>
     <color name="btn_primary_pressed">#FF5252</color>
     <color name="btn_primary_disabled">#B1B1B1</color>
-    <color name="btn_secondary">#887E7E</color>
+    <color name="outlines">#887E7E</color>
     <color name="titles">#333333</color>
+    <color name="subtitles">#635C5C</color>
+    <color name="btn_primary_v2">#FFFFFF</color>
+    <color name="btn_primary_v2_pressed">#B1B1B1</color>
+
     <color name="gray">#B1B1B1</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
