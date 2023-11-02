@@ -25,7 +25,7 @@ import com.example.flashcards_app.viewmodel.FriendViewModel;
 
 import java.util.List;
 
-public class UserFragment extends Fragment {
+public class FriendsFragment extends Fragment {
 
     private FriendViewModel friendViewModel;
     private RecyclerView recyclerView;

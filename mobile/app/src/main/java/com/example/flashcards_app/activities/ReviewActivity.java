@@ -7,10 +7,12 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Animator;
@@ -35,6 +37,15 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
+        Intent intent = getIntent();
+        if (intent.hasExtra("deckId")) {
+            int deckId = intent.getIntExtra("deckId", -1);
+            Toast.makeText(this, "ID: " + deckId, Toast.LENGTH_SHORT).show();
+            // fazer requisição dos cards
+
+        } else {
+            Toast.makeText(this, "Erro ao carregar o deck", Toast.LENGTH_SHORT).show();
+        }
 
         Button microphoneButton  = findViewById(R.id.microphone_button);
         Button easyButton        = findViewById(R.id.easy_button);

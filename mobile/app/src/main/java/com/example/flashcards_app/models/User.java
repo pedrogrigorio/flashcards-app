@@ -5,11 +5,15 @@ public class User {
     String name;
     String username;
     String imgSrc;
+    int dayStreak;
+    int cardsReviewed;
 
     public User(String name, String username) {
         this.name = name;
         this.username = username;
         this.imgSrc = "https://cdn.vectorstock.com/i/preview-1x/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.jpg";
+        this.dayStreak = 0;
+        this.cardsReviewed = 0;
     }
 
     public String getName() {
@@ -34,5 +38,21 @@ public class User {
 
     public void setImgSrc(String imgSrc) {
         this.imgSrc = imgSrc;
+    }
+
+    public int getDayStreak() {
+        return dayStreak;
+    }
+
+    public void setDayStreak(int dayStreak) {
+        this.dayStreak = dayStreak;
+    }
+
+    public int getCardsReviewed() {
+        return cardsReviewed;
+    }
+
+    public void setCardsReviewed(int cardsReviewed) {
+        this.cardsReviewed = cardsReviewed;
     }
 }

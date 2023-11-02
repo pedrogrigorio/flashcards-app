@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.flashcards_app.fragments.DecksFragment;
-import com.example.flashcards_app.fragments.UserFragment;
+import com.example.flashcards_app.fragments.FriendsFragment;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -22,6 +22,8 @@ public class HomeActivity extends AppCompatActivity {
     TabLayout tabLayout;
     Button createDeck;
     Button addFriends;
+    ImageView profileImg;
+    ImageView settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,16 @@ public class HomeActivity extends AppCompatActivity {
         addFriends = findViewById(R.id.btn_add_friends);
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
+        profileImg = findViewById(R.id.profile_img);
+        settings = findViewById(R.id.settings);
+
+        settings.setOnClickListener(v -> {
+            accessSettingsScreen();
+        });
+
+        profileImg.setOnClickListener(v -> {
+            accessProfile();
+        });
 
         configTabLayout();
     }
@@ -41,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
         adapter.addFragment(new DecksFragment(), "Baralhos");
-        adapter.addFragment(new UserFragment(), "Amigos");
+        adapter.addFragment(new FriendsFragment(), "Amigos");
 
         viewPager.setOffscreenPageLimit(adapter.getItemCount());
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -66,13 +78,18 @@ public class HomeActivity extends AppCompatActivity {
 
     /* Change page methods */
 
-    public void accessProfile(View v) {
-        Intent in = new Intent(HomeActivity.this, ProfileActivity.class);
+    private void accessProfile() {
+        Intent in = new Intent(this, ProfileActivity.class);
         startActivity(in);
     }
 
-    public void accessNotifications(View v) {
-        Intent in = new Intent(HomeActivity.this, NotificationActivity.class);
+    private void accessNotifications(View v) {
+        Intent in = new Intent(this, NotificationActivity.class);
+        startActivity(in);
+    }
+
+    private void accessSettingsScreen() {
+        Intent in = new Intent(this, SettingsActivity.class);
         startActivity(in);
     }
 

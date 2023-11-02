@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.flashcards_app.activities.ReviewActivity;
 import com.example.flashcards_app.adapters.DeckAdapter;
@@ -96,7 +97,14 @@ public class DecksFragment extends Fragment {
         adapter.setReviewButtonListener(new DeckAdapter.onReviewButtonListener() {
             @Override
             public void onItemClick(Deck deck) {
+                // TODO: uncomment this code later
+//                if (deck.getLearnCardsNumber() == 0 && deck.getNewCardsNumber() == 0 && deck.getReviewCardsNumber() == 0) {
+//                    Toast.makeText(context, "Todos os cards já foram revisados", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+
                 Intent in = new Intent(context, ReviewActivity.class);
+                in.putExtra("deckId", deck.getId());
                 context.startActivity(in);
             }
         });

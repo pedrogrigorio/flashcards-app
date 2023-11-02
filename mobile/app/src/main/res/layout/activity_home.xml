@@ -43,6 +43,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="28dp"
@@ -74,7 +75,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginRight="28dp"
-            android:onClick="accessProfile"
+            android:onClick="accessNotifications"
             app:srcCompat="@drawable/user_img" />
 
         <LinearLayout
