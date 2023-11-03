@@ -30,8 +30,6 @@ public class AddUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_users);
 
-
-
         adapter = new AddUserAdapter();
 
         recyclerView = findViewById(R.id.users_recycle_view);
