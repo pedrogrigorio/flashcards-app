@@ -95,6 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!emailIsValid[0]) {
                     emailLayout.setError("Insira um endereço de e-mail inválido.");
                 } else {
+                    emailLayout.setHelperText(null);
                     emailLayout.setError(null);
                 }
 
