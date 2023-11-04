@@ -44,7 +44,7 @@ public class ChooseNameActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String name = s.toString();
-                boolean isValid = true;
+                boolean isValid;
 
                 if (name.length() >= 2) {
                     isValid = name.matches("^[a-zA-Z][a-zA-Z\\s]*[a-zA-Z]$");
@@ -55,12 +55,16 @@ public class ChooseNameActivity extends AppCompatActivity {
 
                 continueButton.setEnabled(isValid);
 
+                boolean startsWithLetters = name.matches("^[a-zA-Z].*");
+                boolean containsOnlyLettersAndSpaces = name.matches("^[a-zA-Z\\s]*$");
+                boolean endsWithLetters = name.matches(".*[a-zA-Z]$");
+
                 if (!isValid) {
-                    if (!name.matches("^[a-zA-Z].*")) {
+                    if (!startsWithLetters) {
                         nameLayout.setError("Nome deve iniciar com letras.");
-                    } else if (!name.matches("^[a-zA-Z\\s]*$")) {
+                    } else if (!containsOnlyLettersAndSpaces) {
                         nameLayout.setError("Nome pode conter apenas letras e espaços.");
-                    } else if (!name.matches(".*[a-zA-Z]$")) {
+                    } else if (!endsWithLetters) {
                         nameLayout.setError("Nome não pode terminar com espaços em branco.");
                     }
                 } else {

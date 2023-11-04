@@ -46,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         signup.setEnabled(false);
 
+        final boolean[] usernameIsValid = {false};
+        final boolean[] passwordIsValid = {false};
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -53,7 +55,24 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String username = s.toString();
 
+                if (username.length() >= 5) {
+                    usernameIsValid[0] = username.matches("^[^\\s]+$");
+                    usernameLayout.setHelperText(null);
+                } else {
+                    usernameIsValid[0] = false;
+                    usernameLayout.setHelperText("Nome de usuário deve ter pelo menos 5 caracteres");
+                }
+
+                boolean emailIsEmpty = emailEditText.getText().toString().isEmpty();
+                boolean isValid = usernameIsValid[0] && passwordIsValid[0] && !emailIsEmpty;
+                signup.setEnabled(isValid);
+
+                boolean containsSpace = username.matches(".*\\s+.*");
+                if (containsSpace) {
+                    usernameLayout.setError("Nome de usuário não pode conter espaços em branco.");
+                }
             }
 
             @Override
@@ -69,17 +88,20 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String password = s.toString();
-                boolean isValid = true;
 
                 if (password.length() >= 5) {
-                    isValid = password.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).+$");
+                    passwordIsValid[0] = password.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).+$");
+                    passwordLayout.setHelperText(null);
                 } else {
                     passwordLayout.setHelperText("Sua senha deve ter pelo menos 5 caracteres");
+                    passwordIsValid[0] = false;
                 }
 
+                boolean emailIsEmpty = emailEditText.getText().toString().isEmpty();
+                boolean isValid = usernameIsValid[0] && passwordIsValid[0] && !emailIsEmpty;
                 signup.setEnabled(isValid);
 
-                if (!isValid) {
+                if (!passwordIsValid[0]) {
                     passwordLayout.setError("Sua senha deve conter letras, números e caracteres especiais.");
                 } else {
                     passwordLayout.setError(null);
