@@ -9,33 +9,31 @@
     tools:context=".activities.MainActivity">
 
     <TextView
-        android:id="@+id/username7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="48dp"
         android:lines="2"
         android:text="Aprenda idiomas de forma divertida e eficaz"
         android:textAlignment="textStart"
-        android:textSize="24sp"
         android:textColor="@color/subtitles"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
-        android:id="@+id/username6"
+        android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="96dp"
         android:text="Flashcards App"
         android:textAlignment="textStart"
+        android:textColor="@color/titles"
         android:textSize="36sp"
         android:textStyle="bold"
-        android:textColor="@color/titles"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +49,7 @@
         android:background="@drawable/btn_primary_v2"
         android:text="ENTRAR"
         android:textColor="@drawable/btn_primary_v2"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_signup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -66,6 +65,7 @@
         android:background="@drawable/btn_secondary_v2"
         android:text="Registrar"
         android:textColor="@drawable/btn_secondary_v2"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

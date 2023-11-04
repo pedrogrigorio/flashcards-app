@@ -57,11 +57,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (isPasswordContainsSpecialChar) {
                         layoutPassword.setHelperText("Senha forte");
-                    } else {
-                        layoutPassword.setHelperText("Senha fraca. Inclua pelo menos 1 caracter especial.");
                     }
-                } else {
+                    else {
+                        layoutPassword.setError("Sua senha deve conter pelo menos 1 caracter especial. (ex: !@#$%&*())");
+                        signup.setEnabled(false);
+                    }
+                }
+                else {
                     layoutPassword.setHelperText("Sua senha deve ter pelo menos 5 caracteres");
+                    signup.setEnabled(false);
                 }
             }
 
@@ -72,11 +76,11 @@ public class RegisterActivity extends AppCompatActivity {
                 Matcher matcher = pattern.matcher(password);
                 boolean isPasswordContainsSpecialChar = matcher.find();
 
-                if (password.length() >= 5 && !isPasswordContainsSpecialChar) {
-                    layoutPassword.setError("Sua senha deve conter pelo menos 1 caracter especial. (ex: !@#$%&*())");
-                }
-                else if (password.length() >= 5 && isPasswordContainsSpecialChar) {
+                if (password.length() >= 5 && isPasswordContainsSpecialChar) {
                     signup.setEnabled(true);
+                }
+                else {
+                    signup.setEnabled(false);
                 }
             }
         });

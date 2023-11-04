@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.flashcards_app.ChooseNameActivity;
 import com.example.flashcards_app.R;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -35,15 +36,20 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         signup.setOnClickListener(v -> {
-            accessRegisterScreen();
+            accessRegisterActivity();
         });
 
         signing.setOnClickListener(v -> {
-            accessHomeActivity();
+            // TODO: ChooseName screen on first access
+            // if (name === null) {
+            accessChooseNameActivity();
+            // } else {
+            //  accessHomeActivity();
+            // }
         });
     }
 
-    private void accessRegisterScreen() {
+    private void accessRegisterActivity() {
         Toast.makeText(this, username_email.getEditText().getText() + " " + password.getEditText().getText(), Toast.LENGTH_LONG).show();
         Intent in = new Intent(this, RegisterActivity.class);
         startActivity(in);
@@ -56,6 +62,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void accessHomeActivity() {
         Intent in = new Intent(this, HomeActivity.class);
+        startActivity(in);
+    }
+
+    private void accessChooseNameActivity() {
+        Intent in = new Intent(this, ChooseNameActivity.class);
         startActivity(in);
     }
 }
