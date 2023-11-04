@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -48,6 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         final boolean[] usernameIsValid = {false};
         final boolean[] passwordIsValid = {false};
+        final boolean[] emailIsValid = {false};
+
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -65,14 +68,38 @@ public class RegisterActivity extends AppCompatActivity {
                     usernameLayout.setHelperText("Nome de usuário deve ter pelo menos 5 caracteres");
                 }
 
-                boolean emailIsEmpty = emailEditText.getText().toString().isEmpty();
-                boolean isValid = usernameIsValid[0] && passwordIsValid[0] && !emailIsEmpty;
+                boolean isValid = usernameIsValid[0] && passwordIsValid[0] && emailIsValid[0];
                 signup.setEnabled(isValid);
 
                 boolean containsSpace = username.matches(".*\\s+.*");
                 if (containsSpace) {
                     usernameLayout.setError("Nome de usuário não pode conter espaços em branco.");
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        emailEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String email = s.toString();
+                emailIsValid[0] = Patterns.EMAIL_ADDRESS.matcher(email).matches();
+
+                if (!emailIsValid[0]) {
+                    emailLayout.setError("Insira um endereço de e-mail inválido.");
+                } else {
+                    emailLayout.setError(null);
+                }
+
+                boolean isValid = usernameIsValid[0] && passwordIsValid[0] && emailIsValid[0];
+                signup.setEnabled(isValid);
             }
 
             @Override
@@ -97,8 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                     passwordIsValid[0] = false;
                 }
 
-                boolean emailIsEmpty = emailEditText.getText().toString().isEmpty();
-                boolean isValid = usernameIsValid[0] && passwordIsValid[0] && !emailIsEmpty;
+                boolean isValid = usernameIsValid[0] && passwordIsValid[0] && emailIsValid[0];
                 signup.setEnabled(isValid);
 
                 if (!passwordIsValid[0]) {
@@ -127,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void accessLoginScreen() {
-        Toast.makeText(this, usernameLayout.getEditText().getText() + " " + emailLayout.getEditText().getText() + " " + passwordEditText.getText(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, usernameEditText.getText() + " " + emailEditText.getText() + " " + passwordEditText.getText(), Toast.LENGTH_LONG).show();
         Intent in = new Intent(this, LoginActivity.class);
         startActivity(in);
     }
