@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.flashcards_app.ChooseNameActivity;
 import com.example.flashcards_app.R;
 import com.google.android.material.textfield.TextInputLayout;
 

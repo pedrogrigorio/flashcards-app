@@ -1,4 +1,4 @@
-package com.example.flashcards_app;
+package com.example.flashcards_app.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 
+import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.HomeActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -46,9 +47,7 @@ public class ChooseNameActivity extends AppCompatActivity {
                 boolean isValid = true;
 
                 if (name.length() >= 2) {
-                    Pattern pattern = Pattern.compile("^[a-zA-Z][a-zA-Z\\s]*[a-zA-Z]$");
-                    Matcher matcher = pattern.matcher(name);
-                    isValid = matcher.matches();
+                    isValid = name.matches("^[a-zA-Z][a-zA-Z\\s]*[a-zA-Z]$");
                 } else {
                     nameLayout.setHelperText("Nome deve ter pelo menos 2 letras e pode conter apenas letras e espaços.");
                     isValid = false;
@@ -71,7 +70,6 @@ public class ChooseNameActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }

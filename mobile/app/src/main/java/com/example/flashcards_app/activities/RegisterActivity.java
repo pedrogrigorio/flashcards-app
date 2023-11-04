@@ -22,10 +22,12 @@ public class RegisterActivity extends AppCompatActivity {
     Button signup;
     Button signing;
     ImageView back;
-    TextInputLayout username;
-    TextInputLayout email;
-    TextInputLayout layoutPassword;
-    TextInputEditText editTextPassword;
+    TextInputLayout usernameLayout;
+    TextInputEditText usernameEditText;
+    TextInputLayout emailLayout;
+    TextInputEditText emailEditText;
+    TextInputLayout passwordLayout;
+    TextInputEditText passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,53 +37,57 @@ public class RegisterActivity extends AppCompatActivity {
         signup = findViewById(R.id.btn_signup);
         signing = findViewById(R.id.btn_signing);
         back = findViewById(R.id.btn_back);
-        username = findViewById(R.id.username_field);
-        email = findViewById(R.id.email_field);
-        layoutPassword = findViewById(R.id.password_field);
-        editTextPassword = findViewById(R.id.eTextPassword);
+        usernameLayout = findViewById(R.id.username_field);
+        usernameEditText = findViewById(R.id.username_editText);
+        emailLayout = findViewById(R.id.email_field);
+        emailEditText = findViewById(R.id.email_editText);
+        passwordLayout = findViewById(R.id.password_field);
+        passwordEditText = findViewById(R.id.password_editText);
 
         signup.setEnabled(false);
-        editTextPassword.addTextChangedListener(new TextWatcher() {
+
+        usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        passwordEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String password = s.toString();
-                if (password.length() >= 5) {
-                    Pattern pattern = Pattern.compile("[!@#$%&*()]");
-                    Matcher matcher = pattern.matcher(password);
-                    boolean isPasswordContainsSpecialChar = matcher.find();
+                boolean isValid = true;
 
-                    if (isPasswordContainsSpecialChar) {
-                        layoutPassword.setHelperText("Senha forte");
-                    }
-                    else {
-                        layoutPassword.setError("Sua senha deve conter pelo menos 1 caracter especial. (ex: !@#$%&*())");
-                        signup.setEnabled(false);
-                    }
+                if (password.length() >= 5) {
+                    isValid = password.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).+$");
+                } else {
+                    passwordLayout.setHelperText("Sua senha deve ter pelo menos 5 caracteres");
                 }
-                else {
-                    layoutPassword.setHelperText("Sua senha deve ter pelo menos 5 caracteres");
-                    signup.setEnabled(false);
+
+                signup.setEnabled(isValid);
+
+                if (!isValid) {
+                    passwordLayout.setError("Sua senha deve conter letras, números e caracteres especiais.");
+                } else {
+                    passwordLayout.setError(null);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String password = s.toString();
-                Pattern pattern = Pattern.compile("[!@#$%&*()]");
-                Matcher matcher = pattern.matcher(password);
-                boolean isPasswordContainsSpecialChar = matcher.find();
-
-                if (password.length() >= 5 && isPasswordContainsSpecialChar) {
-                    signup.setEnabled(true);
-                }
-                else {
-                    signup.setEnabled(false);
-                }
             }
         });
 
@@ -99,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void accessLoginScreen() {
-        Toast.makeText(this, username.getEditText().getText() + " " + email.getEditText().getText() + " " + editTextPassword.getText(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, usernameLayout.getEditText().getText() + " " + emailLayout.getEditText().getText() + " " + passwordEditText.getText(), Toast.LENGTH_LONG).show();
         Intent in = new Intent(this, LoginActivity.class);
         startActivity(in);
     }
