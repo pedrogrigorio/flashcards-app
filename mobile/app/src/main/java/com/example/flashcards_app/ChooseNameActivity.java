@@ -46,11 +46,11 @@ public class ChooseNameActivity extends AppCompatActivity {
                 boolean isValid = true;
 
                 if (name.length() >= 2) {
-                    Pattern pattern = Pattern.compile("^[a-zA-Z][a-zA-Z\\s\\.-]*[a-zA-Z\\.]");
+                    Pattern pattern = Pattern.compile("^[a-zA-Z][a-zA-Z\\s]*[a-zA-Z]$");
                     Matcher matcher = pattern.matcher(name);
                     isValid = matcher.matches();
                 } else {
-                    nameLayout.setHelperText("Nome deve ter pelo menos 2 letras");
+                    nameLayout.setHelperText("Nome deve ter pelo menos 2 letras e pode conter apenas letras e espaços.");
                     isValid = false;
                 }
 
@@ -59,10 +59,10 @@ public class ChooseNameActivity extends AppCompatActivity {
                 if (!isValid) {
                     if (!name.matches("^[a-zA-Z].*")) {
                         nameLayout.setError("Nome deve iniciar com letras.");
-                    } else if (!name.matches("^[a-zA-Z\\s\\.-]*$")) {
-                        nameLayout.setError("Nome pode conter apenas letras, espaços, pontos e hífens.");
-                    } else if (!name.matches(".*[a-zA-Z\\.]$")) {
-                        nameLayout.setError("Nome deve terminar com letra ou ponto.");
+                    } else if (!name.matches("^[a-zA-Z\\s]*$")) {
+                        nameLayout.setError("Nome pode conter apenas letras e espaços.");
+                    } else if (!name.matches(".*[a-zA-Z]$")) {
+                        nameLayout.setError("Nome não pode terminar com espaços em branco.");
                     }
                 } else {
                     nameLayout.setError(null);
