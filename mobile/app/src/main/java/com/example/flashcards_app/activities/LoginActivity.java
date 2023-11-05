@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Button signup;
     Button signing;
-    ImageView back;
+    ImageButton back;
     TextInputLayout username_email;
     TextInputLayout password;
     
