@@ -36,21 +36,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_icon" />
 
-            <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/floatingActionButton"-->
-<!--                android:layout_width="32dp"-->
-<!--                android:layout_height="32dp"-->
-<!--                android:clickable="true"-->
-<!--                android:src="@drawable/back_icon"-->
-<!--                android:background="@drawable/btn_appbar"-->
-<!--                app:tint="@color/white"-->
-<!--                app:fabCustomSize="30dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:maxImageSize="24dp" />-->
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

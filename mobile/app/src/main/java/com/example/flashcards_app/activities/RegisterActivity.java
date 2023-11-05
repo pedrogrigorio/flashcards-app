@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     Button signup;
     Button signing;
-    ImageView back;
+    ImageButton back;
     TextInputLayout usernameLayout;
     TextInputEditText usernameEditText;
     TextInputLayout emailLayout;
