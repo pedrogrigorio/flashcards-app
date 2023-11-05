@@ -7,25 +7,39 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.flashcards_app.fragments.DecksFragment;
 import com.example.flashcards_app.fragments.FriendsFragment;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ViewPagerAdapter;
+import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.viewmodel.HomeViewModel;
+import com.example.flashcards_app.viewmodel.ProfileViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity {
+
+    User user;
 
     ViewPager2 viewPager;
     TabLayout tabLayout;
     Button createDeck;
     Button addFriends;
-    ImageView profileImg;
     ImageView settings;
+    ImageView notifications;
+    ImageView profileImg;
+    TextView nameTextView;
+    TextView usernameTextView;
+
+    HomeViewModel homeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +54,14 @@ public class HomeActivity extends AppCompatActivity {
         addFriends = findViewById(R.id.btn_add_friends);
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
-        profileImg = findViewById(R.id.profile_img);
         settings = findViewById(R.id.settings);
+        notifications = findViewById(R.id.notifications);
+        profileImg = findViewById(R.id.profile_img);
+        nameTextView = findViewById(R.id.name_textView);
+        usernameTextView = findViewById(R.id.username_textView);
+
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        configHomeViewModel();
 
         settings.setOnClickListener(v -> {
             accessSettingsScreen();
@@ -49,6 +69,10 @@ public class HomeActivity extends AppCompatActivity {
 
         profileImg.setOnClickListener(v -> {
             accessProfile();
+        });
+
+        notifications.setOnClickListener(v -> {
+            accessNotifications();
         });
 
         configTabLayout();
@@ -82,6 +106,27 @@ public class HomeActivity extends AppCompatActivity {
         mediator.attach();
     }
 
+    private void configHomeViewModel() {
+        homeViewModel.getProfile().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User profile) {
+                user = profile;
+                updateView();
+            }
+        });
+    }
+
+    private void updateView() {
+        nameTextView.setText(user.getName());
+        usernameTextView.setText(user.getUsername());
+
+        if (!user.getImgSrc().isEmpty()) {
+            Picasso.get()
+                    .load(user.getImgSrc())
+                    .into(profileImg);
+        }
+    }
+
     /* Change page methods */
 
     private void accessProfile() {
@@ -89,7 +134,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    private void accessNotifications(View v) {
+    private void accessNotifications() {
         Intent in = new Intent(this, NotificationActivity.class);
         startActivity(in);
     }
