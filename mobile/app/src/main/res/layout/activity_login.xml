@@ -51,6 +51,7 @@
         android:textSize="36sp"
         android:textStyle="bold"
         android:textColor="@color/titles"
+        android:fontFamily="@font/visby_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,6 +67,7 @@
         android:textSize="36sp"
         android:textStyle="bold"
         android:textColor="@color/titles"
+        android:fontFamily="@font/visby_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -191,6 +193,7 @@
         android:text="ENTRAR"
         android:textColor="@color/white"
         android:textSize="20sp"
+        android:fontFamily="@font/visby_bold"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -226,8 +229,8 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:text="ou"
                 android:textColor="@color/outlines" />
 
@@ -252,6 +255,7 @@
         android:textAllCaps="false"
         android:textColor="@drawable/btn_secondary"
         android:textSize="20sp"
+        android:fontFamily="@font/visby_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
