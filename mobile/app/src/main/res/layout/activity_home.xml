@@ -5,7 +5,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/background_home"
     tools:context=".activities.HomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -93,7 +93,7 @@
                 android:gravity="start"
                 android:text="User"
                 android:textAlignment="textStart"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/titles"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="user_2"
-                android:textColor="@color/gray"
+                android:textColor="@color/subtitles"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -124,8 +124,8 @@
         app:layout_constraintVertical_bias="0.0"
         app:tabBackground="@color/transparent"
         app:tabIndicatorColor="@color/white"
-        app:tabIndicatorHeight="4dp"
         app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="4dp"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/CustomTabLayout"
         app:tabTextColor="@color/gray" />
