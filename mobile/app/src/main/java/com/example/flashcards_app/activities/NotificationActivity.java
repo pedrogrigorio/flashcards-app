@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.NotificationAdapter;
@@ -29,7 +31,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+        setContentView(R.layout.activity_notifications);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -42,11 +44,13 @@ public class NotificationActivity extends AppCompatActivity {
         configRecyclerView();
 
         notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
+        configNotificationViewModel();
+
 
         Button addNotification = findViewById(R.id.add_notification_button);
 
         addNotification.setOnClickListener(v -> {
-            this.notificationViewModel.insertNotification(new Notification("New notification"));
+            notificationViewModel.insertNotification(new Notification("Test notification"), this);
         });
 
     }
@@ -61,7 +65,7 @@ public class NotificationActivity extends AppCompatActivity {
 
 
     public void configNotificationViewModel() {
-        this.notificationViewModel.getNotification().observe(this, new Observer<List<Notification>>() {
+        notificationViewModel.getNotification().observe(this, new Observer<List<Notification>>() {
             @Override
             public void onChanged(List<Notification> notifications) {
                 notificationAdapter.setNotifications(notifications);
