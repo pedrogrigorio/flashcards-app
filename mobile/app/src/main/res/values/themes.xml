@@ -4,7 +4,13 @@
          <item name="colorPrimary">@color/purple</item>
     </style>
 
-    <style name="Theme.FlashcardsApp" parent="Base.Theme.MaterialComponents.FlashcardsApp" />
+    <style name="Theme.FlashcardsApp" parent="Base.Theme.MaterialComponents.FlashcardsApp">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
 
     <style name="CustomTabLayout" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:textSize">16sp</item>
