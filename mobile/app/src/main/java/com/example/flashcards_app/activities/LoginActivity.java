@@ -3,9 +3,11 @@ package com.example.flashcards_app.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,8 +17,8 @@ import com.google.android.material.textfield.TextInputLayout;
 public class LoginActivity extends AppCompatActivity {
 
     Button signup;
-    Button signin;
-    ImageView back;
+    Button signing;
+    ImageButton back;
     TextInputLayout username_email;
     TextInputLayout password;
     
@@ -25,8 +27,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+
         signup = findViewById(R.id.btn_signup);
-        signin = findViewById(R.id.btn_signin);
+        signing = findViewById(R.id.btn_signing);
         back = findViewById(R.id.btn_back);
         username_email = findViewById(R.id.username_field);
         password = findViewById(R.id.password_field);
@@ -36,15 +42,20 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         signup.setOnClickListener(v -> {
-            accessRegisterScreen();
+            accessRegisterActivity();
         });
 
-        signin.setOnClickListener(v -> {
-            accessHomeActivity();
+        signing.setOnClickListener(v -> {
+            // TODO: ChooseName screen on first access
+            // if (name === null) {
+            accessChooseNameActivity();
+            // } else {
+            //  accessHomeActivity();
+            // }
         });
     }
 
-    private void accessRegisterScreen() {
+    private void accessRegisterActivity() {
         Toast.makeText(this, username_email.getEditText().getText() + " " + password.getEditText().getText(), Toast.LENGTH_LONG).show();
         Intent in = new Intent(this, RegisterActivity.class);
         startActivity(in);
@@ -57,6 +68,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void accessHomeActivity() {
         Intent in = new Intent(this, HomeActivity.class);
+        startActivity(in);
+    }
+
+    private void accessChooseNameActivity() {
+        Intent in = new Intent(this, ChooseNameActivity.class);
         startActivity(in);
     }
 }
