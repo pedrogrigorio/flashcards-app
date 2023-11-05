@@ -3,9 +3,11 @@ package com.example.flashcards_app.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.flashcards_app.R;
@@ -26,6 +28,10 @@ public class ChooseNameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_name);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
         nameLayout = findViewById(R.id.name_field);
         nameEditText = findViewById(R.id.name_editText);
