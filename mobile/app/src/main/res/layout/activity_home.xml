@@ -5,106 +5,108 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/background_home"
     tools:context=".activities.HomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#00FFFFFF"
+        android:fitsSystemWindows="true"
+        android:paddingTop="12dp"
+        app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="60dp"
+            android:background="#00FFFFFF">
 
-            <Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="#00472C54"
-                android:titleTextColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="72dp"
-                android:onClick="accessNotifications"
-                android:src="@drawable/notifications"
+            <ImageButton
+                android:id="@+id/notifications"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/btn_appbar"
+                android:tint="@color/titles"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/settings"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/notifications" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="28dp"
-                android:src="@drawable/settings"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/btn_appbar"
+                android:tint="@color/titles"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/settings" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
         app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_img"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginRight="28dp"
             android:onClick="accessNotifications"
+            app:shapeAppearanceOverlay="@style/circular"
             app:srcCompat="@drawable/user_img" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="start"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/name_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:fontFamily="@font/visby_bold"
+                android:gravity="start"
                 android:text="User"
-                android:textColor="#FFFFFF"
-                android:textSize="34sp"
-                android:textStyle="bold" />
+                android:textAlignment="textStart"
+                android:textColor="@color/titles"
+                android:textSize="34sp" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/username_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="top"
                 android:text="user_2"
-                android:textColor="@color/gray"
+                android:textColor="@color/subtitles"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -123,8 +125,8 @@
         app:layout_constraintVertical_bias="0.0"
         app:tabBackground="@color/transparent"
         app:tabIndicatorColor="@color/white"
-        app:tabIndicatorHeight="4dp"
         app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="4dp"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/CustomTabLayout"
         app:tabTextColor="@color/gray" />
