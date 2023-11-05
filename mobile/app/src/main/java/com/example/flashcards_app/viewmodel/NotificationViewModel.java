@@ -31,7 +31,9 @@ public class NotificationViewModel extends ViewModel {
 
 
         tempDataLive.setValue(tempData);
-        return tempDataLive;
+        notificationLiveData = tempDataLive; 
+
+        return notificationLiveData;
     }
 
 
