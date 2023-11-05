@@ -6,7 +6,7 @@
     
     
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewNotification"
+        android:id="@+id/notification"
         android:layout_width="374dp"
         android:layout_height="97dp"
         android:layout_margin="20dp"
@@ -46,7 +46,7 @@
                     android:layout_marginLeft="10dp"
                     android:maxLines="2"
                     android:ellipsize="end"
-                    android:text="Junior dos Santos Medeiro da Silva"
+                    android:text="Richard de Oliveira Lira"
                     android:textColor="#472C54"
                     android:textSize="20dp"
                     android:textStyle="bold"/>

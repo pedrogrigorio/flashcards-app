@@ -20,7 +20,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private List<Notification> notifications = new ArrayList<>();
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setUsers(List<Notification> notification){
+    public void setNotifications(List<Notification> notification){
         this.notifications = notification;
         notifyDataSetChanged();
     }

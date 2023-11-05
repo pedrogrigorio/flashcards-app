@@ -2,13 +2,14 @@ package com.example.flashcards_app.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.flashcards_app.models.Notification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationViewModel {
+public class NotificationViewModel extends ViewModel {
 
     private MutableLiveData<List<Notification>> notificationLiveData = new MutableLiveData<>();
 
@@ -27,6 +28,22 @@ public class NotificationViewModel {
 
         tempDataLive.setValue(tempData);
         return tempDataLive;
+    }
+
+
+    // Metodo de teste para adicionar novas notificações na tela
+    public void insertNotification(Notification notification) {
+        List<Notification> currentNotification = this.notificationLiveData.getValue();
+
+        if (currentNotification == null) {
+            currentNotification = new ArrayList<>();
+        }
+
+        currentNotification.add(notification);
+
+        this.notificationLiveData.setValue(currentNotification);
+
+
     }
 
 }
