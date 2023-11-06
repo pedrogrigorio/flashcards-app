@@ -30,15 +30,13 @@ import com.squareup.picasso.Picasso;
 public class ProfileActivity extends AppCompatActivity {
 
     User user;
+    ProfileViewModel profileViewModel;
+
     ImageView profileImg;
-    FloatingActionButton camButton;
-    ImageView editNameButton;
     TextView name;
     TextView username;
     TextView dayStreak;
     TextView reviewedCardsNumber;
-
-    ProfileViewModel profileViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         profileImg = findViewById(R.id.profile_img);
-        camButton = findViewById(R.id.btn_cam);
-        editNameButton = findViewById(R.id.btn_edit_name);
         name = findViewById(R.id.name);
         username = findViewById(R.id.username);
         dayStreak = findViewById(R.id.day_streak);
@@ -60,39 +56,8 @@ public class ProfileActivity extends AppCompatActivity {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         configProfileViewModel();
 
-        editNameButton.setOnClickListener(v -> {
-            EditNameDialog dialog = new EditNameDialog(user);
-            dialog.setDialogResult(new EditNameDialog.onDialogResult() {
-                @Override
-                public void finish(User updatedProfile) {
-                    profileViewModel.updateProfile(updatedProfile);
-                }
-            });
-            dialog.show(getSupportFragmentManager(), "edit_name_popup");
-        });
-
-        camButton.setOnClickListener(v -> {
-            ImagePicker.with(this)
-                    .crop(1f, 1f)
-                    .compress(1024)
-                    .maxResultSize(1080, 1080)
-                    .start();
-        });
-
 //        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = data.getData();
-        profileImg.setImageURI(uri);
-    }
-
-    public void accessMainScreen(View view) {
-        Intent in = new Intent(ProfileActivity.this, HomeActivity.class);
-        startActivity(in);
     }
 
     private void configProfileViewModel() {
@@ -116,5 +81,10 @@ public class ProfileActivity extends AppCompatActivity {
                     .load(user.getImgSrc())
                     .into(profileImg);
         }
+    }
+
+    public void accessMainScreen(View view) {
+        Intent in = new Intent(ProfileActivity.this, HomeActivity.class);
+        startActivity(in);
     }
 }
