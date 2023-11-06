@@ -37,7 +37,7 @@ public class NotificationActivity extends AppCompatActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
 
-        // new adapter
+
         notificationAdapter = new NotificationAdapter();
 
         recyclerView = findViewById(R.id.notification_recycle_view);

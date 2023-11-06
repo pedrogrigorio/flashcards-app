@@ -31,7 +31,7 @@ public class NotificationViewModel extends ViewModel {
 
 
         tempDataLive.setValue(tempData);
-        notificationLiveData = tempDataLive; 
+        notificationLiveData = tempDataLive;
 
         return notificationLiveData;
     }
@@ -48,9 +48,6 @@ public class NotificationViewModel extends ViewModel {
         currentNotification.add(notification);
 
         notificationLiveData.setValue(currentNotification);
-
-        Toast.makeText(context, notification.getNotificationText() , Toast.LENGTH_SHORT).show();
-
 
     }
 
