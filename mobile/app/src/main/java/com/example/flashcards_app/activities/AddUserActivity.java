@@ -45,12 +45,14 @@ public class AddUserActivity extends AppCompatActivity {
         configUserViewModel();
 
         Button addButton = findViewById(R.id.add_user_button);
-//        ImageButton backButtonAction = findViewById(R.id.back_button_users);
-
         ImageButton backButtonAction = findViewById(R.id.back_button_users);
 
         addButton.setOnClickListener(v -> {
             addUserViewModel.insertFriend(new User("User", "User@"));
+        });
+
+        backButtonAction.setOnClickListener(v -> {
+            backButton();
         });
 
     }
