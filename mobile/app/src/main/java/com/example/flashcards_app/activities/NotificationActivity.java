@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.flashcards_app.R;
@@ -47,15 +48,19 @@ public class NotificationActivity extends AppCompatActivity {
         configNotificationViewModel();
 
 
-        Button addNotification = findViewById(R.id.add_notification_button);
+        Button addNotification  = findViewById(R.id.add_notification_button);
+        ImageButton backButtonAction = findViewById(R.id.back_button_notification);
+
 
         addNotification.setOnClickListener(v -> {
             notificationViewModel.insertNotification(new Notification("Test notification"), this);
         });
 
+        backButtonAction.setOnClickListener(v -> {
+            backButton();
+        });
+
     }
-
-
 
     private void configRecyclerView() {
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -72,6 +77,10 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void backButton() {
+        finish();
     }
 
 }

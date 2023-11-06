@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -44,6 +45,10 @@ public class AddUserActivity extends AppCompatActivity {
         configUserViewModel();
 
         Button addButton = findViewById(R.id.add_user_button);
+//        ImageButton backButtonAction = findViewById(R.id.back_button_users);
+
+        ImageButton backButtonAction = findViewById(R.id.back_button_users);
+
         addButton.setOnClickListener(v -> {
             addUserViewModel.insertFriend(new User("User", "User@"));
         });
@@ -66,6 +71,11 @@ public class AddUserActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    private void backButton() {
+        finish();
     }
 
 //    private void configAdapter() {
