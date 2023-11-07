@@ -6,88 +6,105 @@
     android:layout_height="match_parent"
     tools:context=".activities.ProfileActivity">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/profile_img"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        app:shapeAppearanceOverlay="@style/circular"
-        app:strokeColor="@color/purple"
-        app:strokeWidth="2dp"
-        android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/user_img" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_weight="1"
-        android:text="User"
-        android:textColor="@color/purple"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/profile_img"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
-
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="user_2"
-        android:textColor="@color/gray"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:fitsSystemWindows="true"
+        android:paddingTop="8dp"
+        app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="60dp"
+            android:background="#00FFFFFF">
 
-            <Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/purple"
-                android:titleTextColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:onClick="accessMainScreen"
-                android:src="@drawable/back"
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/btn_appbar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/arrow_back_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/visby_bold"
+                android:text="Perfil"
+                android:textColor="@color/titles"
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_img"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginRight="28dp"
+            android:onClick="accessNotifications"
+            app:shapeAppearanceOverlay="@style/circular"
+            app:srcCompat="@drawable/user_img" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/visby_bold"
+                android:gravity="start"
+                android:text="User"
+                android:textAlignment="textStart"
+                android:textColor="@color/titles"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/username_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:text="user_2"
+                android:textColor="@color/subtitles"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView3"
@@ -102,7 +119,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_img" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <TextView
         android:id="@+id/textView18"

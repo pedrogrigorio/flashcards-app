@@ -48,8 +48,8 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         profileImg = findViewById(R.id.profile_img);
-        name = findViewById(R.id.name);
-        username = findViewById(R.id.username);
+        name = findViewById(R.id.name_textView);
+        username = findViewById(R.id.username_textView);
         dayStreak = findViewById(R.id.day_streak);
         reviewedCardsNumber = findViewById(R.id.cards_reviewed_number);
 
