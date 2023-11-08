@@ -4,10 +4,12 @@ public class Notification {
     String notificationText;
     String imgSrc;
 
-    public Notification(String notificationText) {
+    public Notification(String notificationText, String imgSrc) {
         this.notificationText = notificationText;
-        this.imgSrc = "https://cdn.vectorstock.com/i/preview-1x/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.jpg";
+        this.imgSrc = imgSrc;
     }
+
+
     public String getNotificationText() {
         return notificationText;
     }

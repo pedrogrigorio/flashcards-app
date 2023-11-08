@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Notification;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationHolder holder, int position) {
         Notification currentNotification = notifications.get(position);
         holder.TextNotificationName.setText(currentNotification.getNotificationText());
+        if (!currentNotification.getImgSrc().isEmpty()) {
+            Picasso.get()
+                    .load(currentNotification.getImgSrc())
+                    .into(holder.notificationImage);
+        }
     }
 
     @Override
@@ -46,10 +53,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     static class NotificationHolder extends RecyclerView.ViewHolder {
         private TextView TextNotificationName;
-
+        private ImageView notificationImage;
         public NotificationHolder(@NonNull View itemView) {
             super(itemView);
-
+            notificationImage =  itemView.findViewById(R.id.notification_img);
             TextNotificationName = itemView.findViewById(R.id.TextNotificationName);
         }
     }

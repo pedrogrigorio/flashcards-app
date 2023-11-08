@@ -70,16 +70,16 @@ app.get('/friends', (req, res) => {
 
 app.get('/Notification', (req, res) => {
   res.send([
-    {notificationText: 'Ronnie Coleman',
+    {notificationText: 'Ronnie Colema',
     imgSrc:'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg'},
     {notificationText: 'Phil Heath',
-    imgSrc:'http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcQByt7RsuwZOqhe9t1ArYD5UCmrqkHa8Tadj0UlqRVQwUnWOCxehO7wNCP01dPYlAn8'},
+    imgSrc:'https://c7.alamy.com/comp/GY8FAP/las-vegas-nevada-usa-17th-sep-2016-phil-heath-wins-his-sixth-straight-GY8FAP.jpg'},
     {notificationText: 'Dorian Yates',
     imgSrc:'https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY367_.jpg 319w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY551_.jpg 479w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY337_.jpg 293w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY576_.jpg 501w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UX1100_.jpg 1100w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY1264_.jpg'},
     {notificationText: 'Dexter Jackson',
-    imgSrc:'http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcSsGflqHrL6ACz3zh62fzibpnr6nUQHXTfWrSyxYGOTodox5sAC_8MLZFVL8iW0Em_e'},
+    imgSrc:'https://i.pinimg.com/564x/a0/63/a9/a063a994f35412a081ccd1f8822c7dfe.jpg'},
     {notificationText: 'Jay Cutler',
-    imgSrc:'http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTl1mL0LZxWdyDuZHTX70dmMvE9ppKJXcvHjZdNqkPiD_IcXvRoLYzaPG1uyKGtvjn4'},
+    imgSrc:'https://image-cdn.essentiallysports.com/wp-content/uploads/photo_2022-10-20_17-27-49.jpg'},
     
   ])
 })

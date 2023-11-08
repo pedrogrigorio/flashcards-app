@@ -53,7 +53,7 @@ public class NotificationActivity extends AppCompatActivity {
 
 
         addNotification.setOnClickListener(v -> {
-            notificationViewModel.insertNotification(new Notification("Test notification"), this);
+            notificationViewModel.insertNotification(new Notification("Test notification", "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg"), this);
         });
 
         backButtonAction.setOnClickListener(v -> {
