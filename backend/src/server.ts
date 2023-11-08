@@ -67,6 +67,25 @@ app.get('/friends', (req, res) => {
   ])
 })
 
+
+app.get('/Notification', (req, res) => {
+  res.send([
+    {notificationText: 'Ronnie Coleman',
+    imgSrc:'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg'},
+    {notificationText: 'Phil Heath',
+    imgSrc:'http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcQByt7RsuwZOqhe9t1ArYD5UCmrqkHa8Tadj0UlqRVQwUnWOCxehO7wNCP01dPYlAn8'},
+    {notificationText: 'Dorian Yates',
+    imgSrc:'https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY367_.jpg 319w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY551_.jpg 479w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY337_.jpg 293w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY576_.jpg 501w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UX1100_.jpg 1100w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY1264_.jpg'},
+    {notificationText: 'Dexter Jackson',
+    imgSrc:'http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcSsGflqHrL6ACz3zh62fzibpnr6nUQHXTfWrSyxYGOTodox5sAC_8MLZFVL8iW0Em_e'},
+    {notificationText: 'Jay Cutler',
+    imgSrc:'http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTl1mL0LZxWdyDuZHTX70dmMvE9ppKJXcvHjZdNqkPiD_IcXvRoLYzaPG1uyKGtvjn4'},
+    
+  ])
+})
+
+
+
 app.listen(3000, () => {
   console.log('Server is running!')
 })
