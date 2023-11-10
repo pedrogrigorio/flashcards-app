@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView username;
     TextView dayStreak;
     TextView reviewedCardsNumber;
+    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +54,16 @@ public class ProfileActivity extends AppCompatActivity {
         username = findViewById(R.id.username_textView);
         dayStreak = findViewById(R.id.day_streak);
         reviewedCardsNumber = findViewById(R.id.cards_reviewed_number);
+        back = findViewById(R.id.btn_back);
 
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         configProfileViewModel();
 
 //        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
 
+        back.setOnClickListener(v -> {
+            accessHomeActivity();
+        });
     }
 
     private void configProfileViewModel() {
@@ -83,8 +89,8 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void accessMainScreen(View view) {
-        Intent in = new Intent(ProfileActivity.this, HomeActivity.class);
+    public void accessHomeActivity() {
+        Intent in = new Intent(this, HomeActivity.class);
         startActivity(in);
     }
 }

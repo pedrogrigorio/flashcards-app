@@ -33,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
     TextView name;
     TextView username;
 
-    LinearLayout disconnect;
+    LinearLayout logout;
     ImageButton back;
     Button editProfile;
 
@@ -49,20 +49,20 @@ public class SettingsActivity extends AppCompatActivity {
         profileImg = findViewById(R.id.profile_img);
         name = findViewById(R.id.name_textView);
         username = findViewById(R.id.username_textView);
-        disconnect = findViewById(R.id.btn_logout);
+        logout = findViewById(R.id.btn_logout);
         back = findViewById(R.id.btn_back);
         editProfile = findViewById(R.id.btn_edit_profile);
 
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         configProfileViewModel();
 
-        disconnect.setOnClickListener(v -> {
+        logout.setOnClickListener(v -> {
             // TODO: Clear SharedPreferences
-            accessInitialScreen();
+            accessInitialActivity();
         });
 
         back.setOnClickListener(v -> {
-            accessHomeScreen();
+            accessHomeActivity();
         });
 
         editProfile.setOnClickListener(v -> {
@@ -98,12 +98,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void accessHomeScreen() {
+    private void accessHomeActivity() {
         Intent in = new Intent(this, HomeActivity.class);
         startActivity(in);
     }
 
-    private void accessInitialScreen() {
+    private void accessInitialActivity() {
         Intent in = new Intent(this, MainActivity.class);
         startActivity(in);
     }

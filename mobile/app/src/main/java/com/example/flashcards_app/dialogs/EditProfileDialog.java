@@ -5,10 +5,15 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,6 +27,8 @@ import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
 public class EditProfileDialog extends AppCompatDialogFragment {
@@ -32,7 +39,10 @@ public class EditProfileDialog extends AppCompatDialogFragment {
 
     ImageView profileImg;
     FloatingActionButton camButton;
-    EditText name;
+    TextInputLayout nameLayout;
+    TextInputEditText nameEditText;
+
+    Button positiveButton;
 
     public EditProfileDialog(User user) {
         this.user = user;
@@ -50,14 +60,20 @@ public class EditProfileDialog extends AppCompatDialogFragment {
                 .setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        updatedUser.setName(name.getText().toString());
+                        updatedUser.setName(nameEditText.getText().toString());
                         dialogResult.finish(updatedUser);
                     }
                 });
 
+        AlertDialog dialog = builder.create();
+//        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+//        button.setBackgroundColor(Color.BLUE);
+//        button.setTextColor(Color.GREEN);
+
         camButton = view.findViewById(R.id.btn_edit_img);
         profileImg = view.findViewById(R.id.profile_img);
-        name = view.findViewById(R.id.edit_name);
+        nameLayout = view.findViewById(R.id.edit_name_field);
+        nameEditText = view.findViewById(R.id.edit_name_editText);
 
         if (!user.getImgSrc().isEmpty()) {
             Picasso.get()
@@ -65,9 +81,11 @@ public class EditProfileDialog extends AppCompatDialogFragment {
                     .into(profileImg);
         }
 
-        name.setText(user.getName());
+        nameEditText.setText(user.getName());
 
         updatedUser = new User(user.getName(), user.getUsername());
+
+        configNameFieldValidation();
 
         camButton.setOnClickListener(v -> {
             ImagePicker.with(this)
@@ -80,7 +98,7 @@ public class EditProfileDialog extends AppCompatDialogFragment {
                     });
         });
 
-        return builder.create();
+        return dialog;
     }
 
     private final ActivityResultLauncher<Intent> startForMediaPickerResult = registerForActivityResult(
@@ -106,6 +124,49 @@ public class EditProfileDialog extends AppCompatDialogFragment {
 
     public void setDialogResult(onDialogResult dialogResult) {
         this.dialogResult = dialogResult;
+    }
+
+    private void configNameFieldValidation() {
+        nameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String name = s.toString();
+                boolean isValid;
+
+                if (name.length() >= 2) {
+                    isValid = name.matches("^[a-zA-Z][a-zA-Z\\s]*[a-zA-Z]$");
+                } else {
+                    nameLayout.setHelperText("Nome deve ter pelo menos 2 letras e pode conter apenas letras e espaços.");
+                    isValid = false;
+                }
+
+                //editButton.setEnabled(isValid);
+
+                boolean startsWithLetters = name.matches("^[a-zA-Z].*");
+                boolean containsOnlyLettersAndSpaces = name.matches("^[a-zA-Z\\s]*$");
+                boolean endsWithLetters = name.matches(".*[a-zA-Z]$");
+
+                if (!isValid) {
+                    if (!startsWithLetters) {
+                        nameLayout.setError("Nome deve iniciar com letras.");
+                    } else if (!containsOnlyLettersAndSpaces) {
+                        nameLayout.setError("Nome pode conter apenas letras e espaços.");
+                    } else if (!endsWithLetters) {
+                        nameLayout.setError("Nome não pode terminar com espaços em branco.");
+                    }
+                } else {
+                    nameLayout.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
 
