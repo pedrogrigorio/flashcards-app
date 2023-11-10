@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -35,7 +36,7 @@ public class AddUserActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-
+        
         adapter = new AddUserAdapter();
 
         recyclerView = findViewById(R.id.users_recycle_view);
@@ -44,8 +45,14 @@ public class AddUserActivity extends AppCompatActivity {
         configUserViewModel();
 
         Button addButton = findViewById(R.id.add_user_button);
+        ImageButton backButtonAction = findViewById(R.id.back_button_users);
+
         addButton.setOnClickListener(v -> {
             addUserViewModel.insertFriend(new User("User", "User@"));
+        });
+
+        backButtonAction.setOnClickListener(v -> {
+            backButton();
         });
 
     }
@@ -66,6 +73,11 @@ public class AddUserActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    private void backButton() {
+        finish();
     }
 
 //    private void configAdapter() {
