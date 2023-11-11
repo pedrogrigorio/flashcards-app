@@ -20,7 +20,6 @@ import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ViewPagerAdapter;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.viewmodel.HomeViewModel;
-import com.example.flashcards_app.viewmodel.ProfileViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.squareup.picasso.Picasso;
@@ -135,7 +134,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void accessNotifications() {
-        Intent in = new Intent(this, NotificationActivity.class);
+        Intent in = new Intent(this, NotificationsActivity.class);
         startActivity(in);
     }
 

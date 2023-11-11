@@ -67,7 +67,7 @@ app.get('/friends', (req, res) => {
   ])
 })
 
-app.get('/Notification', (req, res) => {
+app.get('/notifications', (req, res) => {
   res.send([
     {
       notificationText: 'Ronnie Colema',
