@@ -21,7 +21,6 @@ public class ProfileViewModel extends ViewModel {
     public LiveData<User> getProfile() {
         if (profileLiveData.getValue() == null) {
             profileLiveData = userRepository.getProfile();
-            profileLiveData.setValue(new User("User3", "username3"));
         }
 
         return profileLiveData;
