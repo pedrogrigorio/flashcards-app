@@ -28,6 +28,7 @@ public class NotificationActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private NotificationAdapter notificationAdapter;
 
+    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +50,15 @@ public class NotificationActivity extends AppCompatActivity {
 
 
         Button addNotification  = findViewById(R.id.add_notification_button);
-        ImageButton backButtonAction = findViewById(R.id.back_button_notification);
+        back = findViewById(R.id.btn_back);
 
+        back.setOnClickListener(v -> {
+            accessHomeActivity();
+        });
 
         addNotification.setOnClickListener(v -> {
             notificationViewModel.insertNotification(new Notification("Test notification", "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg"), this);
         });
-
-        backButtonAction.setOnClickListener(v -> {
-            backButton();
-        });
-
     }
 
     private void configRecyclerView() {
@@ -83,4 +82,8 @@ public class NotificationActivity extends AppCompatActivity {
         finish();
     }
 
+    private void accessHomeActivity() {
+        Intent in = new Intent(this, HomeActivity.class);
+        startActivity(in);
+    }
 }

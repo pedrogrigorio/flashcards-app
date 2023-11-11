@@ -2,6 +2,7 @@ package com.example.flashcards_app.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,7 +57,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         }
 
         holder.editButton.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(v.getContext(), holder.editButton);
+            PopupMenu popup = new PopupMenu(v.getContext(), holder.editButton, Gravity.END);
             popup.inflate(R.menu.deck_options_menu);
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
