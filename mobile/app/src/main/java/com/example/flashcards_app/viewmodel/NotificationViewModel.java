@@ -1,14 +1,13 @@
 package com.example.flashcards_app.viewmodel;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.flashcards_app.models.Notification;
-import com.example.flashcards_app.repositories.NotificationRepository;
+import com.example.flashcards_app.repositories.NotificationsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +15,16 @@ import java.util.List;
 public class NotificationViewModel extends ViewModel {
 
     private MutableLiveData<List<Notification>> notificationLiveData = new MutableLiveData<>();
-    private NotificationRepository notificationRepository;
+    private NotificationsRepository notificationsRepository;
 
 
     public NotificationViewModel() {
-        notificationRepository = new NotificationRepository();
+        notificationsRepository = new NotificationsRepository();
     }
 
     public LiveData<List<Notification>> getNotification() {
         if (notificationLiveData.getValue() == null || notificationLiveData.getValue().isEmpty()) {
-            notificationLiveData = notificationRepository.getNotifications();
+            notificationLiveData = notificationsRepository.getNotifications();
         }
 
 //        MutableLiveData<List<Notification>> tempDataLive = new MutableLiveData<>();

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,15 +31,14 @@ import com.squareup.picasso.Picasso;
 public class ProfileActivity extends AppCompatActivity {
 
     User user;
+    ProfileViewModel profileViewModel;
+
     ImageView profileImg;
-    FloatingActionButton camButton;
-    ImageView editNameButton;
     TextView name;
     TextView username;
     TextView dayStreak;
     TextView reviewedCardsNumber;
-
-    ProfileViewModel profileViewModel;
+    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,49 +50,20 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         profileImg = findViewById(R.id.profile_img);
-        camButton = findViewById(R.id.btn_cam);
-        editNameButton = findViewById(R.id.btn_edit_name);
-        name = findViewById(R.id.name);
-        username = findViewById(R.id.username);
+        name = findViewById(R.id.name_textView);
+        username = findViewById(R.id.username_textView);
         dayStreak = findViewById(R.id.day_streak);
         reviewedCardsNumber = findViewById(R.id.cards_reviewed_number);
+        back = findViewById(R.id.btn_back);
 
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         configProfileViewModel();
 
-        editNameButton.setOnClickListener(v -> {
-            EditNameDialog dialog = new EditNameDialog(user);
-            dialog.setDialogResult(new EditNameDialog.onDialogResult() {
-                @Override
-                public void finish(User updatedProfile) {
-                    profileViewModel.updateProfile(updatedProfile);
-                }
-            });
-            dialog.show(getSupportFragmentManager(), "edit_name_popup");
-        });
-
-        camButton.setOnClickListener(v -> {
-            ImagePicker.with(this)
-                    .crop(1f, 1f)
-                    .compress(1024)
-                    .maxResultSize(1080, 1080)
-                    .start();
-        });
-
 //        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = data.getData();
-        profileImg.setImageURI(uri);
-    }
-
-    public void accessMainScreen(View view) {
-        Intent in = new Intent(ProfileActivity.this, HomeActivity.class);
-        startActivity(in);
+        back.setOnClickListener(v -> {
+            accessHomeActivity();
+        });
     }
 
     private void configProfileViewModel() {
@@ -116,5 +87,10 @@ public class ProfileActivity extends AppCompatActivity {
                     .load(user.getImgSrc())
                     .into(profileImg);
         }
+    }
+
+    public void accessHomeActivity() {
+        Intent in = new Intent(this, HomeActivity.class);
+        startActivity(in);
     }
 }

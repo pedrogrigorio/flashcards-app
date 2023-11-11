@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.HomeActivity;
@@ -23,6 +24,7 @@ public class ChooseNameActivity extends AppCompatActivity {
     TextInputLayout nameLayout;
     TextInputEditText nameEditText;
     Button continueButton;
+    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,15 @@ public class ChooseNameActivity extends AppCompatActivity {
         nameLayout = findViewById(R.id.name_field);
         nameEditText = findViewById(R.id.name_editText);
         continueButton = findViewById(R.id.btn_continue);
+        back = findViewById(R.id.btn_back);
         continueButton.setEnabled(false);
 
         continueButton.setOnClickListener(v -> {
             accessHomeActivity();
+        });
+
+        back.setOnClickListener(v -> {
+            accessMainActivity();
         });
 
         nameEditText.addTextChangedListener(new TextWatcher() {
@@ -86,6 +93,11 @@ public class ChooseNameActivity extends AppCompatActivity {
 
     private void accessHomeActivity() {
         Intent in = new Intent(this, HomeActivity.class);
+        startActivity(in);
+    }
+
+    private void accessMainActivity() {
+        Intent in = new Intent(this, MainActivity.class);
         startActivity(in);
     }
 }

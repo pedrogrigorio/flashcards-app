@@ -7,9 +7,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-public interface NotificationService {
+public interface NotificationsService {
 
-    @GET("Notification")
+    @GET("notifications")
     Call<List<Notification>> lookForNotification();
 
 }

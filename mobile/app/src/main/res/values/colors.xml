@@ -9,7 +9,10 @@
     <color name="btn_primary_v2">#FFFFFF</color>
     <color name="btn_primary_v2_pressed">#B1B1B1</color>
 
+    <color name="action_buttons_icons">#294E5E</color>
     <color name="gray">#B1B1B1</color>
+    <color name="gray_light">#D7D7D7</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#E13434</color>

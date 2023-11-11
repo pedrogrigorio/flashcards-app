@@ -67,24 +67,46 @@ app.get('/friends', (req, res) => {
   ])
 })
 
-
-app.get('/Notification', (req, res) => {
+app.get('/notifications', (req, res) => {
   res.send([
-    {notificationText: 'Ronnie Colema',
-    imgSrc:'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg'},
-    {notificationText: 'Phil Heath',
-    imgSrc:'https://c7.alamy.com/comp/GY8FAP/las-vegas-nevada-usa-17th-sep-2016-phil-heath-wins-his-sixth-straight-GY8FAP.jpg'},
-    {notificationText: 'Dorian Yates',
-    imgSrc:'https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY367_.jpg 319w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY551_.jpg 479w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY337_.jpg 293w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY576_.jpg 501w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UX1100_.jpg 1100w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY1264_.jpg'},
-    {notificationText: 'Dexter Jackson',
-    imgSrc:'https://i.pinimg.com/564x/a0/63/a9/a063a994f35412a081ccd1f8822c7dfe.jpg'},
-    {notificationText: 'Jay Cutler',
-    imgSrc:'https://image-cdn.essentiallysports.com/wp-content/uploads/photo_2022-10-20_17-27-49.jpg'},
-    
+    {
+      notificationText: 'Ronnie Colema',
+      imgSrc:
+        'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg',
+    },
+    {
+      notificationText: 'Phil Heath',
+      imgSrc:
+        'https://c7.alamy.com/comp/GY8FAP/las-vegas-nevada-usa-17th-sep-2016-phil-heath-wins-his-sixth-straight-GY8FAP.jpg',
+    },
+    {
+      notificationText: 'Dorian Yates',
+      imgSrc:
+        'https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY367_.jpg 319w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY551_.jpg 479w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY337_.jpg 293w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY576_.jpg 501w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UX1100_.jpg 1100w, https://m.media-amazon.com/images/M/MV5BYjVhMThhMWUtYTU3OS00YzBiLWI2NzgtOTg1MDI4YzY0MmEzXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UY1264_.jpg',
+    },
+    {
+      notificationText: 'Dexter Jackson',
+      imgSrc:
+        'https://i.pinimg.com/564x/a0/63/a9/a063a994f35412a081ccd1f8822c7dfe.jpg',
+    },
+    {
+      notificationText: 'Jay Cutler',
+      imgSrc:
+        'https://image-cdn.essentiallysports.com/wp-content/uploads/photo_2022-10-20_17-27-49.jpg',
+    },
   ])
 })
 
-
+app.get('/users', (req, res) => {
+  res.send({
+    name: 'João',
+    username: 'joaozin_god',
+    imgSrc:
+      'https://i.pinimg.com/736x/64/fb/63/64fb63cf7acbad70b9ece908b5b1b351.jpg',
+    dayStreak: 34,
+    cardsReviewed: 1024,
+  })
+})
 
 app.listen(3000, () => {
   console.log('Server is running!')

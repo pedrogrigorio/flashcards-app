@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.repositories.UserRepository;
 
-public class HomeViewModel extends ViewModel {
+public class SettingsViewModel extends ViewModel {
     private MutableLiveData<User> profileLiveData = new MutableLiveData<>();
     private UserRepository userRepository;
 
-    public HomeViewModel() {
+    public SettingsViewModel() {
         userRepository = new UserRepository();
     }
 
@@ -21,5 +21,9 @@ public class HomeViewModel extends ViewModel {
         }
 
         return profileLiveData;
+    }
+
+    public void updateProfile(User user) {
+        profileLiveData.setValue(user);
     }
 }
