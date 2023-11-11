@@ -4,17 +4,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.repositories.UserRepository;
 
-import java.util.List;
-
-public class ProfileViewModel extends ViewModel {
+public class SettingsViewModel extends ViewModel {
     private MutableLiveData<User> profileLiveData = new MutableLiveData<>();
     private UserRepository userRepository;
 
-    public ProfileViewModel() {
+    public SettingsViewModel() {
         userRepository = new UserRepository();
     }
 
@@ -24,5 +21,9 @@ public class ProfileViewModel extends ViewModel {
         }
 
         return profileLiveData;
+    }
+
+    public void updateProfile(User user) {
+        profileLiveData.setValue(user);
     }
 }

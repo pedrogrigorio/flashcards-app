@@ -22,12 +22,13 @@ import com.example.flashcards_app.dialogs.EditProfileDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.viewmodel.ProfileViewModel;
+import com.example.flashcards_app.viewmodel.SettingsViewModel;
 import com.squareup.picasso.Picasso;
 
 public class SettingsActivity extends AppCompatActivity {
 
     User user;
-    ProfileViewModel profileViewModel;
+    SettingsViewModel settingsViewModel;
 
     ImageView profileImg;
     TextView name;
@@ -53,8 +54,8 @@ public class SettingsActivity extends AppCompatActivity {
         back = findViewById(R.id.btn_back);
         editProfile = findViewById(R.id.btn_edit_profile);
 
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        configProfileViewModel();
+        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        configSettingsViewModel();
 
         logout.setOnClickListener(v -> {
             // TODO: Clear SharedPreferences
@@ -70,15 +71,15 @@ public class SettingsActivity extends AppCompatActivity {
             dialog.setDialogResult(new EditProfileDialog.onDialogResult() {
                 @Override
                 public void finish(User updatedProfile) {
-                    profileViewModel.updateProfile(updatedProfile);
+                    settingsViewModel.updateProfile(updatedProfile);
                 }
             });
             dialog.show(getSupportFragmentManager(), "edit_profile_popup");
         });
     }
 
-    private void configProfileViewModel() {
-        profileViewModel.getProfile().observe(this, new Observer<User>() {
+    private void configSettingsViewModel() {
+        settingsViewModel.getProfile().observe(this, new Observer<User>() {
             @Override
             public void onChanged(User updatedProfile) {
                 user = updatedProfile;
