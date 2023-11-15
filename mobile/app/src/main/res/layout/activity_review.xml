@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/new_background"
+    android:id="@+id/ReviewActivity"
     tools:context=".activities.ReviewActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -41,123 +42,134 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/backCardViewText"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:cardCornerRadius="34dp"
+
+    <!-- old code - Don't touch this-->
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/backCardViewText"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="250dp"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        app:cardCornerRadius="34dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.388">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/backCardText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:gravity="center"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#391760"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            &lt;!&ndash; View para o lado esquerdo da tela &ndash;&gt;-->
+<!--            <View-->
+<!--                android:id="@+id/leftClickableRegionBack"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:visibility="visible"-->
+<!--                android:background="@android:color/transparent" />-->
+
+<!--            &lt;!&ndash; View para o lado direito da tela &ndash;&gt;-->
+<!--            <View-->
+<!--                android:id="@+id/rightClickableRegionBack"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:visibility="visible"-->
+<!--                android:background="@android:color/transparent" />-->
+
+<!--        </LinearLayout>-->
+
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+
+
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/frontCardViewText"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="250dp"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        app:cardCornerRadius="34dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.388">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/frontCardText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:gravity="center"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#391760"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            &lt;!&ndash; View para o lado esquerdo da tela &ndash;&gt;-->
+<!--            <View-->
+<!--                android:id="@+id/leftClickableRegionFront"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:visibility="visible"-->
+<!--                android:background="@android:color/transparent" />-->
+
+<!--            &lt;!&ndash; View para o lado direito da tela &ndash;&gt;-->
+<!--            <View-->
+<!--                android:id="@+id/rightClickableRegionFront"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:visibility="visible"-->
+<!--                android:background="@android:color/transparent" />-->
+
+<!--        </LinearLayout>-->
+
+
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/testReviewScreen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.388">
-
-        <TextView
-            android:id="@+id/backCardText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="#391760"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <!-- View para o lado esquerdo da tela -->
-            <View
-                android:id="@+id/leftClickableRegionBack"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="visible"
-                android:background="@android:color/transparent" />
-
-            <!-- View para o lado direito da tela -->
-            <View
-                android:id="@+id/rightClickableRegionBack"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="visible"
-                android:background="@android:color/transparent" />
-
-        </LinearLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
-
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/frontCardViewText"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:cardCornerRadius="34dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.388">
-
-        <TextView
-            android:id="@+id/frontCardText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="#391760"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <!-- View para o lado esquerdo da tela -->
-            <View
-                android:id="@+id/leftClickableRegionFront"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="visible"
-                android:background="@android:color/transparent" />
-
-            <!-- View para o lado direito da tela -->
-            <View
-                android:id="@+id/rightClickableRegionFront"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="visible"
-                android:background="@android:color/transparent" />
-
-        </LinearLayout>
-
-
-
-    </androidx.cardview.widget.CardView>
-
-
-
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="NotSibling"
+        tools:listitem="@layout/test_new_review_item" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/microphone_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/btn_microphone_sound_edit_card_rounded"
         android:drawableBottom="@drawable/microphone"
         android:gravity="center"
@@ -167,8 +179,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
-        app:layout_constraintVertical_bias="0.314" />
+        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"
+        app:layout_constraintVertical_bias="0.862" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/audio_button"
@@ -180,10 +193,10 @@
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintHorizontal_bias="0.781"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
-        app:layout_constraintVertical_bias="0.054" />
+        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"
+        app:layout_constraintVertical_bias="0.729" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button5"
@@ -195,11 +208,10 @@
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintHorizontal_bias="0.921"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backCardViewText"
-        app:layout_constraintVertical_bias="0.054" />
-
+        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"
+        app:layout_constraintVertical_bias="0.729" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/hard_button"

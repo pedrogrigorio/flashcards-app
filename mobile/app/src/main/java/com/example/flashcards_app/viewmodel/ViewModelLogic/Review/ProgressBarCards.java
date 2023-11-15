@@ -1,4 +1,4 @@
-package com.example.flashcards_app.models;
+package com.example.flashcards_app.viewmodel.ViewModelLogic.Review;
 
 import android.view.View;
 import android.widget.TextView;
