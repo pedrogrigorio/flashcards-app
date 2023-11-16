@@ -5,11 +5,20 @@ public class Review {
     String frontText;
     String backText;
     int id;
+    Integer stampLevel = null;
 
     public Review(String frontText, String backText, int id) {
         this.frontText = frontText;
         this.backText = backText;
         this.id = id;
+    }
+
+    public Integer getStampLevel() {
+        return stampLevel;
+    }
+
+    public void setStampLevel(Integer stampLevel) {
+        this.stampLevel = stampLevel;
     }
 
     public String getFrontText() {

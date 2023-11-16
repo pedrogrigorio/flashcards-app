@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.activities.ReviewActivity;
 import com.example.flashcards_app.models.Animator;
 import com.example.flashcards_app.models.Review;
 
@@ -44,6 +45,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         Review currentReview = reviews.get(position);
         holder.frontTextCard.setText(currentReview.getFrontText());
         holder.backTextCard.setText(currentReview.getBackText());
+        holder.setStampLevel(currentReview.getStampLevel());
 
         Animator animator = new Animator(context,
                 (AnimatorSet) AnimatorInflater.loadAnimator(this.context, R.animator.front_animator_anticlockwise),
@@ -53,8 +55,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
                 holder.frontCard, holder.backCard
         );
 
-        holder.frontCard.setOnClickListener(v -> animator.makeAnimationRight());
+        holder.frontCard.setOnClickListener(v -> {
+            animator.makeAnimationRight();
+            ReviewActivity.setVisibilityDificultButtons(true);
+        });
         holder.backCard.setOnClickListener(v -> animator.makeAnimationLeft());
+
 
     }
     @Override
@@ -80,6 +86,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         private View backCard;
         private TextView frontTextCard;
         private TextView backTextCard;
+        private Integer stampLevel;
+
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -92,6 +100,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         public String getTextCard() {
             return (String) this.frontTextCard.getText();
         }
+
+        public void setStampLevel(Integer stampLevel) {this.stampLevel = stampLevel;}
+        public Integer getStampLevel() {return this.stampLevel;}
     }
 
 }

@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -36,12 +37,13 @@ public class ReviewActivity extends AppCompatActivity {
     private LinearSnapHelper linearSnapHelper;
     private ProgressBarCards progressBarCards;
     private Button microphoneButton;
-    private Button easyButton;
-    private Button goodButton;
-    private Button hardButton;
+    private static Button easyButton;
+    private static Button goodButton;
+    private static Button hardButton;
     private Button audioButton;
     private AudioCard audioCard;
     private LinearLayoutManager layoutManager;
+    private Cards cards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,8 @@ public class ReviewActivity extends AppCompatActivity {
             Toast.makeText(this, "Erro ao carregar o deck", Toast.LENGTH_SHORT).show();
         }
 
+        cards = new Cards();
+
         startUpRecycleViewMVVM();
         startUpScreenElements();
 
@@ -68,12 +72,18 @@ public class ReviewActivity extends AppCompatActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 recyclerView.setScrollingTouchSlop(dx);
                 updateProgressBar();
+                ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
+                if (firstVisibleViewHolder != null && firstVisibleViewHolder.getStampLevel() == null) {
+                    setVisibilityDificultButtons(false);
+                }
             }
         });
 
         this.audioButton.setOnClickListener(v -> speakAudio());
 
-
+        easyButton.setOnClickListener(v -> cards.easyButton(getCurrentRecycleObjectOnScreen(), this.recyclerView));
+        goodButton.setOnClickListener(v -> cards.goodButton(getCurrentRecycleObjectOnScreen(), this.recyclerView));
+        hardButton.setOnClickListener(v -> cards.hardButton(getCurrentRecycleObjectOnScreen(), this.recyclerView));
 
     }
 
@@ -90,10 +100,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void startUpScreenElements() {
         this.microphoneButton  = findViewById(R.id.microphone_button);
-        this.easyButton        = findViewById(R.id.easy_button);
-        this.goodButton        = findViewById(R.id.good_button);
-        this.hardButton        = findViewById(R.id.hard_button);
-        this.audioButton       = findViewById(R.id.audio_button);
+        easyButton        = findViewById(R.id.easy_button);
+        goodButton        = findViewById(R.id.good_button);
+        hardButton        = findViewById(R.id.hard_button);
+        this.audioButton  = findViewById(R.id.audio_button);
         this.audioCard = new AudioCard(getApplicationContext());
     }
 
@@ -118,6 +128,7 @@ public class ReviewActivity extends AppCompatActivity {
         recyclerView.setAdapter(this.reviewAdapter);
         linearSnapHelper.attachToRecyclerView(this.recyclerView);
     }
+
 
 
     public void configReviewViewModel() {
@@ -148,10 +159,12 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
 
-    
-
-
-
+    public static  void setVisibilityDificultButtons(boolean setVisibility) {
+        int visibility = setVisibility ? View.VISIBLE : View.INVISIBLE;
+        goodButton.setVisibility(visibility);
+        hardButton.setVisibility(visibility);
+        easyButton.setVisibility(visibility);
+    }
 
 
 

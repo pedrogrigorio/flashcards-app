@@ -5,13 +5,22 @@ public class NewCards {
     String frontText;
     String backText;
     int  id;
+    int assignmentLevel = -1;
 
-    public NewCards(String frontText, String backText, int id) {
+    public NewCards(String frontText, String backText, int id, int assignmentLevel) {
         this.frontText = frontText;
         this.backText = backText;
         this.id = id;
+        this.assignmentLevel = assignmentLevel;
     }
 
+    public int getAssignmentLevel() {
+        return assignmentLevel;
+    }
+
+    public void setAssignmentLevel(int assignmentLevel) {
+        this.assignmentLevel = assignmentLevel;
+    }
 
     public String getFrontText() {
         return frontText;
