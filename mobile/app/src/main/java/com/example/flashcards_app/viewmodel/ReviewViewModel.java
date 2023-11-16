@@ -11,23 +11,31 @@ import java.util.List;
 
 public class ReviewViewModel extends ViewModel {
     private MutableLiveData<List<Review>> reviewLiveData = new MutableLiveData<>();
+    private List<Review> reviewTemp = new ArrayList<>();
 
+    public ReviewViewModel() {
+        loadReviewCardsData();
+    }
 
-    public LiveData<List<Review>> getReviewData() {
-//        if (reviewLiveData.getValue() == null || reviewLiveData.getValue().isEmpty()) {
-//            reviewLiveData = reviewLiveData ** coding in the future **
-//        }
-
-        List<Review> reviewTemp = new ArrayList<>();
-
+    private void loadReviewCardsData() {
         reviewTemp.add(new Review("Good Nigth", "Boa Noite", 1));
         reviewTemp.add(new Review("Have a nice day", "Tenha um bom dia", 2));
         reviewTemp.add(new Review("So far, so good", "Até agora, tudo bem", 1));
         reviewTemp.add(new Review("I'm lost", "Eu estou perdido", 1));
 
-        MutableLiveData<List<Review>> tempDataLive = new MutableLiveData<>();
-        tempDataLive.setValue(reviewTemp);
-        return tempDataLive;
+
+    }
+
+    public void loadUiCards(int indexUiCard) {
+        indexUiCard = Math.min(indexUiCard, reviewTemp.size()) + 1;
+        this.reviewLiveData.setValue(reviewTemp.subList(0,indexUiCard));
+
+
+    }
+
+    public LiveData<List<Review>> getReviewData() {
+        return this.reviewLiveData;
+
     }
 
 }

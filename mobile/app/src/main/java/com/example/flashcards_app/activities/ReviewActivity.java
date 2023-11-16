@@ -81,7 +81,6 @@ public class ReviewActivity extends AppCompatActivity {
 
 
 
-
         this.audioButton.setOnClickListener(v -> speakAudio());
 
         easyButton.setOnClickListener(v -> setEasyButton());
@@ -92,6 +91,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void setEasyButton() {
         this.cards.easyButton(getCurrentRecycleObjectOnScreen(), this.recyclerView);
+
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setGoodButton() {
@@ -141,6 +141,7 @@ public class ReviewActivity extends AppCompatActivity {
         // View Model Config
         this.reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         configReviewViewModel();
+        this.reviewViewModel.loadUiCards(0);
 
     }
 
