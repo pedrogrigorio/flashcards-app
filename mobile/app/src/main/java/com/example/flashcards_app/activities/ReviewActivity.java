@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -73,18 +74,33 @@ public class ReviewActivity extends AppCompatActivity {
                 recyclerView.setScrollingTouchSlop(dx);
                 updateProgressBar();
                 ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
-                if (firstVisibleViewHolder != null && firstVisibleViewHolder.getStampLevel() == null) {
-                    setVisibilityDificultButtons(false);
-                }
+                setVisibilityDificultButtons(firstVisibleViewHolder == null || firstVisibleViewHolder.getStampLevel() != null);
+
             }
         });
 
+
+
+
         this.audioButton.setOnClickListener(v -> speakAudio());
 
-        easyButton.setOnClickListener(v -> cards.easyButton(getCurrentRecycleObjectOnScreen(), this.recyclerView));
-        goodButton.setOnClickListener(v -> cards.goodButton(getCurrentRecycleObjectOnScreen(), this.recyclerView));
-        hardButton.setOnClickListener(v -> cards.hardButton(getCurrentRecycleObjectOnScreen(), this.recyclerView));
+        easyButton.setOnClickListener(v -> setEasyButton());
+        goodButton.setOnClickListener(v -> setGoodButton());
+        hardButton.setOnClickListener(v -> setHardButton());
 
+    }
+
+    private void setEasyButton() {
+        this.cards.easyButton(getCurrentRecycleObjectOnScreen(), this.recyclerView);
+        nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
+    }
+    private void setGoodButton() {
+        this.cards.goodButton(getCurrentRecycleObjectOnScreen(), this.recyclerView);
+        nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
+    }
+    private void setHardButton() {
+        this.cards.hardButton(getCurrentRecycleObjectOnScreen(), this.recyclerView);
+        nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
 
     private void speakAudio() {
@@ -96,6 +112,12 @@ public class ReviewActivity extends AppCompatActivity {
 
     private int getCurrentRecycleObjectOnScreen() {
         return this.layoutManager.findFirstVisibleItemPosition();
+    }
+
+    private void nextSmoothScrollToPosition(int currentRecycleObject) {
+        if (currentRecycleObject < this.reviewAdapter.getItemCount()) {
+            recyclerView.smoothScrollToPosition(currentRecycleObject);
+        }
     }
 
     private void startUpScreenElements() {
