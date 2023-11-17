@@ -27,7 +27,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
     private List<Review> reviews = new ArrayList<>();
     private final Context context;
-    private  LinearLayoutManager linearLayoutManager;
+
 
 
     public ReviewAdapter(Context context) {
@@ -64,14 +64,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     public void onViewRecycled(@NonNull ReviewHolder holder) {
         super.onViewRecycled(holder);
 
-        holder.frontCard.animate().cancel();
-        holder.backCard.animate().cancel();
+        holder.animator.resetCardPosition();
 
-        holder.frontCard.clearAnimation();
-        holder.backCard.clearAnimation();
-
-
-
+//        holder.frontCard.animate().cancel();
+//        holder.backCard.animate().cancel();
+//
+//        holder.backCard.clearAnimation();
+//        holder.frontCard.clearAnimation();
 
 
     }

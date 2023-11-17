@@ -48,6 +48,10 @@ public class ReviewViewModel extends ViewModel {
 
 
 
+    public void setReviewedCard(int ActualFirstVisibleItemPosition, int StampLevel) {
+        this.reviewTemp.get(ActualFirstVisibleItemPosition).setStampLevel(StampLevel);
+    }
+
     public LiveData<List<Review>> getReviewData() {
         return this.reviewLiveData;
 

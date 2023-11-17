@@ -12,16 +12,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ReviewAdapter;
-import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.Cards;
+import com.example.flashcards_app.util.DifficultLevel;
 import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.AudioCard;
 import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.ProgressBarCards;
 import com.example.flashcards_app.models.Review;
@@ -44,7 +42,7 @@ public class ReviewActivity extends AppCompatActivity {
     private Button audioButton;
     private AudioCard audioCard;
     private LinearLayoutManager layoutManager;
-    private Cards cards;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,6 @@ public class ReviewActivity extends AppCompatActivity {
             Toast.makeText(this, "Erro ao carregar o deck", Toast.LENGTH_SHORT).show();
         }
 
-        cards = new Cards();
 
         startUpRecycleViewMVVM();
         startUpScreenElements();
@@ -90,20 +87,29 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void setEasyButton() {
-        this.cards.easyButton(getCurrentRecycleObjectOnScreen(), this.recyclerView, reviewAdapter.getReviews());
+        changeDataToReviewedCards(DifficultLevel.EASY.getValue());
         this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(), this);
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setGoodButton() {
-        this.cards.goodButton(getCurrentRecycleObjectOnScreen(), this.recyclerView, reviewAdapter.getReviews());
+        changeDataToReviewedCards(DifficultLevel.GOOD.getValue());
         this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(),this);
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setHardButton() {
-        this.cards.hardButton(getCurrentRecycleObjectOnScreen(), this.recyclerView, reviewAdapter.getReviews());
+        changeDataToReviewedCards(DifficultLevel.HARD.getValue());
         this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(),this);
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
 
+    }
+
+    private void changeDataToReviewedCards(int levelStamp) {
+        ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
+        if (firstVisibleViewHolder != null) {
+                firstVisibleViewHolder.setStampLevel(levelStamp);
+                this.reviewViewModel.setReviewedCard(getCurrentRecycleObjectOnScreen(),levelStamp);
+
+        }
     }
 
     private void speakAudio() {
