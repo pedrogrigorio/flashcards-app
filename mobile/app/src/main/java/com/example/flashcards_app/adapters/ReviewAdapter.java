@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.ReviewActivity;
 import com.example.flashcards_app.models.Animator;
@@ -42,44 +44,54 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
     @Override
     public void onBindViewHolder(@NonNull ReviewHolder holder, int position) {
-        Review currentReview = reviews.get(position);
+        Review currentReview = this.reviews.get(position);
         holder.frontTextCard.setText(currentReview.getFrontText());
         holder.backTextCard.setText(currentReview.getBackText());
-        holder.setStampLevel(currentReview.getStampLevel());
 
-        Animator animator = new Animator(context,
-                (AnimatorSet) AnimatorInflater.loadAnimator(this.context, R.animator.front_animator_anticlockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(this.context, R.animator.back_animator_anticlockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(this.context, R.animator.front_animator_clockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(this.context, R.animator.back_animator_clockwise),
-                holder.frontCard, holder.backCard
-        );
+
+
+        Toast.makeText(context, holder.getTextCard(), Toast.LENGTH_SHORT).show();
 
         holder.frontCard.setOnClickListener(v -> {
-            animator.makeAnimationRight();
+            holder.animator.makeAnimationRight();
             ReviewActivity.setVisibilityDificultButtons(true);
         });
-        holder.backCard.setOnClickListener(v -> animator.makeAnimationLeft());
+        holder.backCard.setOnClickListener(v -> holder.animator.makeAnimationLeft());
 
 
     }
     @Override
     public void onViewRecycled(@NonNull ReviewHolder holder) {
         super.onViewRecycled(holder);
+
+        holder.frontCard.animate().cancel();
+        holder.backCard.animate().cancel();
+
         holder.frontCard.clearAnimation();
         holder.backCard.clearAnimation();
+
+
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return this.reviews.size();
+        return reviews.size();
+    }
+
+    public List<Review> getReviews() {
+        return this.reviews;
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
+    public void setReviews(List<Review> newReviews) {
+        reviews = newReviews;
         notifyDataSetChanged();
     }
+
+
 
     public static class ReviewHolder extends RecyclerView.ViewHolder {
         private View frontCard;
@@ -87,6 +99,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         private TextView frontTextCard;
         private TextView backTextCard;
         private Integer stampLevel;
+        private Animator animator;
 
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +108,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
             backTextCard  = itemView.findViewById(R.id.backCardReviewText);
             frontCard     = itemView.findViewById(R.id.frontCardView);
             backCard      = itemView.findViewById(R.id.backCardView);
+
+             this.animator = new Animator(itemView.getContext(),
+                    (AnimatorSet) AnimatorInflater.loadAnimator(itemView.getContext(), R.animator.front_animator_anticlockwise),
+                    (AnimatorSet) AnimatorInflater.loadAnimator(itemView.getContext(), R.animator.back_animator_anticlockwise),
+                    (AnimatorSet) AnimatorInflater.loadAnimator(itemView.getContext(), R.animator.front_animator_clockwise),
+                    (AnimatorSet) AnimatorInflater.loadAnimator(itemView.getContext(), R.animator.back_animator_clockwise),
+                    this.frontCard, this.backCard
+            );
+
         }
 
         public String getTextCard() {

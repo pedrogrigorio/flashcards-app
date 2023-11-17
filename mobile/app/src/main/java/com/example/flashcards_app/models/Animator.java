@@ -51,10 +51,10 @@ public class Animator {
         this.backCardViewText.setCameraDistance(8000*this.scale);
     }
 
-    private void setVisibilityFrontCard() {
-        this.frontCardViewText.setVisibility(View.VISIBLE);
-    }
-    private void setInvisibilityFrontCard() {this.frontCardViewText.setVisibility(View.INVISIBLE); }
+//    private void setVisibilityFrontCard() {
+//        this.frontCardViewText.setVisibility(View.VISIBLE);
+//    }
+//    private void setInvisibilityFrontCard() {this.frontCardViewText.setVisibility(View.INVISIBLE); }
     private void mainAnimationEngine(int animationId) {
         switch (animationId) {
             case 1:
@@ -64,14 +64,14 @@ public class Animator {
                 frontAnimClockWise.start();
                 backAnimClockWise.start();
                 this.turnControl = false;
-                this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
+//                this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
             } else {
                 this.frontAnimClockWise.setTarget(this.backCardViewText);
                 this.backAnimClockWise.setTarget(this.frontCardViewText);
                 backAnimClockWise.start();
                 frontAnimClockWise.start();
                 this.turnControl = true;
-                this.setVisibilityFrontCard();
+//                this.setVisibilityFrontCard();
             }
             break;
 
@@ -82,7 +82,7 @@ public class Animator {
                 frontAnimAntiClockWise.start();
                 backAnimAntiClockWise.start();
                 this.turnControl = false;
-                this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
+//                this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
             } else {
                 this.frontAnimAntiClockWise.setTarget(this.backCardViewText);
                 this.backAnimAntiClockWise.setTarget(this.frontCardViewText);
@@ -90,12 +90,14 @@ public class Animator {
 
                 frontAnimAntiClockWise.start();
                 this.turnControl = true;
-                this.setVisibilityFrontCard();
+//                this.setVisibilityFrontCard();
             }
 
             break;
         }
     }
+
+
 
 
 

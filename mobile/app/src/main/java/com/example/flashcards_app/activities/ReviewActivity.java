@@ -90,17 +90,20 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void setEasyButton() {
-        this.cards.easyButton(getCurrentRecycleObjectOnScreen(), this.recyclerView);
-
+        this.cards.easyButton(getCurrentRecycleObjectOnScreen(), this.recyclerView, reviewAdapter.getReviews());
+        this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(), this);
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setGoodButton() {
-        this.cards.goodButton(getCurrentRecycleObjectOnScreen(), this.recyclerView);
+        this.cards.goodButton(getCurrentRecycleObjectOnScreen(), this.recyclerView, reviewAdapter.getReviews());
+        this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(),this);
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setHardButton() {
-        this.cards.hardButton(getCurrentRecycleObjectOnScreen(), this.recyclerView);
+        this.cards.hardButton(getCurrentRecycleObjectOnScreen(), this.recyclerView, reviewAdapter.getReviews());
+        this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(),this);
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
+
     }
 
     private void speakAudio() {
@@ -141,7 +144,7 @@ public class ReviewActivity extends AppCompatActivity {
         // View Model Config
         this.reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         configReviewViewModel();
-        this.reviewViewModel.loadUiCards(0);
+        this.reviewViewModel.loadUiCards(0, this);
 
     }
 
