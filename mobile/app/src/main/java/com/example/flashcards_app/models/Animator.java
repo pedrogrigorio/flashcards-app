@@ -100,7 +100,14 @@ public class Animator {
 
 
 
-
+    public void resetCardPosition() {
+        // Garanta que o front esteja virado para a tela e inicie a animação para a posição inicial.
+        this.frontAnimClockWise.setTarget(this.frontCardViewText);
+        this.backAnimClockWise.setTarget(this.backCardViewText);
+        frontAnimClockWise.start();
+        backAnimClockWise.start();
+        this.turnControl = false;
+    }
 
 
     public void makeAnimationLeft() {
