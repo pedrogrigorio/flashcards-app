@@ -53,10 +53,7 @@ public class Animator {
         this.backCardViewText.setCameraDistance(8000*this.scale);
     }
 
-//    private void setVisibilityFrontCard() {
-//        this.frontCardViewText.setVisibility(View.VISIBLE);
-//    }
-//    private void setInvisibilityFrontCard() {this.frontCardViewText.setVisibility(View.INVISIBLE); }
+
     private void mainAnimationEngine(int animationId) {
 
         switch (animationId) {
@@ -67,14 +64,13 @@ public class Animator {
                 frontAnimClockWise.start();
                 backAnimClockWise.start();
                 this.turnControl = false;
-//                this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
+
             } else {
                 this.frontAnimClockWise.setTarget(this.backCardViewText);
                 this.backAnimClockWise.setTarget(this.frontCardViewText);
                 backAnimClockWise.start();
                 frontAnimClockWise.start();
                 this.turnControl = true;
-//                this.setVisibilityFrontCard();
             }
             break;
 
@@ -85,7 +81,6 @@ public class Animator {
                 frontAnimAntiClockWise.start();
                 backAnimAntiClockWise.start();
                 this.turnControl = false;
-//                this.frontCardViewText.postDelayed(this::setInvisibilityFrontCard, 1000);
             } else {
                 this.frontAnimAntiClockWise.setTarget(this.backCardViewText);
                 this.backAnimAntiClockWise.setTarget(this.frontCardViewText);
@@ -93,24 +88,13 @@ public class Animator {
 
                 frontAnimAntiClockWise.start();
                 this.turnControl = true;
-//                this.setVisibilityFrontCard();
+
             }
 
             break;
         }
     }
 
-
-
-
-    public void resetCardPosition() {
-        // Garanta que o front esteja virado para a tela e inicie a animação para a posição inicial.
-        this.frontAnimClockWise.setTarget(this.frontCardViewText);
-        this.backAnimClockWise.setTarget(this.backCardViewText);
-        frontAnimClockWise.start();
-        backAnimClockWise.start();
-        this.turnControl = false;
-    }
 
 
     public void makeAnimationLeft() {

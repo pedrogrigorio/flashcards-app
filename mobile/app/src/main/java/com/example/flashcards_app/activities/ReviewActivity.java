@@ -69,19 +69,10 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 recyclerView.setScrollingTouchSlop(dx);
-                List<Review> reviews = reviewViewModel.getReviewData().getValue();
-                Review review = reviews.get(reviews.size()-1);
-                Toast.makeText(getApplicationContext(), String.valueOf(getCurrentRecycleObjectOnScreen()), Toast.LENGTH_SHORT).show();
 
                 updateProgressBar();
-
                 ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
-                System.out.println("PRINT StampLevel " + getCurrentRecycleObjectOnScreen() + ": " + firstVisibleViewHolder.getStampLevel());
-                boolean test = firstVisibleViewHolder == null || firstVisibleViewHolder.getStampLevel() != null;
-
-                Toast.makeText(getApplicationContext(), firstVisibleViewHolder.getTextCard() + String.valueOf(test), Toast.LENGTH_SHORT).show();
-
-                setVisibilityDificultButtons(test, getCurrentRecycleObjectOnScreen());
+                setVisibilityDifficultButtons(firstVisibleViewHolder == null || reviewViewModel.hasBeenReviewed(getCurrentRecycleObjectOnScreen()));
 
             }
         });
@@ -116,7 +107,6 @@ public class ReviewActivity extends AppCompatActivity {
     private void changeDataToReviewedCards(int levelStamp) {
         ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
         if (firstVisibleViewHolder != null) {
-//                firstVisibleViewHolder.setStampLevel(levelStamp);
                 this.reviewViewModel.setReviewedCard(getCurrentRecycleObjectOnScreen(),levelStamp);
 
         }
@@ -146,13 +136,14 @@ public class ReviewActivity extends AppCompatActivity {
         hardButton        = findViewById(R.id.hard_button);
         this.audioButton  = findViewById(R.id.audio_button);
         this.audioCard = new AudioCard(getApplicationContext());
+        startUpProgressBar(this.reviewViewModel.getLoadCardsSize());
     }
 
     private void startUpRecycleViewMVVM() {
 
         // Recycle View config
         this.linearSnapHelper = new LinearSnapHelper();
-        this.reviewAdapter = new ReviewAdapter(getApplicationContext());
+        this.reviewAdapter = new ReviewAdapter();
         this.recyclerView = findViewById(R.id.testReviewScreen);
         configRecyclerView();
         this.layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -178,7 +169,6 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Review> reviews) {
                 reviewAdapter.setReviews(reviews);
-                startUpProgressBar(reviews.size());
             }
         });
     }
@@ -201,10 +191,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
 
-    public static  void setVisibilityDificultButtons(boolean setVisibility, int id) {
-
-//        Toast.makeText(getApplicationContext(), String.valueOf(setVisibility), Toast.LENGTH_SHORT).show();
-        System.out.println("PRINT " + id + ": " + setVisibility);
+    public static  void setVisibilityDifficultButtons(boolean setVisibility) {
         int visibility = setVisibility ? View.VISIBLE : View.INVISIBLE;
         goodButton.setVisibility(visibility);
         hardButton.setVisibility(visibility);
@@ -212,24 +199,6 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-//
-//    private void alertDialogEndCard() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setMessage("Você finalizou seus estudos por hoje. Parabêns!");
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                finish();
-//            }
-//
-//        });
-//        AlertDialog dialog = builder.create();
-//        dialog.create();
-//    }
 
 
 

@@ -26,16 +26,6 @@ import java.util.List;
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHolder> {
 
     private List<Review> reviews = new ArrayList<>();
-    private final Context context;
-
-
-
-    public ReviewAdapter(Context context) {
-        this.context = context;
-
-    }
-
-
 
     @NonNull
     @Override
@@ -50,19 +40,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         holder.frontTextCard.setText(currentReview.getFrontText());
         holder.backTextCard.setText(currentReview.getBackText());
 
-
-
-
-
         holder.frontCard.setOnClickListener(v -> {
             holder.animator.makeAnimationRight();
-            ReviewActivity.setVisibilityDificultButtons(true, 0);
-//            holder.setFront(false);
+            ReviewActivity.setVisibilityDifficultButtons(true);
+            holder.setAnimatorState(false);
         });
         holder.backCard.setOnClickListener(v -> {
             holder.animator.makeAnimationLeft();
-//            holder.setFront(true);
-
+            holder.setAnimatorState(true);
         });
 
 
@@ -70,29 +55,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     @Override
     public void onViewRecycled(@NonNull ReviewHolder holder) {
         super.onViewRecycled(holder);
-
-
-//        holder.turnFront();
-
-//        Toast.makeText(context, holder.getTextCard(), Toast.LENGTH_SHORT).show();
-
-
-//        holder.frontCard.animate().cancel();
-//        holder.backCard.animate().cancel();
-//
-//        holder.backCard.clearAnimation();
-//        holder.frontCard.clearAnimation();
-
-
+        holder.resetAnimatorState();
     }
 
     @Override
     public int getItemCount() {
         return reviews.size();
-    }
-
-    public List<Review> getReviews() {
-        return this.reviews;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -103,13 +71,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     }
 
 
-
     public static class ReviewHolder extends RecyclerView.ViewHolder {
         private View frontCard;
         private View backCard;
         private TextView frontTextCard;
         private TextView backTextCard;
-        private Integer stampLevel;
         private Animator animator;
         private boolean isFront = true;
 
@@ -135,21 +101,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
             return (String) this.frontTextCard.getText();
         }
 
-        public void setStampLevel(Integer stampLevel) {this.stampLevel = stampLevel;}
-        public Integer getStampLevel() {return this.stampLevel;}
-
-        public void turnFront() {
+        public void resetAnimatorState() {
             if (!this.isFront) {
                 this.animator.makeAnimationLeft();
                 this.isFront = true;
             }
         }
 
-        public void setFront(boolean isFront) {
+        public void setAnimatorState(boolean isFront) {
             this.isFront = isFront;
         }
-
-
 
     }
 
