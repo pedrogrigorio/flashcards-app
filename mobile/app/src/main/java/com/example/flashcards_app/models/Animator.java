@@ -44,6 +44,8 @@ public class Animator {
         this.backAnimClockWise  = backAnimClockWise;
         this.scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
 
+
+
         this.setCameraCardDistance();
     }
     private void setCameraCardDistance() {
@@ -56,6 +58,7 @@ public class Animator {
 //    }
 //    private void setInvisibilityFrontCard() {this.frontCardViewText.setVisibility(View.INVISIBLE); }
     private void mainAnimationEngine(int animationId) {
+
         switch (animationId) {
             case 1:
                 if (this.turnControl) {

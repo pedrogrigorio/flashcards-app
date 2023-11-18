@@ -35,6 +35,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
     }
 
+
+
     @NonNull
     @Override
     public ReviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,13 +52,18 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
 
 
-        Toast.makeText(context, holder.getTextCard(), Toast.LENGTH_SHORT).show();
+
 
         holder.frontCard.setOnClickListener(v -> {
             holder.animator.makeAnimationRight();
-            ReviewActivity.setVisibilityDificultButtons(true);
+            ReviewActivity.setVisibilityDificultButtons(true, 0);
+//            holder.setFront(false);
         });
-        holder.backCard.setOnClickListener(v -> holder.animator.makeAnimationLeft());
+        holder.backCard.setOnClickListener(v -> {
+            holder.animator.makeAnimationLeft();
+//            holder.setFront(true);
+
+        });
 
 
     }
@@ -64,7 +71,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     public void onViewRecycled(@NonNull ReviewHolder holder) {
         super.onViewRecycled(holder);
 
-        holder.animator.resetCardPosition();
+
+//        holder.turnFront();
+
+//        Toast.makeText(context, holder.getTextCard(), Toast.LENGTH_SHORT).show();
+
 
 //        holder.frontCard.animate().cancel();
 //        holder.backCard.animate().cancel();
@@ -88,6 +99,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     public void setReviews(List<Review> newReviews) {
         reviews = newReviews;
         notifyDataSetChanged();
+
     }
 
 
@@ -99,6 +111,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         private TextView backTextCard;
         private Integer stampLevel;
         private Animator animator;
+        private boolean isFront = true;
 
         public ReviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -124,6 +137,20 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
         public void setStampLevel(Integer stampLevel) {this.stampLevel = stampLevel;}
         public Integer getStampLevel() {return this.stampLevel;}
+
+        public void turnFront() {
+            if (!this.isFront) {
+                this.animator.makeAnimationLeft();
+                this.isFront = true;
+            }
+        }
+
+        public void setFront(boolean isFront) {
+            this.isFront = isFront;
+        }
+
+
+
     }
 
 }

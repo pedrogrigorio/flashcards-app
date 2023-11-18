@@ -69,9 +69,19 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 recyclerView.setScrollingTouchSlop(dx);
+                List<Review> reviews = reviewViewModel.getReviewData().getValue();
+                Review review = reviews.get(reviews.size()-1);
+                Toast.makeText(getApplicationContext(), String.valueOf(getCurrentRecycleObjectOnScreen()), Toast.LENGTH_SHORT).show();
+
                 updateProgressBar();
+
                 ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
-                setVisibilityDificultButtons(firstVisibleViewHolder == null || firstVisibleViewHolder.getStampLevel() != null);
+                System.out.println("PRINT StampLevel " + getCurrentRecycleObjectOnScreen() + ": " + firstVisibleViewHolder.getStampLevel());
+                boolean test = firstVisibleViewHolder == null || firstVisibleViewHolder.getStampLevel() != null;
+
+                Toast.makeText(getApplicationContext(), firstVisibleViewHolder.getTextCard() + String.valueOf(test), Toast.LENGTH_SHORT).show();
+
+                setVisibilityDificultButtons(test, getCurrentRecycleObjectOnScreen());
 
             }
         });
@@ -106,7 +116,7 @@ public class ReviewActivity extends AppCompatActivity {
     private void changeDataToReviewedCards(int levelStamp) {
         ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
         if (firstVisibleViewHolder != null) {
-                firstVisibleViewHolder.setStampLevel(levelStamp);
+//                firstVisibleViewHolder.setStampLevel(levelStamp);
                 this.reviewViewModel.setReviewedCard(getCurrentRecycleObjectOnScreen(),levelStamp);
 
         }
@@ -191,7 +201,10 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
 
-    public static  void setVisibilityDificultButtons(boolean setVisibility) {
+    public static  void setVisibilityDificultButtons(boolean setVisibility, int id) {
+
+//        Toast.makeText(getApplicationContext(), String.valueOf(setVisibility), Toast.LENGTH_SHORT).show();
+        System.out.println("PRINT " + id + ": " + setVisibility);
         int visibility = setVisibility ? View.VISIBLE : View.INVISIBLE;
         goodButton.setVisibility(visibility);
         hardButton.setVisibility(visibility);

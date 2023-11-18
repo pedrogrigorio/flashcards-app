@@ -22,10 +22,10 @@ public class ReviewViewModel extends ViewModel {
     }
 
     private void loadReviewCardsData() {
-        reviewTemp.add(new Review("Good Nigth", "Boa Noite", 1, 1));
-        reviewTemp.add(new Review("Have a nice day", "Tenha um bom dia", 2,null));
-        reviewTemp.add(new Review("So far, so good", "Até agora, tudo bem", 3,null));
-        reviewTemp.add(new Review("I'm lost", "Eu estou perdido", 4,null));
+        reviewTemp.add(new Review("Good Nigth", "Boa Noite", 0, null));
+        reviewTemp.add(new Review("Have a nice day", "Tenha um bom dia", 1,null));
+        reviewTemp.add(new Review("So far, so good", "Até agora, tudo bem", 2,null));
+        reviewTemp.add(new Review("I'm lost", "Eu estou perdido", 3,null));
 
 
     }
