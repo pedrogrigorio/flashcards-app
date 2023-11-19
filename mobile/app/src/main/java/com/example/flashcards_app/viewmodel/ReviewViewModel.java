@@ -34,7 +34,7 @@ public class ReviewViewModel extends ViewModel {
 
         for (Review review : reviewTemp) {
             if (review.getStampLevel() == null) {
-                this.indexLastCardReviewed = reviewTemp.indexOf(review);
+                this.indexLastCardReviewed = reviewTemp.indexOf(review) + 1;
                 tempLiveData.add(review);
                 break;
             }
