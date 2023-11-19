@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ReviewAdapter;
+import com.example.flashcards_app.dialogs.FinishedReviewDialog;
 import com.example.flashcards_app.util.DifficultLevel;
 import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.AudioCard;
 import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.ProgressBarCards;
@@ -95,19 +96,27 @@ public class ReviewActivity extends AppCompatActivity {
     }
     private void setEasyButton() {
         changeDataToReviewedCards(DifficultLevel.EASY.getValue());
+        raiseFinishedDialog();
         this.reviewViewModel.loadUiCards();
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setGoodButton() {
         changeDataToReviewedCards(DifficultLevel.GOOD.getValue());
+        raiseFinishedDialog();
         this.reviewViewModel.loadUiCards();
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setHardButton() {
         changeDataToReviewedCards(DifficultLevel.HARD.getValue());
+        raiseFinishedDialog();
         this.reviewViewModel.loadUiCards();
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
+    }
 
+    public void raiseFinishedDialog() {
+        if (getCurrentRecycleObjectOnScreen() == reviewViewModel.getLoadCardsSize()) {
+            reviewFinishedDialog();
+        }
     }
 
     private void changeDataToReviewedCards(int levelStamp) {
@@ -202,6 +211,21 @@ public class ReviewActivity extends AppCompatActivity {
         goodButton.setVisibility(visibility);
         hardButton.setVisibility(visibility);
         easyButton.setVisibility(visibility);
+    }
+
+
+    public void reviewFinishedDialog() {
+
+        FinishedReviewDialog dialog = new FinishedReviewDialog();
+
+        dialog.setDialogFinished(new FinishedReviewDialog.onDialogFinished() {
+            @Override
+            public void finishReview() {
+                finish();
+            }
+        });
+
+
     }
 
 
