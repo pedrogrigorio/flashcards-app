@@ -35,7 +35,7 @@ public class FinishedReviewDialog extends AppCompatDialogFragment {
                     }
                 });
 
-        return super.onCreateDialog(savedInstanceState);
+        return builder.create();
 
     }
 

@@ -2,6 +2,7 @@ package com.example.flashcards_app.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -114,7 +115,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     public void raiseFinishedDialog() {
-        if (getCurrentRecycleObjectOnScreen() == reviewViewModel.getLoadCardsSize()) {
+        if (getCurrentRecycleObjectOnScreen() == reviewViewModel.getLoadCardsSize()-1) {
             reviewFinishedDialog();
         }
     }
@@ -217,13 +218,15 @@ public class ReviewActivity extends AppCompatActivity {
     public void reviewFinishedDialog() {
 
         FinishedReviewDialog dialog = new FinishedReviewDialog();
-
+        FragmentManager manager = getSupportFragmentManager();
         dialog.setDialogFinished(new FinishedReviewDialog.onDialogFinished() {
             @Override
             public void finishReview() {
                 finish();
             }
         });
+
+        dialog.show(manager, "finished_review_popup");
 
 
     }
