@@ -68,6 +68,11 @@ public class ReviewActivity extends AppCompatActivity {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
+                if (dx < 0) {
+                    traceBackResetAnimator();
+                }
+
                 recyclerView.setScrollingTouchSlop(dx);
                 updateProgressBar();
                 ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
@@ -86,7 +91,10 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void traceBackResetAnimator() {
-        ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen()-1);
+        ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen()+1);
+        if (firstVisibleViewHolder != null) {
+            firstVisibleViewHolder.resetAnimatorState();
+        }
     }
     private void setEasyButton() {
         changeDataToReviewedCards(DifficultLevel.EASY.getValue());
