@@ -30,7 +30,7 @@ public class ReviewViewModel extends ViewModel {
 
     }
 
-    public void loadUiCards(int indexUiCard, Context context) {
+    public void loadUiCards() {
         List<Review> tempLiveData = new ArrayList<>();
 
         for (Review review : reviewTemp) {

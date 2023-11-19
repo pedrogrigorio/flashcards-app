@@ -69,7 +69,6 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 recyclerView.setScrollingTouchSlop(dx);
-
                 updateProgressBar();
                 ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
                 setVisibilityDifficultButtons(firstVisibleViewHolder == null || reviewViewModel.hasBeenReviewed(getCurrentRecycleObjectOnScreen()));
@@ -80,26 +79,28 @@ public class ReviewActivity extends AppCompatActivity {
 
 
         this.audioButton.setOnClickListener(v -> speakAudio());
-
         easyButton.setOnClickListener(v -> setEasyButton());
         goodButton.setOnClickListener(v -> setGoodButton());
         hardButton.setOnClickListener(v -> setHardButton());
 
     }
 
+    private void traceBackResetAnimator() {
+        ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen()-1);
+    }
     private void setEasyButton() {
         changeDataToReviewedCards(DifficultLevel.EASY.getValue());
-        this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(), this);
+        this.reviewViewModel.loadUiCards();
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setGoodButton() {
         changeDataToReviewedCards(DifficultLevel.GOOD.getValue());
-        this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(),this);
+        this.reviewViewModel.loadUiCards();
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
     }
     private void setHardButton() {
         changeDataToReviewedCards(DifficultLevel.HARD.getValue());
-        this.reviewViewModel.loadUiCards(getCurrentRecycleObjectOnScreen(),this);
+        this.reviewViewModel.loadUiCards();
         nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
 
     }
@@ -151,7 +152,7 @@ public class ReviewActivity extends AppCompatActivity {
         // View Model Config
         this.reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         configReviewViewModel();
-        this.reviewViewModel.loadUiCards(0, this);
+        this.reviewViewModel.loadUiCards();
 
     }
 
