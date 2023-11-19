@@ -228,7 +228,6 @@ public class ReviewActivity extends AppCompatActivity {
 
         dialog.show(manager, "finished_review_popup");
 
-
     }
 
 
