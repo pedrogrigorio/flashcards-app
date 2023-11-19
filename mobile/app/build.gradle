@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'nl.dionsegijn:konfetti-xml:2.0.3'
+
 
     implementation 'org.mockito:mockito-core:5.3.1'
     testImplementation 'junit:junit:4.13.2'

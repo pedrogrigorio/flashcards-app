@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -30,6 +31,10 @@ import com.example.flashcards_app.viewmodel.ReviewViewModel;
 import java.util.List;
 
 
+
+
+
+
 public class ReviewActivity extends AppCompatActivity {
 
     private ReviewViewModel reviewViewModel;
@@ -44,6 +49,7 @@ public class ReviewActivity extends AppCompatActivity {
     private Button audioButton;
     private AudioCard audioCard;
     private LinearLayoutManager layoutManager;
+
 
 
     @Override
@@ -80,6 +86,8 @@ public class ReviewActivity extends AppCompatActivity {
 
 
 
+
+
         this.audioButton.setOnClickListener(v -> speakAudio());
         easyButton.setOnClickListener(v -> setEasyButton());
         goodButton.setOnClickListener(v -> setGoodButton());
@@ -87,14 +95,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
-    private void traceBackResetAnimator() {
-        ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen()+1);
-        if (firstVisibleViewHolder != null) {
-            firstVisibleViewHolder.resetAnimatorState();
-        }
 
-
-    }
     private void setEasyButton() {
         changeDataToReviewedCards(DifficultLevel.EASY.getValue());
         raiseFinishedDialog();
@@ -149,7 +150,7 @@ public class ReviewActivity extends AppCompatActivity {
         this.microphoneButton  = findViewById(R.id.microphone_button);
         easyButton        = findViewById(R.id.easy_button);
         goodButton        = findViewById(R.id.good_button);
-        hardButton        = findViewById(R.id.hard_button);
+        hardButton        = findViewById(R.id.finished_review_button);
         this.audioButton  = findViewById(R.id.audio_button);
         this.audioCard = new AudioCard(getApplicationContext());
         startUpProgressBar(this.reviewViewModel.getLoadCardsSize());
@@ -216,18 +217,9 @@ public class ReviewActivity extends AppCompatActivity {
 
 
     public void reviewFinishedDialog() {
-
-        FinishedReviewDialog dialog = new FinishedReviewDialog();
-        FragmentManager manager = getSupportFragmentManager();
-        dialog.setDialogFinished(new FinishedReviewDialog.onDialogFinished() {
-            @Override
-            public void finishReview() {
-                finish();
-            }
-        });
-
-        dialog.show(manager, "finished_review_popup");
-
+        Intent intent = new Intent(this, FinishedReviewActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
