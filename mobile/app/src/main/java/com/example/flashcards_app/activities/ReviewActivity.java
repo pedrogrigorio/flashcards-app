@@ -193,7 +193,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void updateProgressBar() {
-        this.progressBarCards.setCurrent(getCurrentRecycleObjectOnScreen()+1);
+        this.progressBarCards.setCurrent(this.reviewViewModel.getIndexLastCardReviewed());
     }
 
 

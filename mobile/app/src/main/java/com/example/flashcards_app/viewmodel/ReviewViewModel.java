@@ -15,8 +15,7 @@ import java.util.List;
 public class ReviewViewModel extends ViewModel {
     private MutableLiveData<List<Review>> reviewLiveData = new MutableLiveData<>();
     private List<Review> reviewTemp = new ArrayList<>();
-
-
+    private int indexLastCardReviewed;
     public ReviewViewModel() {
         loadReviewCardsData();
     }
@@ -35,6 +34,7 @@ public class ReviewViewModel extends ViewModel {
 
         for (Review review : reviewTemp) {
             if (review.getStampLevel() == null) {
+                this.indexLastCardReviewed = reviewTemp.indexOf(review);
                 tempLiveData.add(review);
                 break;
             }
@@ -60,6 +60,10 @@ public class ReviewViewModel extends ViewModel {
 
     public int getLoadCardsSize() {
         return this.reviewTemp.size();
+    }
+
+    public int getIndexLastCardReviewed() {
+        return this.indexLastCardReviewed;
     }
 
 
