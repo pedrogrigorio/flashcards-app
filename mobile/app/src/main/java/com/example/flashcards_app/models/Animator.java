@@ -44,8 +44,6 @@ public class Animator {
         this.backAnimClockWise  = backAnimClockWise;
         this.scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
 
-
-
         this.setCameraCardDistance();
     }
     private void setCameraCardDistance() {
@@ -103,7 +101,5 @@ public class Animator {
     public void makeAnimationRight() {
         this.mainAnimationEngine(2);
     }
-
-
 
 }

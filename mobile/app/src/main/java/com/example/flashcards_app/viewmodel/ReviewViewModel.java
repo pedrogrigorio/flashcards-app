@@ -43,6 +43,8 @@ public class ReviewViewModel extends ViewModel {
             }
         }
 
+        if (tempLiveData.equals(reviewLiveData.getValue())) return;
+
         this.reviewLiveData.setValue(tempLiveData);
     }
 

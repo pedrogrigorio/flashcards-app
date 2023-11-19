@@ -108,6 +108,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
             }
         }
 
+        public boolean getIsTrue() {
+            return isFront;
+        }
         public void setAnimatorState(boolean isFront) {
             this.isFront = isFront;
         }
