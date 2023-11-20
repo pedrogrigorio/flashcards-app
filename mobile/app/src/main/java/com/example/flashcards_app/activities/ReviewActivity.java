@@ -219,7 +219,7 @@ public class ReviewActivity extends AppCompatActivity {
     public void reviewFinishedDialog() {
         Intent intent = new Intent(this, FinishedReviewActivity.class);
         startActivity(intent);
-        finish();
+
     }
 
 
