@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.repositories.AddUserRepository;
 
@@ -55,11 +56,22 @@ public class AddUserViewModel extends ViewModel {
         addFriendsLiveData.setValue(currentFriends);
     }
 
+    public User getUser(int position) {
+        return addFriendsLiveData.getValue().get(position);
+    }
 
+    public void deleteFriend(User user, int position) {
+        List<User> currentUsers = addFriendsLiveData.getValue();
 
-//    public void deleteFriend(int position) {
-//        Adicionar funcionalidade em breve
-//    }
+        if (currentUsers == null) {
+            currentUsers = new ArrayList<>();
+        }
+
+        user.setIsFriend(false);
+        currentUsers.set(position, user);
+
+        addFriendsLiveData.setValue(currentUsers);
+    }
 
 
 
