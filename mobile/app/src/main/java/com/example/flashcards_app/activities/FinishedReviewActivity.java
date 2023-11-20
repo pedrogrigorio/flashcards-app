@@ -6,7 +6,11 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+
 import com.example.flashcards_app.R;
+
+
 
 public class FinishedReviewActivity extends AppCompatActivity {
 
@@ -14,7 +18,7 @@ public class FinishedReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_finished_review);
 
         Button finishedReview = findViewById(R.id.finished_review_button);
         Intent intent = new Intent(this, HomeActivity.class);

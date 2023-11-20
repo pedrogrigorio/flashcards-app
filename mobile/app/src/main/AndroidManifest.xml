@@ -43,6 +43,9 @@
             android:name=".activities.NotificationsActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.FinishedReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddUserActivity"
             android:exported="false" />
         <activity
