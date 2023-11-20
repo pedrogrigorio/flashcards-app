@@ -9,33 +9,26 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="38dp"
         android:gravity="right"
         android:orientation="horizontal"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/back_button_users"-->
-<!--            android:layout_width="12dp"-->
-<!--            android:layout_height="22dp"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            android:layout_marginRight="10dp"-->
-<!--            android:layout_marginBottom="6dp"-->
-<!--            android:layout_weight="1"-->
-<!--            app:srcCompat="@drawable/back_black" />-->
+
 
 
         <ImageButton
             android:id="@+id/back_button_users"
-            android:layout_width="12dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="25dp"
+            android:layout_width="20dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/btn_appbar"
             app:srcCompat="@drawable/back_black" />
 
