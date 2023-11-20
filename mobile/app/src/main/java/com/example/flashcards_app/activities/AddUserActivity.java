@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -19,6 +20,7 @@ import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.AddUserAdapter;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.viewmodel.AddUserViewModel;
+import com.example.flashcards_app.viewmodel.NotificationViewModel;
 
 import java.util.List;
 
@@ -65,6 +67,20 @@ public class AddUserActivity extends AppCompatActivity {
             searchView.requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+        });
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                addUserViewModel.getSearchRequest(s);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
         });
 
 
