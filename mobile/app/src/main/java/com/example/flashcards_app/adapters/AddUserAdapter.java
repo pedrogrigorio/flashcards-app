@@ -12,9 +12,14 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.models.User;
+import com.squareup.picasso.Picasso;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -24,6 +29,7 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFrien
 
 
     private List<User> users = new ArrayList<>();
+    private OnItemClickListener deleteFriendListener;
 
     @NonNull
     @Override
@@ -37,6 +43,25 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFrien
         User currentUser = users.get(position);
         holder.textViewFriendName.setText(currentUser.getName());
         holder.textViewFriendUserName.setText(currentUser.getUsername());
+
+        if (currentUser.getIsFriend()) {
+            holder.addFriend.setVisibility(View.GONE);
+            holder.deleteFriend.setVisibility(View.VISIBLE);
+        } else {
+            holder.deleteFriend.setVisibility(View.GONE);
+            holder.addFriend.setVisibility(View.VISIBLE);
+        }
+
+        if (!currentUser.getImgSrc().isEmpty()) {
+            Picasso.get()
+                    .load(currentUser.getImgSrc())
+                    .into(holder.userImage);
+        }
+
+        holder.deleteFriend.setOnClickListener(v -> {
+            deleteFriendListener.onItemClick(currentUser, position);
+        });
+
     }
 
     @Override
@@ -52,16 +77,30 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFrien
 
     static class AddFriendHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewFriendName;
-        private TextView textViewFriendUserName;
+        TextView textViewFriendName;
+        TextView textViewFriendUserName;
+        ImageView userImage;
+        ImageView deleteFriend;
+        ImageView addFriend;
 
         public AddFriendHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewFriendName     = itemView.findViewById(R.id.TextFriendName);
+            textViewFriendName = itemView.findViewById(R.id.TextFriendName);
             textViewFriendUserName = itemView.findViewById(R.id.TextFriendUserName);
+            userImage = itemView.findViewById(R.id.friend_img);
+            deleteFriend = itemView.findViewById(R.id.btn_delete_friend);
+            addFriend = itemView.findViewById(R.id.btn_add_friend);
 
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(User user, int position);
+    }
+
+    public void setDeleteFriendListener(OnItemClickListener listener) {
+        this.deleteFriendListener = listener;
     }
 
 }

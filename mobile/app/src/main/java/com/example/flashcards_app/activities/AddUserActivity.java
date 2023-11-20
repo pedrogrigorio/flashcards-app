@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.AddUserAdapter;
+import com.example.flashcards_app.adapters.FriendAdapter;
+import com.example.flashcards_app.dialogs.DeleteFriendDialog;
+import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.viewmodel.AddUserViewModel;
 import com.example.flashcards_app.viewmodel.NotificationViewModel;
@@ -46,6 +49,8 @@ public class AddUserActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.users_recycle_view);
         ConfigRecyclerView();
+        configAdapter();
+
         addUserViewModel = new ViewModelProvider(this).get(AddUserViewModel.class);
         configUserViewModel();
 
@@ -109,9 +114,24 @@ public class AddUserActivity extends AppCompatActivity {
         finish();
     }
 
-//    private void configAdapter() {
-//    ainda por implementar
-//    }
+    private void configAdapter() {
+        adapter.setDeleteFriendListener(new AddUserAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(User user, int position) {
+                Friend friend = new Friend(0, user.getName(), user.getUsername());
+                DeleteFriendDialog dialog = new DeleteFriendDialog(friend);
+                dialog.setDialogResult(new DeleteFriendDialog.onDialogResult() {
+                    @Override
+                    public void finish() {
+
+                        User user = addUserViewModel.getUser(position);
+                        addUserViewModel.deleteFriend(user, position);
+                    }
+                });
+                dialog.show(getSupportFragmentManager(), "delete friend");
+            }
+        });
+    }
 
 }
 
