@@ -1,10 +1,13 @@
 package com.example.flashcards_app.activities;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -54,6 +57,16 @@ public class AddUserActivity extends AppCompatActivity {
         backButtonAction.setOnClickListener(v -> {
             backButton();
         });
+
+
+        SearchView searchView = findViewById(R.id.user_search);
+
+        searchView.setOnClickListener(v -> {
+            searchView.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+        });
+
 
     }
 

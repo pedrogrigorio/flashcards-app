@@ -1,15 +1,18 @@
 package com.example.flashcards_app.activities;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
 
 import android.view.View;
 import android.view.WindowManager;
@@ -17,21 +20,36 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.flashcards_app.R;
-import com.example.flashcards_app.models.Animator;
-import com.example.flashcards_app.models.Cards;
-import com.example.flashcards_app.models.AudioCard;
-import com.example.flashcards_app.models.ProgressBarCards;
+import com.example.flashcards_app.adapters.ReviewAdapter;
+import com.example.flashcards_app.dialogs.FinishedReviewDialog;
+import com.example.flashcards_app.util.DifficultLevel;
+import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.AudioCard;
+import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.ProgressBarCards;
+import com.example.flashcards_app.models.Review;
+import com.example.flashcards_app.viewmodel.ReviewViewModel;
+
+import java.util.List;
+
+
+
+
 
 
 public class ReviewActivity extends AppCompatActivity {
 
-    private Cards card;
-    private AudioCard audioCard;
-    private Animator animator;
+    private ReviewViewModel reviewViewModel;
+    private RecyclerView recyclerView;
+    private ReviewAdapter reviewAdapter;
+    private LinearSnapHelper linearSnapHelper;
     private ProgressBarCards progressBarCards;
-    private int count = 0;
-    private int indexCardControl = 1;
-    private boolean hiddenControl = false;
+    private Button microphoneButton;
+    private static Button easyButton;
+    private static Button goodButton;
+    private static Button hardButton;
+    private Button audioButton;
+    private AudioCard audioCard;
+    private LinearLayoutManager layoutManager;
+
 
 
     @Override
@@ -47,95 +65,130 @@ public class ReviewActivity extends AppCompatActivity {
         if (intent.hasExtra("deckId")) {
             int deckId = intent.getIntExtra("deckId", -1);
             Toast.makeText(this, "ID: " + deckId, Toast.LENGTH_SHORT).show();
-            // fazer requisição dos cards
-
         } else {
             Toast.makeText(this, "Erro ao carregar o deck", Toast.LENGTH_SHORT).show();
         }
 
-        Button microphoneButton  = findViewById(R.id.microphone_button);
-        Button easyButton        = findViewById(R.id.easy_button);
-        Button goodButton        = findViewById(R.id.good_button);
-        Button hardButton        = findViewById(R.id.hard_button);
-        Button audioButton       = findViewById(R.id.audio_button);
-        View leftClickableRegionFront = findViewById(R.id.leftClickableRegionFront);
-        View rightClickableRegionFront = findViewById(R.id.rightClickableRegionFront);
-        View leftClickableRegionBack = findViewById(R.id.leftClickableRegionBack);
-        View rightClickableRegionBack = findViewById(R.id.rightClickableRegionBack);
 
+        startUpRecycleViewMVVM();
+        startUpScreenElements();
 
-        this.card = new Cards(this,
-                findViewById(R.id.frontCardText),
-                findViewById(R.id.backCardText),
-                easyButton,
-                goodButton,
-                hardButton,
-                audioButton);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                recyclerView.setScrollingTouchSlop(dx);
+                updateProgressBar();
+                ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
 
-
-        this.animator = new Animator(this,
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_anticlockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_anticlockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.front_animator_clockwise),
-                (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.back_animator_clockwise),
-                findViewById(R.id.frontCardViewText),
-                findViewById(R.id.backCardViewText));
-
-
-        this.progressBarCards = new ProgressBarCards(findViewById(R.id.progressText), findViewById(R.id.progressBar));
-        this.setProgressBarParameters();
-
-
-        easyButton.setOnClickListener(v-> {
-            this.updateIndexCardControl();
-            if (this.card.easyButtonCommand(this.indexCardControl)) {
-                this.animator.makeAnimationRight();
+                setVisibilityDifficultButtons(firstVisibleViewHolder == null || reviewViewModel.hasBeenReviewed(getCurrentRecycleObjectOnScreen()) || !firstVisibleViewHolder.getIsTrue());
             }
         });
 
-        goodButton.setOnClickListener(v-> {
-            this.card.goodButtonCommand(indexCardControl);
-            if (this.card.goodButtonCommand(this.indexCardControl)) {
-                this.animator.makeAnimationRight();
-            }
-        });
 
-        hardButton.setOnClickListener(v-> {
-            this.card.goodButtonCommand(indexCardControl);
-            if (this.card.hardButtonCommand(this.indexCardControl)) {
-                this.animator.makeAnimationRight();
-            }
-        });
 
-        audioButton.setOnClickListener(v-> {
-            this.card.audioSpeak();
-        });
 
-        leftClickableRegionBack.setOnClickListener(v->{
-            this.animator.makeAnimationLeft();
-            this.card.showControlDifficultButton(!hiddenControl);
-        });
 
-        rightClickableRegionFront.setOnClickListener(v->{
-            this.animator.makeAnimationRight();
-            this.card.showControlDifficultButton(!hiddenControl);
-        });
-
-        leftClickableRegionFront.setOnClickListener(v->{
-
-        });
-
-        rightClickableRegionBack.setOnClickListener(v->{
-
-        });
-
-        microphoneButton.setOnClickListener(v -> {
-            this.animator.makeAnimationRight();
-            this.card.showControlDifficultButton(!hiddenControl);
-        });
+        this.audioButton.setOnClickListener(v -> speakAudio());
+        easyButton.setOnClickListener(v -> setEasyButton());
+        goodButton.setOnClickListener(v -> setGoodButton());
+        hardButton.setOnClickListener(v -> setHardButton());
 
     }
 
+
+    private void setEasyButton() {
+        changeDataToReviewedCards(DifficultLevel.EASY.getValue());
+        raiseFinishedDialog();
+        this.reviewViewModel.loadUiCards();
+        nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
+    }
+    private void setGoodButton() {
+        changeDataToReviewedCards(DifficultLevel.GOOD.getValue());
+        raiseFinishedDialog();
+        this.reviewViewModel.loadUiCards();
+        nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
+    }
+    private void setHardButton() {
+        changeDataToReviewedCards(DifficultLevel.HARD.getValue());
+        raiseFinishedDialog();
+        this.reviewViewModel.loadUiCards();
+        nextSmoothScrollToPosition(getCurrentRecycleObjectOnScreen()+1);
+    }
+
+    public void raiseFinishedDialog() {
+        if (getCurrentRecycleObjectOnScreen() == reviewViewModel.getLoadCardsSize()-1) {
+            reviewFinishedDialog();
+        }
+    }
+
+    private void changeDataToReviewedCards(int levelStamp) {
+        ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
+        if (firstVisibleViewHolder != null) {
+                this.reviewViewModel.setReviewedCard(getCurrentRecycleObjectOnScreen(),levelStamp);
+
+        }
+    }
+
+    private void speakAudio() {
+        ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) this.recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
+        if (firstVisibleViewHolder != null) {
+            this.audioCard.speak(firstVisibleViewHolder.getTextCard());
+        }
+    }
+
+    private int getCurrentRecycleObjectOnScreen() {
+        return this.layoutManager.findFirstVisibleItemPosition();
+    }
+
+    private void nextSmoothScrollToPosition(int currentRecycleObject) {
+        if (currentRecycleObject < this.reviewAdapter.getItemCount()) {
+            recyclerView.smoothScrollToPosition(currentRecycleObject);
+        }
+    }
+
+    private void startUpScreenElements() {
+        this.microphoneButton  = findViewById(R.id.microphone_button);
+        easyButton        = findViewById(R.id.easy_button);
+        goodButton        = findViewById(R.id.good_button);
+        hardButton        = findViewById(R.id.finished_review_button);
+        this.audioButton  = findViewById(R.id.audio_button);
+        this.audioCard = new AudioCard(getApplicationContext());
+        startUpProgressBar(this.reviewViewModel.getLoadCardsSize());
+    }
+
+    private void startUpRecycleViewMVVM() {
+
+        // Recycle View config
+        this.linearSnapHelper = new LinearSnapHelper();
+        this.reviewAdapter = new ReviewAdapter();
+        this.recyclerView = findViewById(R.id.testReviewScreen);
+        configRecyclerView();
+        this.layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+        // View Model Config
+        this.reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+        configReviewViewModel();
+        this.reviewViewModel.loadUiCards();
+
+    }
+
+    private void configRecyclerView() {
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        this.recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(this.reviewAdapter);
+        linearSnapHelper.attachToRecyclerView(this.recyclerView);
+    }
+
+
+
+    public void configReviewViewModel() {
+        reviewViewModel.getReviewData().observe(this, new Observer<List<Review>>() {
+            @Override
+            public void onChanged(List<Review> reviews) {
+                reviewAdapter.setReviews(reviews);
+            }
+        });
+    }
 
     @Override
     protected void onDestroy() {
@@ -145,32 +198,32 @@ public class ReviewActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void setProgressBarParameters() {
-        this.progressBarCards.setAmount(this.card.getCardAmount());
+    private void startUpProgressBar(int getItemCount) {
+        this.progressBarCards  = new ProgressBarCards(findViewById(R.id.progressText), findViewById(R.id.progressBar));
+        this.progressBarCards.setAmount(getItemCount);
     }
 
-    private void alertDialogEndCard() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Você finalizou seus estudos por hoje. Parabêns!");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-
-        });
-        AlertDialog dialog = builder.create();
-        dialog.create();
+    private void updateProgressBar() {
+        this.progressBarCards.setCurrent(this.reviewViewModel.getIndexLastCardReviewed());
     }
 
-    private void updateIndexCardControl() {
-        if (indexCardControl > this.card.getCardAmount()) {
-            this.alertDialogEndCard();
-        } else {
-            this.indexCardControl+=1;
-            this.progressBarCards.setCurrent(this.indexCardControl);
-        }
+
+    public static  void setVisibilityDifficultButtons(boolean setVisibility) {
+        int visibility = setVisibility ? View.VISIBLE : View.INVISIBLE;
+        goodButton.setVisibility(visibility);
+        hardButton.setVisibility(visibility);
+        easyButton.setVisibility(visibility);
     }
+
+
+    public void reviewFinishedDialog() {
+        Intent intent = new Intent(this, FinishedReviewActivity.class);
+        startActivity(intent);
+
+    }
+
+
+
 
 
 }
