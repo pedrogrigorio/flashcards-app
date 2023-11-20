@@ -7,6 +7,10 @@ public class Review {
     int id;
     Integer stampLevel = null;
 
+    public Review() {
+
+    }
+
     public Review(String frontText, String backText, int id, Integer stampLevel) {
         this.frontText = frontText;
         this.backText = backText;

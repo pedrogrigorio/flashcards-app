@@ -60,6 +60,20 @@ public class ReviewViewModel extends ViewModel {
         }
     }
 
+    public void updateCard(Review updatedCard, int position) {
+        List<Review> currentCards = reviewLiveData.getValue();
+
+        if (currentCards != null && !currentCards.isEmpty()) {
+            currentCards.set(position, updatedCard);
+            reviewTemp.set(position, updatedCard);
+
+            reviewLiveData.setValue(currentCards);
+        }
+    }
+    public Review getCurrentCard(int position) {
+        return reviewLiveData.getValue().get(position);
+    }
+
 
     public void setReviewedCard(int ActualFirstVisibleItemPosition, int StampLevel) {
         this.reviewTemp.get(ActualFirstVisibleItemPosition).setStampLevel(StampLevel);

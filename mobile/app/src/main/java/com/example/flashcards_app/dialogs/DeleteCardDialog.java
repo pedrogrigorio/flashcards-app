@@ -27,7 +27,7 @@ public class DeleteCardDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_delete_deck, null);
+        View view = inflater.inflate(R.layout.dialog_delete_card, null);
 
         builder.setView(view)
                 .setNegativeButton("Cancelar", null)

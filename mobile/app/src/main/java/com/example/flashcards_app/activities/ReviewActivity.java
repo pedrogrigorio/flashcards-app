@@ -22,8 +22,10 @@ import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ReviewAdapter;
+import com.example.flashcards_app.dialogs.AddCardsDialog;
 import com.example.flashcards_app.dialogs.DeleteCardDialog;
 import com.example.flashcards_app.dialogs.DeleteDeckDialog;
+import com.example.flashcards_app.dialogs.EditCardDialog;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.dialogs.FinishedReviewDialog;
 import com.example.flashcards_app.models.Deck;
@@ -55,6 +57,7 @@ public class ReviewActivity extends AppCompatActivity {
     private AudioCard audioCard;
     private LinearLayoutManager layoutManager;
     Button deleteButton;
+    Button editButton;
     ImageButton back;
 
 
@@ -109,6 +112,19 @@ public class ReviewActivity extends AppCompatActivity {
                 }
             });
             dialog.show(getSupportFragmentManager(), "delete_card_popup");
+        });
+
+        editButton.setOnClickListener(v -> {
+            int position = getCurrentRecycleObjectOnScreen();
+            Review currentCard = reviewViewModel.getCurrentCard(position);
+            EditCardDialog dialog = new EditCardDialog(currentCard);
+            dialog.setDialogResult(new EditCardDialog.onDialogResult() {
+                @Override
+                public void finish(Review updatedCard) {
+                    reviewViewModel.updateCard(updatedCard, position);
+                }
+            });
+            dialog.show(getSupportFragmentManager(), "edit_card_popup");
         });
 
         back.setOnClickListener(v -> {
@@ -196,6 +212,7 @@ public class ReviewActivity extends AppCompatActivity {
         configReviewViewModel();
         this.reviewViewModel.loadUiCards();
         deleteButton = findViewById(R.id.delete_button);
+        editButton = findViewById(R.id.edit_button);
         back = findViewById(R.id.btn_back);
 
     }
