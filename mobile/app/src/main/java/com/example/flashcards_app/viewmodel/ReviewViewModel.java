@@ -56,9 +56,21 @@ public class ReviewViewModel extends ViewModel {
             currentCards.remove(position);
             reviewTemp.remove(position);
 
+            nextNotReviewed(currentCards);
+            
+
             reviewLiveData.setValue(currentCards);
         }
     }
+
+    private void nextNotReviewed(List<Review> currentCards) {
+        for (Review review : currentCards)  {
+                if (review.getStampLevel() == null) {
+                    this.indexLastCardReviewed = currentCards.indexOf(review) + 1;
+                }
+        }
+    }
+
 
     public void updateCard(Review updatedCard, int position) {
         List<Review> currentCards = reviewLiveData.getValue();
