@@ -5,8 +5,10 @@ public class User {
     String name;
     String username;
     String imgSrc;
+    int id;
     int dayStreak;
     int cardsReviewed;
+    boolean isFriend;
 
     public User(String name, String username) {
         this.name = name;
@@ -14,6 +16,7 @@ public class User {
         this.imgSrc = "https://cdn.vectorstock.com/i/preview-1x/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.jpg";
         this.dayStreak = 0;
         this.cardsReviewed = 0;
+        this.isFriend = true;
     }
 
     public String getName() {
@@ -54,5 +57,21 @@ public class User {
 
     public void setCardsReviewed(int cardsReviewed) {
         this.cardsReviewed = cardsReviewed;
+    }
+
+    public boolean getIsFriend() {
+        return isFriend;
+    }
+
+    public void setIsFriend(boolean isFriend) {
+        this.isFriend = isFriend;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
