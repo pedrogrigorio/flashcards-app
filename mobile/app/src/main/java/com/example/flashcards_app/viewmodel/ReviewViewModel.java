@@ -64,8 +64,12 @@ public class ReviewViewModel extends ViewModel {
     }
 
     private void nextNotReviewed(List<Review> currentCards) {
+
+        
         for (Review review : currentCards)  {
                 if (review.getStampLevel() == null) {
+                    this.indexLastCardReviewed = currentCards.indexOf(review) + 1;
+                } else if (review.getStampLevel() != null && (currentCards.indexOf(review) == currentCards.size() -1 )) {
                     this.indexLastCardReviewed = currentCards.indexOf(review) + 1;
                 }
         }

@@ -230,6 +230,7 @@ public class ReviewActivity extends AppCompatActivity {
         reviewViewModel.getReviewData().observe(this, new Observer<List<Review>>() {
             @Override
             public void onChanged(List<Review> reviews) {
+                startUpProgressBar(reviewViewModel.getLoadCardsSize());
                 reviewAdapter.setReviews(reviews);
             }
         });
