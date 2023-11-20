@@ -97,6 +97,66 @@ app.get('/notifications', (req, res) => {
   ])
 })
 
+
+
+app.get('/AddUser', (req, res) => {
+  res.send([
+    {name:"Richardo Oliveira", 
+    username:"Richardo2023Oliveira", 
+    imgSrc:
+     'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg',
+    id: 234234,
+    dayStreak:20, 
+    cardsReviewed:2000,
+    isFriend:true},
+    {name:"Cunha Oliveira", 
+    username:"Cunha2023Oliveira", 
+    imgSrc:
+     'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg',
+    id: 234234,
+    dayStreak:20, 
+    cardsReviewed:2000,
+    isFriend:true},
+    {name:"Pedro Oliveira", 
+    username:"Pedro2023Oliveira", 
+    imgSrc:
+     'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg',
+    id: 234234,
+    dayStreak:20, 
+    cardsReviewed:2000,
+    isFriend:true},
+    {name:"Rafael Oliveira", 
+    username:"Rafaelliveira", 
+    imgSrc:
+     'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg',
+    id: 234234,
+    dayStreak:20, 
+    cardsReviewed:2000,
+    isFriend:true},
+    {name:"Matheus Oliveira", 
+    username:"Matheusoiveira", 
+    imgSrc:
+     'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg',
+    id: 234234,
+    dayStreak:20, 
+    cardsReviewed:2000,
+    isFriend:true},
+    {name:"Paulo Oliveira", 
+    username:"Paulo2023Oliveira", 
+    imgSrc:
+     'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg',
+    id: 234234,
+    dayStreak:20, 
+    cardsReviewed:2000,
+    isFriend:true},
+  ])
+})
+
+
+
+
+
+
 app.get('/users', (req, res) => {
   res.send({
     name: 'João',
