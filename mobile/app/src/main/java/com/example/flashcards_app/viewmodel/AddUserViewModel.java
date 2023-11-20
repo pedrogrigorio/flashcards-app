@@ -25,16 +25,16 @@ public class AddUserViewModel extends ViewModel {
             addFriendsLiveData = addUserRepository.getNewFriendsToAdd();
         }
 
-        MutableLiveData<List<User>> tempDataLive = new MutableLiveData<>();
-
-        List<User> tempData = new ArrayList<>();
-
-        tempData.add(new User("Em busca do shape inexplicavel", "@ShapeBolado"));
-        tempData.add(new User("Maromberio raiz", "@EmBuscaDos140KG"));
-        tempData.add(new User("Buscando 170kg", "@PeitroalArnold"));
-
-//        tempDataLive.setValue(tempData);
-        addFriendsLiveData.setValue(tempData);
+//        MutableLiveData<List<User>> tempDataLive = new MutableLiveData<>();
+//
+//        List<User> tempData = new ArrayList<>();
+//
+//        tempData.add(new User("Em busca do shape inexplicavel", "@ShapeBolado"));
+//        tempData.add(new User("Maromberio raiz", "@EmBuscaDos140KG"));
+//        tempData.add(new User("Buscando 170kg", "@PeitroalArnold"));
+//
+////        tempDataLive.setValue(tempData);
+//        addFriendsLiveData.setValue(tempData);
 
 
     }
