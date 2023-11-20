@@ -20,8 +20,9 @@ public class AddUserViewModel extends ViewModel {
     }
 
 
-    public LiveData<List<User>> getAddFriends() {
-//        if (addFriendsLiveData.getValue() == null || addFriendsLiveData.getValue().isEmpty()) {
+    public void getSearchRequest(String request) {
+
+        //        if (addFriendsLiveData.getValue() == null || addFriendsLiveData.getValue().isEmpty()) {
 //            addFriendsLiveData = addFriendRepository.getNewFriendsToAdd();
 //        }
 
@@ -36,6 +37,11 @@ public class AddUserViewModel extends ViewModel {
         tempDataLive.setValue(tempData);
         addFriendsLiveData = tempDataLive;
 
+
+    }
+
+
+    public LiveData<List<User>> getAddFriends() {
 
         return addFriendsLiveData;
     }

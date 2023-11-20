@@ -20,6 +20,7 @@ import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.AddUserAdapter;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.viewmodel.AddUserViewModel;
+import com.example.flashcards_app.viewmodel.NotificationViewModel;
 
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class AddUserActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                addUserViewModel.getSearchRequest(s);
                 return true;
             }
 
