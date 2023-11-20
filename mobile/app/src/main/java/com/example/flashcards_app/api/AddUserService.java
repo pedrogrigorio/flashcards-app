@@ -8,6 +8,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface AddUserService {
-    @GET("AddFriends")
+    @GET("AddUser")
     Call<List<User>> getAllFriends();
 }

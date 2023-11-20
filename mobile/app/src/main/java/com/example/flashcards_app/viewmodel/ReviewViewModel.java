@@ -57,7 +57,7 @@ public class ReviewViewModel extends ViewModel {
             reviewTemp.remove(position);
 
             nextNotReviewed(currentCards);
-            
+
 
             reviewLiveData.setValue(currentCards);
         }
