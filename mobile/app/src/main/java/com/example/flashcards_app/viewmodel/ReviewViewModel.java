@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.Review;
 
 import java.util.ArrayList;
@@ -48,6 +49,30 @@ public class ReviewViewModel extends ViewModel {
         this.reviewLiveData.setValue(tempLiveData);
     }
 
+    public void deleteCard(int position) {
+        List<Review> currentCards = reviewLiveData.getValue();
+
+        if (currentCards != null && !currentCards.isEmpty()) {
+            currentCards.remove(position);
+            reviewTemp.remove(position);
+
+            reviewLiveData.setValue(currentCards);
+        }
+    }
+
+    public void updateCard(Review updatedCard, int position) {
+        List<Review> currentCards = reviewLiveData.getValue();
+
+        if (currentCards != null && !currentCards.isEmpty()) {
+            currentCards.set(position, updatedCard);
+            reviewTemp.set(position, updatedCard);
+
+            reviewLiveData.setValue(currentCards);
+        }
+    }
+    public Review getCurrentCard(int position) {
+        return reviewLiveData.getValue().get(position);
+    }
 
 
     public void setReviewedCard(int ActualFirstVisibleItemPosition, int StampLevel) {
