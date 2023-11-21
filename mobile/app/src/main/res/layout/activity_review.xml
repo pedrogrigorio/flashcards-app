@@ -44,126 +44,17 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <!-- old code - Don't touch this-->
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:id="@+id/backCardViewText"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="250dp"-->
-<!--        android:layout_marginStart="24dp"-->
-<!--        android:layout_marginEnd="24dp"-->
-<!--        app:cardCornerRadius="34dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
-<!--        app:layout_constraintVertical_bias="0.388">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/backCardText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:gravity="center"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textColor="#391760"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            &lt;!&ndash; View para o lado esquerdo da tela &ndash;&gt;-->
-<!--            <View-->
-<!--                android:id="@+id/leftClickableRegionBack"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:visibility="visible"-->
-<!--                android:background="@android:color/transparent" />-->
-
-<!--            &lt;!&ndash; View para o lado direito da tela &ndash;&gt;-->
-<!--            <View-->
-<!--                android:id="@+id/rightClickableRegionBack"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:visibility="visible"-->
-<!--                android:background="@android:color/transparent" />-->
-
-<!--        </LinearLayout>-->
-
-
-<!--    </androidx.cardview.widget.CardView>-->
-
-
-
-
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:id="@+id/frontCardViewText"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="250dp"-->
-<!--        android:layout_marginStart="24dp"-->
-<!--        android:layout_marginEnd="24dp"-->
-<!--        app:cardCornerRadius="34dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
-<!--        app:layout_constraintVertical_bias="0.388">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/frontCardText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:gravity="center"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textColor="#391760"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            &lt;!&ndash; View para o lado esquerdo da tela &ndash;&gt;-->
-<!--            <View-->
-<!--                android:id="@+id/leftClickableRegionFront"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:visibility="visible"-->
-<!--                android:background="@android:color/transparent" />-->
-
-<!--            &lt;!&ndash; View para o lado direito da tela &ndash;&gt;-->
-<!--            <View-->
-<!--                android:id="@+id/rightClickableRegionFront"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:visibility="visible"-->
-<!--                android:background="@android:color/transparent" />-->
-
-<!--        </LinearLayout>-->
-
-
-
-<!--    </androidx.cardview.widget.CardView>-->
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/testReviewScreen"
-        android:layout_width="410dp"
-        android:layout_height="490dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/microphone_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         tools:ignore="NotSibling"
-        tools:listitem="@layout/test_new_review_item" />
+        tools:listitem="@layout/item_new_card_review" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/microphone_button"
@@ -182,52 +73,52 @@
         app:layout_constraintVertical_bias="0.862" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/audio_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/btn_microphone_sound_edit_card_rounded"
-        android:drawableBottom="@drawable/audio"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.651" />
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/audio_button"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:background="@drawable/btn_microphone_sound_edit_card_rounded"-->
+<!--        android:drawableBottom="@drawable/audio"-->
+<!--        android:gravity="center"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.789"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.651" />-->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/delete_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/btn_microphone_sound_edit_card_rounded"
-        android:drawableBottom="@drawable/delete_icon"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.651" />
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/delete_button"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:background="@drawable/btn_microphone_sound_edit_card_rounded"-->
+<!--        android:drawableBottom="@drawable/delete_icon"-->
+<!--        android:gravity="center"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.651" />-->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/edit_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/btn_microphone_sound_edit_card_rounded"
-        android:drawableBottom="@drawable/edit_pencil"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.651" />
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/edit_button"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        android:background="@drawable/btn_microphone_sound_edit_card_rounded"-->
+<!--        android:drawableBottom="@drawable/edit_pencil"-->
+<!--        android:gravity="center"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.651" />-->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/finished_review_button"
