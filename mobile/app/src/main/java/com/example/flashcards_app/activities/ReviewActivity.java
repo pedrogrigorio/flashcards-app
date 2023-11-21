@@ -97,7 +97,7 @@ public class ReviewActivity extends AppCompatActivity {
 
 
 
-        this.audioButton.setOnClickListener(v -> speakAudio());
+        audioButton.setOnClickListener(v -> speakAudio());
         easyButton.setOnClickListener(v -> setEasyButton());
         goodButton.setOnClickListener(v -> setGoodButton());
         hardButton.setOnClickListener(v -> setHardButton());
@@ -195,6 +195,9 @@ public class ReviewActivity extends AppCompatActivity {
         hardButton        = findViewById(R.id.finished_review_button);
         this.audioButton  = findViewById(R.id.audio_button);
         this.audioCard = new AudioCard(getApplicationContext());
+        deleteButton = findViewById(R.id.delete_button);
+        editButton = findViewById(R.id.edit_button);
+        back = findViewById(R.id.btn_back);
         startUpProgressBar(this.reviewViewModel.getLoadCardsSize());
     }
 
@@ -211,9 +214,6 @@ public class ReviewActivity extends AppCompatActivity {
         this.reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         configReviewViewModel();
         this.reviewViewModel.loadUiCards();
-        deleteButton = findViewById(R.id.delete_button);
-        editButton = findViewById(R.id.edit_button);
-        back = findViewById(R.id.btn_back);
 
     }
 
