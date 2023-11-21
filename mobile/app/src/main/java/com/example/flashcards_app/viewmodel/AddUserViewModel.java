@@ -22,9 +22,8 @@ public class AddUserViewModel extends ViewModel {
 
 
     public void getSearchRequest(String request) {
-
-        //        if (addFriendsLiveData.getValue() == null || addFriendsLiveData.getValue().isEmpty()) {
-//            addFriendsLiveData = addFriendRepository.getNewFriendsToAdd();
+//        if (addFriendsLiveData.getValue() == null || addFriendsLiveData.getValue().isEmpty()) {
+//            addFriendsLiveData = addUserRepository.getNewFriendsToAdd();
 //        }
 
         MutableLiveData<List<User>> tempDataLive = new MutableLiveData<>();

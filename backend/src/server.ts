@@ -97,6 +97,21 @@ app.get('/notifications', (req, res) => {
   ])
 })
 
+app.get('/AddUser', (req, res) => {
+  res.send([
+    {
+      name: 'Richardo Oliveira',
+      username: 'Richardo2023Oliveira',
+      imgSrc:
+        'https://upload.wikimedia.org/wikipedia/commons/c/c9/RONNIE_COLEMAN.jpg',
+      id: 234234,
+      dayStreak: 20,
+      cardsReviewed: 2000,
+      isFriend: true,
+    },
+  ])
+})
+
 app.get('/users', (req, res) => {
   res.send({
     name: 'João',

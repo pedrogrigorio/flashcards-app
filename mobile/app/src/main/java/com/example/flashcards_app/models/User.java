@@ -15,6 +15,7 @@ public class User {
         this.username = username;
         this.imgSrc = "https://cdn.vectorstock.com/i/preview-1x/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.jpg";
         this.dayStreak = 0;
+        this.id = 0;
         this.cardsReviewed = 0;
         this.isFriend = true;
     }
