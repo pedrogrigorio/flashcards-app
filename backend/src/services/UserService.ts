@@ -13,17 +13,17 @@ class UserService {
     const { username, email, password, passwordConfirmation } = userData
 
     if (password !== passwordConfirmation) {
-      throw new Error('Passwords not match')
+      throw new Error('Passwords not match.')
     }
 
     let user = await UserRepository.findByUsername(username)
     if (user) {
-      throw new Error('Username already taken')
+      throw new Error('Username already taken.')
     }
 
     user = await UserRepository.findByEmail(email)
     if (user) {
-      throw new Error('Email already in use')
+      throw new Error('Email already in use.')
     }
 
     const hashPassword = await hash(password, 8)
