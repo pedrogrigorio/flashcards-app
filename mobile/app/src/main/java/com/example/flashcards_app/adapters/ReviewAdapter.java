@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.ReviewActivity;
@@ -20,6 +21,8 @@ import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.AudioCard;
 
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -28,7 +31,10 @@ import java.util.List;
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHolder> {
 
     private List<Review> reviews = new ArrayList<>();
-    private ViewModelAdapterMethods viewModelAdapterMethods;
+
+    private OnDeleteCardButtonListener onDeleteCardButtonListener;
+    private OnEditCardButtonListener onEditCardButtonListener;
+
 
     @NonNull
     @Override
@@ -42,6 +48,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         Review currentReview = this.reviews.get(position);
         holder.frontTextCard.setText(currentReview.getFrontText());
         holder.backTextCard.setText(currentReview.getBackText());
+
 
         holder.frontCard.setOnClickListener(v -> {
             holder.animator.makeAnimationRight();
@@ -58,24 +65,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         });
 
         holder.editButton.setOnClickListener(v -> {
-            EditCardDialog dialog = new EditCardDialog(currentReview);
-            dialog.setDialogResult(new EditCardDialog.onDialogResult() {
-                @Override
-                public void finish(Review updatedCard) {
-                    viewModelAdapterMethods.updateCard(updatedCard, position);
-                }
-            });
+            onEditCardButtonListener.editCard();
         });
 
         holder.deleteButton.setOnClickListener(v -> {
-            Review card = new Review("currently card", "currently card", 444, null);
-            DeleteCardDialog dialog = new DeleteCardDialog(card);
-            dialog.setDialogResult(new DeleteCardDialog.onDialogResult() {
-                @Override
-                public void finish() {
-                    viewModelAdapterMethods.deleteCard(position);
-                }
-            });
+            onDeleteCardButtonListener.deleteCard(position);
         });
 
     }
@@ -83,7 +77,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     public void onViewRecycled(@NonNull ReviewHolder holder) {
         super.onViewRecycled(holder);
         holder.resetAnimatorState();
-        holder.cleanAudio();
     }
 
     @Override
@@ -96,6 +89,23 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         reviews = newReviews;
         notifyDataSetChanged();
 
+    }
+
+    public interface OnDeleteCardButtonListener {
+
+        void deleteCard(int position);
+    }
+
+    public void setOnDeleteCardButtonListener(OnDeleteCardButtonListener onDeleteCardButtonListener) {
+        this.onDeleteCardButtonListener = onDeleteCardButtonListener;
+    }
+
+    public interface OnEditCardButtonListener {
+        void editCard();
+    }
+
+    public void setOnEditCardButtonListener(OnEditCardButtonListener onEditCardButtonListener) {
+        this.onEditCardButtonListener = onEditCardButtonListener;
     }
 
 

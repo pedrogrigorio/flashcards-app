@@ -2,6 +2,8 @@ package com.example.flashcards_app.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,7 +38,7 @@ import java.util.List;
 
 
 
-public class ReviewActivity extends AppCompatActivity implements ViewModelAdapterMethods {
+public class ReviewActivity extends AppCompatActivity {
 
     private ReviewViewModel reviewViewModel;
     private RecyclerView recyclerView;
@@ -48,7 +50,6 @@ public class ReviewActivity extends AppCompatActivity implements ViewModelAdapte
     private static Button goodButton;
     private static Button hardButton;
     private Button audioButton;
-
     private LinearLayoutManager layoutManager;
     Button deleteButton;
     Button editButton;
@@ -92,30 +93,9 @@ public class ReviewActivity extends AppCompatActivity implements ViewModelAdapte
         goodButton.setOnClickListener(v -> setGoodButton());
         hardButton.setOnClickListener(v -> setHardButton());
 
-        deleteButton.setOnClickListener(v -> {
-            Review card = new Review("currently card", "currently card", 444, null);
-            DeleteCardDialog dialog = new DeleteCardDialog(card);
-            dialog.setDialogResult(new DeleteCardDialog.onDialogResult() {
-                @Override
-                public void finish() {
-                    reviewViewModel.deleteCard(getCurrentRecycleObjectOnScreen());
-                }
-            });
-            dialog.show(getSupportFragmentManager(), "delete_card_popup");
-        });
+        deleteCard();
+        editCard();
 
-        editButton.setOnClickListener(v -> {
-            int position = getCurrentRecycleObjectOnScreen();
-            Review currentCard = reviewViewModel.getCurrentCard(position);
-            EditCardDialog dialog = new EditCardDialog(currentCard);
-            dialog.setDialogResult(new EditCardDialog.onDialogResult() {
-                @Override
-                public void finish(Review updatedCard) {
-                    reviewViewModel.updateCard(updatedCard, position);
-                }
-            });
-            dialog.show(getSupportFragmentManager(), "edit_card_popup");
-        });
 
         back.setOnClickListener(v -> {
             accessHomeActivity();
@@ -259,13 +239,44 @@ public class ReviewActivity extends AppCompatActivity implements ViewModelAdapte
     }
 
 
-    @Override
-    public void updateCard(Review updateCard, int position) {
-        reviewViewModel.updateCard(updateCard, position);
+    public void deleteCard() {
+
+        reviewAdapter.setOnDeleteCardButtonListener(new ReviewAdapter.OnDeleteCardButtonListener() {
+            @Override
+            public void deleteCard(int position) {
+
+                Review card = new Review("currently card", "currently card", 444, null);
+                DeleteCardDialog dialog = new DeleteCardDialog(card);
+                dialog.setDialogResult(new DeleteCardDialog.onDialogResult() {
+                    @Override
+                    public void finish() {
+                        reviewViewModel.deleteCard(position);
+                    }
+                });
+                dialog.show(getSupportFragmentManager(), "delete_card_popup");
+                }
+            });
     }
 
-    @Override
-    public void deleteCard(int position) {
-        reviewViewModel.deleteCard(position);
+
+    public void editCard() {
+        reviewAdapter.setOnEditCardButtonListener(new ReviewAdapter.OnEditCardButtonListener() {
+            @Override
+            public void editCard() {
+                int position = getCurrentRecycleObjectOnScreen();
+                Review currentCard = reviewViewModel.getCurrentCard(position);
+                EditCardDialog dialog = new EditCardDialog(currentCard);
+                dialog.setDialogResult(new EditCardDialog.onDialogResult() {
+                    @Override
+                    public void finish(Review updatedCard) {
+                        reviewViewModel.updateCard(updatedCard, position);
+                    }
+                });
+                dialog.show(getSupportFragmentManager(), "edit_card_popup");
+
+                }
+            });
+
     }
+
 }
