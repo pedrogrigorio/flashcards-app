@@ -5,8 +5,7 @@ import routes from './routes/routes'
 const app = express()
 
 app.use(cors())
-
-// configura rotas definidas no arquivo routes.ts
+app.use(express.json())
 app.use(routes)
 
 app.listen(3000, () => {
