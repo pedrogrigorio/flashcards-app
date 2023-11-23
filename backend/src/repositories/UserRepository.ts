@@ -56,6 +56,18 @@ class UserRepository {
 
     return user
   }
+
+  async searchUsers(query: string) {
+    const users = await prisma.user.findMany({
+      where: {
+        username: {
+          contains: query,
+        },
+      },
+    })
+
+    return users
+  }
 }
 
 export default new UserRepository()

@@ -36,7 +36,7 @@ class UserService {
     return await UserRepository.findUserById(userId)
   }
 
-  async updateUser(
+  async updateProfile(
     userId: number,
     authenticatedUserId: number,
     newData: { name: string; imgSrc: string },
@@ -50,6 +50,10 @@ class UserService {
       newData.name,
       newData.imgSrc,
     )
+  }
+
+  async searchUsers(query: string) {
+    return await UserRepository.searchUsers(query)
   }
 }
 

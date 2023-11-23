@@ -8,5 +8,6 @@ const userRoutes = Router()
 userRoutes.post('/users/register', UserController.register)
 userRoutes.get('/users/:id', AuthMiddleware, UserController.getUser)
 userRoutes.put('/users/:id', AuthMiddleware, UserController.updateProfile)
+userRoutes.post('/users/search', AuthMiddleware, UserController.searchUsers)
 
 export default userRoutes

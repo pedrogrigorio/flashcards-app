@@ -21,7 +21,13 @@ export function AuthMiddleware(
   const [, token] = authorization.split(' ')
 
   try {
-    const decoded = verify(token, process.env.SECRET)
+    const SECRET_KEY = process.env.SECRET
+
+    if (!SECRET_KEY) {
+      throw new Error('Secret key not provided')
+    }
+
+    const decoded = verify(token, SECRET_KEY)
     const { id } = decoded as TokenPayload
 
     req.userId = id

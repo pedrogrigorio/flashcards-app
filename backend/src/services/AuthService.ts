@@ -15,7 +15,13 @@ class AuthService {
       throw new Error('Invalid password.')
     }
 
-    const token = sign({ id: user.id }, process.env.SECRET, {
+    const SECRET_KEY = process.env.SECRET
+
+    if (!SECRET_KEY) {
+      throw new Error('Secret key not provided')
+    }
+
+    const token = sign({ id: user.id }, SECRET_KEY, {
       expiresIn: '30d',
     })
 

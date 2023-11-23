@@ -15,7 +15,7 @@ class UserController {
 
     try {
       const user = await UserService.register(userData)
-      res.json(user)
+      return res.json(user)
     } catch (error) {
       if (error instanceof Error) {
         return res.status(400).json({ error: error.message })
@@ -35,10 +35,16 @@ class UserController {
   async updateProfile(req: Request, res: Response) {
     const userId = parseInt(req.params.id)
     const authenticatedUserId = parseInt(req.userId)
-    const newData = req.body
+    const bodySchema = z.object({
+      name: z
+        .string()
+        .min(2, { message: 'Name must contain at least 2 character(s).' }),
+      imgSrc: z.string(),
+    })
 
     try {
-      const updatedUser = await UserService.updateUser(
+      const newData = bodySchema.parse(req.body)
+      const updatedUser = await UserService.updateProfile(
         userId,
         authenticatedUserId,
         newData,
@@ -46,12 +52,21 @@ class UserController {
 
       return res.json(updatedUser)
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors[0].message })
+      } else if (error instanceof Error) {
         return res.status(400).json({ error: error.message })
       }
 
       return res.status(500).json({ error: 'Internal Server Error' })
     }
+  }
+
+  async searchUsers(req: Request, res: Response) {
+    const { query } = req.body
+    const users = await UserService.searchUsers(query)
+
+    return res.json(users)
   }
 }
 
