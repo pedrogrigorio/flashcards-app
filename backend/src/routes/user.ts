@@ -5,8 +5,8 @@ import UserController from '../controllers/UserController'
 const userRoutes = Router()
 
 // only for token authorization test
-userRoutes.get('/users', AuthMiddleware, UserController.getAllUsers)
-
 userRoutes.post('/users/register', UserController.register)
+userRoutes.get('/users/:id', AuthMiddleware, UserController.getUser)
+userRoutes.put('/users/:id', AuthMiddleware, UserController.updateProfile)
 
 export default userRoutes

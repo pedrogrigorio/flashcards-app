@@ -13,7 +13,7 @@ class UserRepository {
     return user
   }
 
-  async findByUsername(username: string) {
+  async findUserByUsername(username: string) {
     const user = await prisma.user.findUnique({
       where: {
         username,
@@ -23,7 +23,7 @@ class UserRepository {
     return user
   }
 
-  async findByEmail(email: string) {
+  async findUserByEmail(email: string) {
     const user = await prisma.user.findUnique({
       where: {
         email,
@@ -33,10 +33,28 @@ class UserRepository {
     return user
   }
 
-  async getAllUsers() {
-    const users = await prisma.user.findMany()
+  async findUserById(id: number) {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
 
-    return users
+    return user
+  }
+
+  async updateProfile(id: number, name: string, imgSrc: string) {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        imgSrc,
+      },
+    })
+
+    return user
   }
 }
 

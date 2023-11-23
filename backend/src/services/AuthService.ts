@@ -4,7 +4,7 @@ import { sign } from 'jsonwebtoken'
 
 class AuthService {
   async login(email: string, password: string) {
-    const user = await UserRepository.findByEmail(email)
+    const user = await UserRepository.findUserByEmail(email)
     if (!user) {
       throw new Error('Email not found.')
     }
