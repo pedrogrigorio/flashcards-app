@@ -18,14 +18,6 @@ class UserRepository {
       where: {
         username,
       },
-      select: {
-        id: true,
-        username: true,
-        name: true,
-        imgSrc: true,
-        dayStreak: true,
-        cardsReviewed: true,
-      },
     })
 
     return user
@@ -35,14 +27,6 @@ class UserRepository {
     const user = await prisma.user.findUnique({
       where: {
         email,
-      },
-      select: {
-        id: true,
-        username: true,
-        name: true,
-        imgSrc: true,
-        dayStreak: true,
-        cardsReviewed: true,
       },
     })
 

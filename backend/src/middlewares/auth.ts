@@ -21,7 +21,7 @@ export function AuthMiddleware(
   const [, token] = authorization.split(' ')
 
   try {
-    const SECRET_KEY = process.env.SECRET
+    const SECRET_KEY = process.env.SECRET_KEY
 
     if (!SECRET_KEY) {
       throw new Error('Secret key not provided')
