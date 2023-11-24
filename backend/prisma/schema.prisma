@@ -19,4 +19,18 @@ model User {
   imgSrc        String @default("")
   dayStreak     Int    @default(0)
   cardsReviewed Int    @default(0)
+
+  friends Friend[]
+}
+
+model Friend {
+  id            Int    @id @default(autoincrement())
+  username      String @unique
+  name          String
+  imgSrc        String @default("")
+  dayStreak     Int
+  cardsReviewed Int
+
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
 }
