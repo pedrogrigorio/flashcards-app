@@ -5,6 +5,11 @@ import UserController from '../controllers/UserController'
 const userRoutes = Router()
 
 userRoutes.get('/users/:id', AuthMiddleware, UserController.getUser)
+userRoutes.get(
+  '/users/:id/friends',
+  AuthMiddleware,
+  UserController.getAllFriends,
+)
 
 userRoutes.post('/users/register', UserController.register)
 userRoutes.post('/users/search', AuthMiddleware, UserController.searchUsers)

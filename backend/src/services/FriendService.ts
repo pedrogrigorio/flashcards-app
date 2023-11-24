@@ -1,3 +1,5 @@
+import FriendRepository from '../repositories/FriendRepository'
+
 class FriendService {
   async addFriend() {
     return null
@@ -7,16 +9,12 @@ class FriendService {
     return null
   }
 
-  async deleteFriend() {
-    return null
+  async deleteFriend(friendId: number) {
+    return await FriendRepository.deleteFriend(friendId)
   }
 
-  async getAllFriends() {
-    return null
-  }
-
-  async getFriendById() {
-    return null
+  async getFriendById(friendId: number) {
+    return await FriendRepository.getFriendById(friendId)
   }
 }
 

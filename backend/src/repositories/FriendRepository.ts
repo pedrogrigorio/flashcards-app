@@ -1,16 +1,24 @@
 import { prisma } from '../lib/prisma'
 
 class FriendRepository {
-  async deleteFriend() {
-    return null
+  async deleteFriend(friendId: number) {
+    const friend = await prisma.friend.delete({
+      where: {
+        id: friendId,
+      },
+    })
+
+    return friend
   }
 
-  async getAllFriends() {
-    return null
-  }
+  async getFriendById(friendId: number) {
+    const friend = await prisma.friend.findUnique({
+      where: {
+        id: friendId,
+      },
+    })
 
-  async getFriendById() {
-    return null
+    return friend
   }
 }
 

@@ -112,6 +112,13 @@ class UserController {
 
     return res.json(users)
   }
+
+  async getAllFriends(req: Request, res: Response) {
+    const userId = parseInt(req.params.id)
+    const friends = await UserService.getAllFriends(userId)
+
+    return res.json(friends)
+  }
 }
 
 export default new UserController()
