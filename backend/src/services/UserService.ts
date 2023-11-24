@@ -52,6 +52,30 @@ class UserService {
     )
   }
 
+  async updateUserDayStreak(
+    userId: number,
+    authenticatedUserId: number,
+    dayStreak: number,
+  ) {
+    if (userId !== authenticatedUserId) {
+      throw new Error('Unauthorized: You cannot modify other user data.')
+    }
+
+    return await UserRepository.updateUserDayStreak(userId, dayStreak)
+  }
+
+  async updateUserCardsReviewed(
+    userId: number,
+    authenticatedUserId: number,
+    cardsReviewed: number,
+  ) {
+    if (userId !== authenticatedUserId) {
+      throw new Error('Unauthorized: You cannot modify other user data.')
+    }
+
+    return await UserRepository.updateUserCardsReviewed(userId, cardsReviewed)
+  }
+
   async searchUsers(query: string) {
     return await UserRepository.searchUsers(query)
   }
