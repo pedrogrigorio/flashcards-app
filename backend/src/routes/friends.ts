@@ -2,14 +2,14 @@ import { Router } from 'express'
 import { AuthMiddleware } from '../middlewares/auth'
 import FriendController from '../controllers/FriendController'
 
-const friendsRoutes = Router()
+const friendRoutes = Router()
 
-friendsRoutes.delete(
+friendRoutes.delete(
   '/friends/:id',
   AuthMiddleware,
   FriendController.deleteFriend,
 )
 
-friendsRoutes.get('/friends/:id', FriendController.getFriendById)
+friendRoutes.get('/friends/:id', AuthMiddleware, FriendController.getFriendById)
 
-export default friendsRoutes
+export default friendRoutes
