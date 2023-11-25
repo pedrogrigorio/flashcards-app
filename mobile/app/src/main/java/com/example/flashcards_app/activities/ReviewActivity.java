@@ -2,7 +2,6 @@ package com.example.flashcards_app.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,15 +21,9 @@ import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ReviewAdapter;
-import com.example.flashcards_app.dialogs.AddCardsDialog;
 import com.example.flashcards_app.dialogs.DeleteCardDialog;
-import com.example.flashcards_app.dialogs.DeleteDeckDialog;
 import com.example.flashcards_app.dialogs.EditCardDialog;
-import com.example.flashcards_app.dialogs.EditDeckDialog;
-import com.example.flashcards_app.dialogs.FinishedReviewDialog;
-import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.util.DifficultLevel;
-import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.AudioCard;
 import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.ProgressBarCards;
 import com.example.flashcards_app.models.Review;
 import com.example.flashcards_app.viewmodel.ReviewViewModel;
@@ -42,7 +35,7 @@ import java.util.List;
 
 
 
-public class ReviewActivity extends AppCompatActivity {
+public class ReviewActivity extends AppCompatActivity  {
 
     private ReviewViewModel reviewViewModel;
     private RecyclerView recyclerView;
@@ -54,7 +47,6 @@ public class ReviewActivity extends AppCompatActivity {
     private static Button goodButton;
     private static Button hardButton;
     private Button audioButton;
-    private AudioCard audioCard;
     private LinearLayoutManager layoutManager;
     Button deleteButton;
     Button editButton;
@@ -89,47 +81,15 @@ public class ReviewActivity extends AppCompatActivity {
                 updateProgressBar();
                 ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
 
-                setVisibilityDifficultButtons(firstVisibleViewHolder == null || reviewViewModel.hasBeenReviewed(getCurrentRecycleObjectOnScreen()) || !firstVisibleViewHolder.getIsTrue());
+                setVisibility(firstVisibleViewHolder == null || reviewViewModel.hasBeenReviewed(getCurrentRecycleObjectOnScreen()) || !firstVisibleViewHolder.getIsTrue());
             }
         });
 
 
-
-
-
-        audioButton.setOnClickListener(v -> speakAudio());
         easyButton.setOnClickListener(v -> setEasyButton());
         goodButton.setOnClickListener(v -> setGoodButton());
         hardButton.setOnClickListener(v -> setHardButton());
-
-        deleteButton.setOnClickListener(v -> {
-            Review card = new Review("currently card", "currently card", 444, null);
-            DeleteCardDialog dialog = new DeleteCardDialog(card);
-            dialog.setDialogResult(new DeleteCardDialog.onDialogResult() {
-                @Override
-                public void finish() {
-                    reviewViewModel.deleteCard(getCurrentRecycleObjectOnScreen());
-                }
-            });
-            dialog.show(getSupportFragmentManager(), "delete_card_popup");
-        });
-
-        editButton.setOnClickListener(v -> {
-            int position = getCurrentRecycleObjectOnScreen();
-            Review currentCard = reviewViewModel.getCurrentCard(position);
-            EditCardDialog dialog = new EditCardDialog(currentCard);
-            dialog.setDialogResult(new EditCardDialog.onDialogResult() {
-                @Override
-                public void finish(Review updatedCard) {
-                    reviewViewModel.updateCard(updatedCard, position);
-                }
-            });
-            dialog.show(getSupportFragmentManager(), "edit_card_popup");
-        });
-
-        back.setOnClickListener(v -> {
-            accessHomeActivity();
-        });
+        back.setOnClickListener(v -> accessHomeActivity());
 
     }
 
@@ -137,6 +97,7 @@ public class ReviewActivity extends AppCompatActivity {
         Intent in = new Intent(this, HomeActivity.class);
         startActivity(in);
     }
+
 
     private void setEasyButton() {
         changeDataToReviewedCards(DifficultLevel.EASY.getValue());
@@ -167,14 +128,6 @@ public class ReviewActivity extends AppCompatActivity {
         ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
         if (firstVisibleViewHolder != null) {
                 this.reviewViewModel.setReviewedCard(getCurrentRecycleObjectOnScreen(),levelStamp);
-
-        }
-    }
-
-    private void speakAudio() {
-        ReviewAdapter.ReviewHolder firstVisibleViewHolder = (ReviewAdapter.ReviewHolder) this.recyclerView.findViewHolderForAdapterPosition(getCurrentRecycleObjectOnScreen());
-        if (firstVisibleViewHolder != null) {
-            this.audioCard.speak(firstVisibleViewHolder.getTextCard());
         }
     }
 
@@ -189,16 +142,16 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void startUpScreenElements() {
-        this.microphoneButton  = findViewById(R.id.microphone_button);
+        microphoneButton  = findViewById(R.id.microphone_button);
         easyButton        = findViewById(R.id.easy_button);
         goodButton        = findViewById(R.id.good_button);
         hardButton        = findViewById(R.id.finished_review_button);
-        this.audioButton  = findViewById(R.id.audio_button);
-        this.audioCard = new AudioCard(getApplicationContext());
-        deleteButton = findViewById(R.id.delete_button);
-        editButton = findViewById(R.id.edit_button);
         back = findViewById(R.id.btn_back);
         startUpProgressBar(this.reviewViewModel.getLoadCardsSize());
+        deleteCard();
+        editCard();
+        refreshProgressBar();
+        setVisibility();
     }
 
     private void startUpRecycleViewMVVM() {
@@ -236,25 +189,17 @@ public class ReviewActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        if (this.audioCard != null) {
-            this.audioCard.shutDown();
-        }
-        super.onDestroy();
-    }
-
     private void startUpProgressBar(int getItemCount) {
         this.progressBarCards  = new ProgressBarCards(findViewById(R.id.progressText), findViewById(R.id.progressBar));
         this.progressBarCards.setAmount(getItemCount);
     }
 
     private void updateProgressBar() {
-        this.progressBarCards.setCurrent(this.reviewViewModel.getIndexLastCardReviewed());
+        this.progressBarCards.setCurrent(reviewViewModel.getIndexLastCardReviewed());
     }
 
 
-    public static  void setVisibilityDifficultButtons(boolean setVisibility) {
+    private void setVisibility(boolean setVisibility) {
         int visibility = setVisibility ? View.VISIBLE : View.INVISIBLE;
         goodButton.setVisibility(visibility);
         hardButton.setVisibility(visibility);
@@ -269,7 +214,64 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
 
+    public void deleteCard() {
+
+        reviewAdapter.setOnDeleteCardButtonListener(new ReviewAdapter.OnDeleteCardButtonListener() {
+            @Override
+            public void deleteCard(int position) {
+
+                Review card = new Review("currently card", "currently card", 444, null);
+                DeleteCardDialog dialog = new DeleteCardDialog(card);
+                dialog.setDialogResult(new DeleteCardDialog.onDialogResult() {
+                    @Override
+                    public void finish() {
+                        reviewViewModel.deleteCard(position);
+                    }
+                });
+                dialog.show(getSupportFragmentManager(), "delete_card_popup");
+                }
+            });
+    }
 
 
+    public void editCard() {
+        reviewAdapter.setOnEditCardButtonListener(new ReviewAdapter.OnEditCardButtonListener() {
+            @Override
+            public void editCard() {
+                int position = getCurrentRecycleObjectOnScreen();
+                Review currentCard = reviewViewModel.getCurrentCard(position);
+                EditCardDialog dialog = new EditCardDialog(currentCard);
+                dialog.setDialogResult(new EditCardDialog.onDialogResult() {
+                    @Override
+                    public void finish(Review updatedCard) {
+                        reviewViewModel.updateCard(updatedCard, position);
+                    }
+                });
+                dialog.show(getSupportFragmentManager(), "edit_card_popup");
+
+                }
+            });
+
+    }
+
+
+
+    public void refreshProgressBar() {
+        reviewViewModel.setOnRefreshProgressBar(new ReviewViewModel.OnRefreshProgressBar() {
+            @Override
+            public void refreshProgressBar() {
+                updateProgressBar();
+            }
+        });
+    }
+
+    public void setVisibility() {
+        reviewAdapter.setOnVisibilityListenerButton(new ReviewAdapter.OnVisibilityListenerButton() {
+            @Override
+            public void setVisibilityButton(boolean visibility) {
+                setVisibility(visibility);
+            }
+        });
+    }
 
 }
