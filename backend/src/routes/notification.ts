@@ -16,4 +16,10 @@ notificationRoutes.put(
   NotificationController.acceptFriendRequest,
 )
 
+notificationRoutes.put(
+  '/notifications/:id/reject',
+  AuthMiddleware,
+  NotificationController.rejectFriendRequest,
+)
+
 export default notificationRoutes

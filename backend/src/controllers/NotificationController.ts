@@ -20,6 +20,14 @@ class NotificationController {
       await NotificationService.acceptFriendRequest(notificationId)
     res.json(response)
   }
+
+  async rejectFriendRequest(req: Request, res: Response) {
+    const notificationId = parseInt(req.params.id)
+
+    const response =
+      await NotificationService.rejectFriendRequest(notificationId)
+    res.json(response)
+  }
 }
 
 export default new NotificationController()

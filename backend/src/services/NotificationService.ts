@@ -1,5 +1,5 @@
-import NotificationStatus from '../enum/NotificationStatus'
-import NotificationType from '../enum/NotificationType'
+import NotificationStatus from '../constants/NotificationStatus'
+import NotificationType from '../constants/NotificationType'
 import NotificationRepository from '../repositories/NotificationRepository'
 import FriendService from './FriendService'
 
@@ -32,6 +32,15 @@ class NotificationService {
 
       return [notification, responseNotification]
     }
+  }
+
+  async rejectFriendRequest(notificationId: number) {
+    const notification = await NotificationRepository.updateNotificationStatus(
+      notificationId,
+      NotificationStatus.Rejected,
+    )
+
+    return notification
   }
 }
 

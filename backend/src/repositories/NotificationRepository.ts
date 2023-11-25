@@ -1,5 +1,5 @@
-import NotificationStatus from '../enum/NotificationStatus'
-import NotificationType from '../enum/NotificationType'
+import NotificationStatus from '../constants/NotificationStatus'
+import NotificationType from '../constants/NotificationType'
 import { prisma } from '../lib/prisma'
 
 class NotificationRepository {

@@ -36,44 +36,28 @@ class UserService {
     return await UserRepository.findUserById(userId)
   }
 
-  async updateProfile(
-    userId: number,
-    authenticatedUserId: number,
-    newData: { name: string; imgSrc: string },
-  ) {
-    if (userId !== authenticatedUserId) {
-      throw new Error('Unauthorized: You cannot modify other user data.')
+  async updateProfile(userId: number, name: string, imgSrc: string) {
+    return await UserRepository.updateProfile(userId, name, imgSrc)
+  }
+
+  async updateStats(userId: number, cardsReviewed: number) {
+    const user = await UserRepository.findUserById(userId)
+
+    if (!user) {
+      throw new Error('User not found')
     }
 
-    return await UserRepository.updateProfile(
+    // logic to calculate dayStreak
+    const dayStreak = 0
+    const newCardsReviewedCount = user?.cardsReviewed + cardsReviewed
+
+    const updatedUser = await UserRepository.updateStats(
       userId,
-      newData.name,
-      newData.imgSrc,
+      dayStreak,
+      newCardsReviewedCount,
     )
-  }
 
-  async updateUserDayStreak(
-    userId: number,
-    authenticatedUserId: number,
-    dayStreak: number,
-  ) {
-    if (userId !== authenticatedUserId) {
-      throw new Error('Unauthorized: You cannot modify other user data.')
-    }
-
-    return await UserRepository.updateUserDayStreak(userId, dayStreak)
-  }
-
-  async updateUserCardsReviewed(
-    userId: number,
-    authenticatedUserId: number,
-    cardsReviewed: number,
-  ) {
-    if (userId !== authenticatedUserId) {
-      throw new Error('Unauthorized: You cannot modify other user data.')
-    }
-
-    return await UserRepository.updateUserCardsReviewed(userId, cardsReviewed)
+    return updatedUser
   }
 
   async searchUsers(query: string) {

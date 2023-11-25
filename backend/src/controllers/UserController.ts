@@ -1,123 +1,75 @@
 import { Request, Response } from 'express'
 import UserService from '../services/UserService'
-import { z } from 'zod'
+import { handleError } from '../utils/errorHandling'
+import * as Validators from '../validators/user'
 
 class UserController {
   async register(req: Request, res: Response) {
-    const bodySchema = z.object({
-      username: z.string(),
-      email: z.string().email(),
-      password: z.string(),
-      passwordConfirmation: z.string(),
-    })
-
-    const userData = bodySchema.parse(req.body)
-
     try {
+      const userData = Validators.registerSchema.parse(req.body)
       const user = await UserService.register(userData)
+
       return res.json(user)
     } catch (error) {
-      if (error instanceof Error) {
-        return res.status(400).json({ error: error.message })
-      }
-
-      return res.status(500).json({ error: 'Internal Server Error' })
+      handleError(res, error)
     }
   }
 
   async getUser(req: Request, res: Response) {
-    const userId = parseInt(req.params.id)
-    const user = await UserService.getUser(userId)
+    try {
+      const userId = parseInt(req.params.id)
+      const user = await UserService.getUser(userId)
 
-    return res.json(user)
+      return res.json(user)
+    } catch (error) {
+      handleError(res, error)
+    }
   }
 
   async updateProfile(req: Request, res: Response) {
-    const userId = parseInt(req.params.id)
-    const authenticatedUserId = parseInt(req.userId)
-    const bodySchema = z.object({
-      name: z
-        .string()
-        .min(2, { message: 'Name must contain at least 2 character(s).' }),
-      imgSrc: z.string(),
-    })
-
     try {
-      const newData = bodySchema.parse(req.body)
-      const updatedUser = await UserService.updateProfile(
-        userId,
-        authenticatedUserId,
-        newData,
-      )
+      const userId = parseInt(req.params.id)
+      const { name, imgSrc } = Validators.updateProfileSchema.parse(req.body)
+      const updatedUser = await UserService.updateProfile(userId, name, imgSrc)
 
       return res.json(updatedUser)
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: error.errors[0].message })
-      } else if (error instanceof Error) {
-        return res.status(400).json({ error: error.message })
-      }
-
-      return res.status(500).json({ error: 'Internal Server Error' })
+      handleError(res, error)
     }
   }
 
-  async updateUserDayStreak(req: Request, res: Response) {
-    const userId = parseInt(req.params.id)
-    const authenticatedUserId = parseInt(req.userId)
-    const { dayStreak } = req.body
-
+  async updateStats(req: Request, res: Response) {
     try {
-      const updatedUser = await UserService.updateUserDayStreak(
-        userId,
-        authenticatedUserId,
-        dayStreak,
-      )
+      const userId = parseInt(req.params.id)
+      const { cardsReviewed } = Validators.updateStatsSchema.parse(req.body)
+      const user = await UserService.updateStats(userId, cardsReviewed)
 
-      return res.json(updatedUser)
+      return res.json(user)
     } catch (error) {
-      if (error instanceof Error) {
-        return res.status(400).json({ error: error.message })
-      }
-
-      return res.status(500).json({ error: 'Internal Server Error' })
-    }
-  }
-
-  async updateUserCardsReviewed(req: Request, res: Response) {
-    const userId = parseInt(req.params.id)
-    const authenticatedUserId = parseInt(req.userId)
-    const { cardsReviewed } = req.body
-
-    try {
-      const updatedUser = await UserService.updateUserCardsReviewed(
-        userId,
-        authenticatedUserId,
-        cardsReviewed,
-      )
-
-      return res.json(updatedUser)
-    } catch (error) {
-      if (error instanceof Error) {
-        return res.status(400).json({ error: error.message })
-      }
-
-      return res.status(500).json({ error: 'Internal Server Error' })
+      handleError(res, error)
     }
   }
 
   async searchUsers(req: Request, res: Response) {
-    const { query } = req.body
-    const users = await UserService.searchUsers(query)
+    try {
+      const { query } = Validators.searchUsersSchema.parse(req.body)
+      const users = await UserService.searchUsers(query)
 
-    return res.json(users)
+      return res.json(users)
+    } catch (error) {
+      handleError(res, error)
+    }
   }
 
   async getAllFriends(req: Request, res: Response) {
-    const userId = parseInt(req.params.id)
-    const friends = await UserService.getAllFriends(userId)
+    try {
+      const userId = parseInt(req.params.id)
+      const friends = await UserService.getAllFriends(userId)
 
-    return res.json(friends)
+      return res.json(friends)
+    } catch (error) {
+      handleError(res, error)
+    }
   }
 }
 
