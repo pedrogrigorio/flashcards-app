@@ -20,17 +20,22 @@ model User {
   dayStreak     Int    @default(0)
   cardsReviewed Int    @default(0)
 
-  friends Friend[]
+  friends   Friend[] @relation("UserFriends")
+  friendsOf Friend[] @relation("UserFriendsOf")
 }
 
 model Friend {
-  id            Int    @id @default(autoincrement())
-  username      String @unique
+  username      String
   name          String
-  imgSrc        String @default("")
+  imgSrc        String
   dayStreak     Int
   cardsReviewed Int
 
-  User   User? @relation(fields: [userId], references: [id])
-  userId Int?
+  user   User? @relation("UserFriendsOf", fields: [userId], references: [id])
+  userId Int
+
+  friendOf   User? @relation("UserFriends", fields: [friendOfId], references: [id])
+  friendOfId Int
+
+  @@id([userId, friendOfId])
 }

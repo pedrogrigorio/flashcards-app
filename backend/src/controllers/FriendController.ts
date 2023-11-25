@@ -6,8 +6,12 @@ class FriendController {
     return res.status(400).json({ to_do: 'TO DO' })
   }
 
-  async acceptFriendRequest(req: Request, res: Response) {
-    return res.status(400).json({ to_do: 'TO DO' })
+  async createFriendTest(req: Request, res: Response) {
+    const userId = parseInt(req.params.id)
+    const { friendId } = req.body
+
+    const newFriend = await FriendService.addNewFriend(userId, friendId)
+    return res.json(newFriend)
   }
 
   async deleteFriend(req: Request, res: Response) {

@@ -4,6 +4,8 @@ import FriendController from '../controllers/FriendController'
 
 const friendRoutes = Router()
 
+friendRoutes.post('/friends/:id', FriendController.createFriendTest)
+
 friendRoutes.delete(
   '/friends/:id',
   AuthMiddleware,
