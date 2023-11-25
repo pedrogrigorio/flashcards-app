@@ -1,0 +1,91 @@
+import { hash } from 'bcryptjs'
+import UserRepository from '../repositories/UserRepository'
+
+interface UserDataSchema {
+  username: string
+  email: string
+  password: string
+  passwordConfirmation: string
+}
+
+class UserService {
+  async register(userData: UserDataSchema) {
+    const { username, email, password, passwordConfirmation } = userData
+
+    if (password !== passwordConfirmation) {
+      throw new Error('Passwords not match.')
+    }
+
+    let user = await UserRepository.findUserByUsername(username)
+    if (user) {
+      throw new Error('Username already taken.')
+    }
+
+    user = await UserRepository.findUserByEmail(email)
+    if (user) {
+      throw new Error('Email already in use.')
+    }
+
+    const hashPassword = await hash(password, 8)
+    user = await UserRepository.createUser(username, email, hashPassword)
+
+    return user
+  }
+
+  async getUser(userId: number) {
+    return await UserRepository.findUserById(userId)
+  }
+
+  async updateProfile(
+    userId: number,
+    authenticatedUserId: number,
+    newData: { name: string; imgSrc: string },
+  ) {
+    if (userId !== authenticatedUserId) {
+      throw new Error('Unauthorized: You cannot modify other user data.')
+    }
+
+    return await UserRepository.updateProfile(
+      userId,
+      newData.name,
+      newData.imgSrc,
+    )
+  }
+
+  async updateUserDayStreak(
+    userId: number,
+    authenticatedUserId: number,
+    dayStreak: number,
+  ) {
+    if (userId !== authenticatedUserId) {
+      throw new Error('Unauthorized: You cannot modify other user data.')
+    }
+
+    return await UserRepository.updateUserDayStreak(userId, dayStreak)
+  }
+
+  async updateUserCardsReviewed(
+    userId: number,
+    authenticatedUserId: number,
+    cardsReviewed: number,
+  ) {
+    if (userId !== authenticatedUserId) {
+      throw new Error('Unauthorized: You cannot modify other user data.')
+    }
+
+    return await UserRepository.updateUserCardsReviewed(userId, cardsReviewed)
+  }
+
+  async searchUsers(query: string) {
+    return await UserRepository.searchUsers(query)
+  }
+
+  async getAllFriends(id: number) {
+    const userWithFriends = await UserRepository.getAllFriends(id)
+
+    const friends = userWithFriends.flatMap((user) => user.friends)
+    return friends
+  }
+}
+
+export default new UserService()

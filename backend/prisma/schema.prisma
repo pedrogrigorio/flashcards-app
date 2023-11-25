@@ -9,3 +9,44 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            Int    @id @default(autoincrement())
+  username      String @unique
+  name          String @default("")
+  email         String @unique
+  password      String
+  imgSrc        String @default("")
+  dayStreak     Int    @default(0)
+  cardsReviewed Int    @default(0)
+
+  friends       Friend[]       @relation("UserFriends")
+  friendsOf     Friend[]       @relation("UserFriendsOf")
+  notifications Notification[]
+}
+
+model Friend {
+  username      String
+  name          String
+  imgSrc        String
+  dayStreak     Int
+  cardsReviewed Int
+
+  user   User @relation("UserFriendsOf", fields: [userId], references: [id])
+  userId Int
+
+  friendOf   User @relation("UserFriends", fields: [friendOfId], references: [id])
+  friendOfId Int
+
+  @@id([userId, friendOfId])
+}
+
+model Notification {
+  id       Int  @id @default(autoincrement())
+  type     Int
+  status   Int?
+  senderId Int?
+
+  receiver   User @relation(fields: [receiverId], references: [id])
+  receiverId Int
+}
