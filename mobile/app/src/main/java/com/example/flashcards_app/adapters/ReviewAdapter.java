@@ -8,21 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.flashcards_app.R;
-import com.example.flashcards_app.activities.ReviewActivity;
-import com.example.flashcards_app.dialogs.DeleteCardDialog;
-import com.example.flashcards_app.dialogs.EditCardDialog;
 import com.example.flashcards_app.models.Animator;
 import com.example.flashcards_app.models.Review;
-import com.example.flashcards_app.util.ViewModelAdapterMethods;
 import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.AudioCard;
 
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -34,6 +27,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
     private OnDeleteCardButtonListener onDeleteCardButtonListener;
     private OnEditCardButtonListener onEditCardButtonListener;
+    private OnVisibilityListenerButton onVisibilityListenerButton;
+
 
 
     @NonNull
@@ -52,7 +47,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
         holder.frontCard.setOnClickListener(v -> {
             holder.animator.makeAnimationRight();
-            ReviewActivity.setVisibilityDifficultButtons(true);
+            onVisibilityListenerButton.setVisibilityButton(true);
             holder.setAnimatorState(false);
         });
         holder.backCard.setOnClickListener(v -> {
@@ -90,24 +85,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         notifyDataSetChanged();
 
     }
-
-    public interface OnDeleteCardButtonListener {
-
-        void deleteCard(int position);
-    }
-
-    public void setOnDeleteCardButtonListener(OnDeleteCardButtonListener onDeleteCardButtonListener) {
-        this.onDeleteCardButtonListener = onDeleteCardButtonListener;
-    }
-
-    public interface OnEditCardButtonListener {
-        void editCard();
-    }
-
-    public void setOnEditCardButtonListener(OnEditCardButtonListener onEditCardButtonListener) {
-        this.onEditCardButtonListener = onEditCardButtonListener;
-    }
-
 
     public static class ReviewHolder extends RecyclerView.ViewHolder {
         private View frontCard;
@@ -175,4 +152,29 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         }
     }
 
+    public interface OnDeleteCardButtonListener {
+
+        void deleteCard(int position);
+    }
+
+    public void setOnDeleteCardButtonListener(OnDeleteCardButtonListener onDeleteCardButtonListener) {
+        this.onDeleteCardButtonListener = onDeleteCardButtonListener;
+    }
+
+    public interface OnEditCardButtonListener {
+        void editCard();
+    }
+
+    public void setOnEditCardButtonListener(OnEditCardButtonListener onEditCardButtonListener) {
+        this.onEditCardButtonListener = onEditCardButtonListener;
+    }
+
+
+    public void setOnVisibilityListenerButton(OnVisibilityListenerButton onVisibilityListenerButton) {
+        this.onVisibilityListenerButton = onVisibilityListenerButton;
+    }
+
+    public interface OnVisibilityListenerButton {
+        void setVisibilityButton(boolean visibility);
+    }
 }
