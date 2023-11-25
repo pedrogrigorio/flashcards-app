@@ -73,6 +73,48 @@ class UserRepository {
     return user
   }
 
+  async updateUserDayStreak(id: number, dayStreak: number) {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        dayStreak,
+      },
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        imgSrc: true,
+        dayStreak: true,
+        cardsReviewed: true,
+      },
+    })
+
+    return user
+  }
+
+  async updateUserCardsReviewed(id: number, cardsReviewed: number) {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        cardsReviewed,
+      },
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        imgSrc: true,
+        dayStreak: true,
+        cardsReviewed: true,
+      },
+    })
+
+    return user
+  }
+
   async searchUsers(query: string) {
     const users = await prisma.user.findMany({
       where: {
@@ -91,6 +133,19 @@ class UserRepository {
     })
 
     return users
+  }
+
+  async getAllFriends(id: number) {
+    const friends = await prisma.user.findMany({
+      where: {
+        id,
+      },
+      include: {
+        friends: true,
+      },
+    })
+
+    return friends
   }
 }
 

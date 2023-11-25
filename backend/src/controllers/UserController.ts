@@ -62,11 +62,62 @@ class UserController {
     }
   }
 
+  async updateUserDayStreak(req: Request, res: Response) {
+    const userId = parseInt(req.params.id)
+    const authenticatedUserId = parseInt(req.userId)
+    const { dayStreak } = req.body
+
+    try {
+      const updatedUser = await UserService.updateUserDayStreak(
+        userId,
+        authenticatedUserId,
+        dayStreak,
+      )
+
+      return res.json(updatedUser)
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message })
+      }
+
+      return res.status(500).json({ error: 'Internal Server Error' })
+    }
+  }
+
+  async updateUserCardsReviewed(req: Request, res: Response) {
+    const userId = parseInt(req.params.id)
+    const authenticatedUserId = parseInt(req.userId)
+    const { cardsReviewed } = req.body
+
+    try {
+      const updatedUser = await UserService.updateUserCardsReviewed(
+        userId,
+        authenticatedUserId,
+        cardsReviewed,
+      )
+
+      return res.json(updatedUser)
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message })
+      }
+
+      return res.status(500).json({ error: 'Internal Server Error' })
+    }
+  }
+
   async searchUsers(req: Request, res: Response) {
     const { query } = req.body
     const users = await UserService.searchUsers(query)
 
     return res.json(users)
+  }
+
+  async getAllFriends(req: Request, res: Response) {
+    const userId = parseInt(req.params.id)
+    const friends = await UserService.getAllFriends(userId)
+
+    return res.json(friends)
   }
 }
 
