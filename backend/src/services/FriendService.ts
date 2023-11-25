@@ -2,11 +2,7 @@ import FriendRepository from '../repositories/FriendRepository'
 import UserService from './UserService'
 
 class FriendService {
-  async addFriend() {
-    return null
-  }
-
-  async addNewFriend(userId: number, newFriendId: number) {
+  async addFriend(userId: number, newFriendId: number) {
     const user = await UserService.getUser(userId)
     const newFriend = await UserService.getUser(newFriendId)
 
