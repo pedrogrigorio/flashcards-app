@@ -5,6 +5,10 @@ import FriendService from './FriendService'
 
 class NotificationService {
   async sendFriendRequest(receiverId: number, senderId: number) {
+    if (receiverId === senderId) {
+      throw new Error('You cannot send an notification to yourself.')
+    }
+
     const notification = await NotificationRepository.createNotification(
       NotificationType.FriendRequest,
       NotificationStatus.Pending,

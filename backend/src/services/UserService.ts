@@ -33,7 +33,13 @@ class UserService {
   }
 
   async getUser(userId: number) {
-    return await UserRepository.findUserById(userId)
+    const user = await UserRepository.findUserById(userId)
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    return user
   }
 
   async updateProfile(userId: number, name: string, imgSrc: string) {
