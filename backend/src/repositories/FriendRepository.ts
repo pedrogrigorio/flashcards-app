@@ -26,6 +26,16 @@ class FriendRepository {
     return newFriend
   }
 
+  async getAllFriends(friendOfId: number) {
+    const friends = await prisma.friend.findMany({
+      where: {
+        friendOfId,
+      },
+    })
+
+    return friends
+  }
+
   async getFriendById(friendId: number, friendOfId: number) {
     const friend = await prisma.friend.findUnique({
       where: {

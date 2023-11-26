@@ -60,17 +60,6 @@ class UserController {
       handleError(res, error)
     }
   }
-
-  async getAllFriends(req: Request, res: Response) {
-    try {
-      const userId = parseInt(req.params.id)
-      const friends = await UserService.getAllFriends(userId)
-
-      return res.json(friends)
-    } catch (error) {
-      handleError(res, error)
-    }
-  }
 }
 
 export default new UserController()

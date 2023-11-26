@@ -17,6 +17,10 @@ class FriendService {
     }
   }
 
+  async getAllFriends(userId: number) {
+    return await FriendRepository.getAllFriends(userId)
+  }
+
   async getFriend(friendId: number, userId: number) {
     return await FriendRepository.getFriendById(friendId, userId)
   }

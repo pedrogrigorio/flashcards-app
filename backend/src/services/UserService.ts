@@ -63,13 +63,6 @@ class UserService {
   async searchUsers(query: string) {
     return await UserRepository.searchUsers(query)
   }
-
-  async getAllFriends(id: number) {
-    const userWithFriends = await UserRepository.getAllFriends(id)
-
-    const friends = userWithFriends.flatMap((user) => user.friends)
-    return friends
-  }
 }
 
 export default new UserService()

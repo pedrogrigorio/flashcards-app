@@ -114,19 +114,6 @@ class UserRepository {
 
     return users
   }
-
-  async getAllFriends(id: number) {
-    const friends = await prisma.user.findMany({
-      where: {
-        id,
-      },
-      include: {
-        friends: true,
-      },
-    })
-
-    return friends
-  }
 }
 
 export default new UserRepository()

@@ -3,6 +3,17 @@ import FriendService from '../services/FriendService'
 import { handleError } from '../utils/errorHandler'
 
 class FriendController {
+  async getAllFriends(req: Request, res: Response) {
+    try {
+      const userId = parseInt(req.userId)
+      const friends = await FriendService.getAllFriends(userId)
+
+      return res.json(friends)
+    } catch (error) {
+      handleError(res, error)
+    }
+  }
+
   async getFriend(req: Request, res: Response) {
     try {
       const friendId = parseInt(req.params.id)
