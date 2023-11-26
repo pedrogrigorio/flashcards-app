@@ -32,9 +32,17 @@ class FriendController {
       const friendId = parseInt(req.params.id)
       const userId = parseInt(req.userId)
 
-      const deletedFriend = await FriendService.deleteFriend(friendId, userId)
+      const deletedFriendForward = await FriendService.deleteFriend(
+        friendId,
+        userId,
+      )
 
-      return res.json(deletedFriend)
+      const deletedFriendBackward = await FriendService.deleteFriend(
+        userId,
+        friendId,
+      )
+
+      return res.json(deletedFriendForward)
     } catch (error) {
       handleError(res, error)
     }

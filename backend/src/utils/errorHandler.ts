@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 function handleError(res: Response, error: Error | z.ZodError | unknown) {
   if (error instanceof z.ZodError) {
-    return res.status(400).json({ error: error.errors[0].message })
+    return res.status(400).json({ error: 'Invalid data' })
   } else if (error instanceof Error) {
     return res.status(400).json({ error: error.message })
   }
