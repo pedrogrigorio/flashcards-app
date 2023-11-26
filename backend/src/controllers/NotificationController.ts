@@ -51,6 +51,22 @@ class NotificationController {
       handleError(res, error)
     }
   }
+
+  async deleteNotification(req: Request, res: Response) {
+    try {
+      const notificationId = parseInt(req.params.id)
+      const userId = parseInt(req.userId)
+
+      const notificationDeleted = await NotificationService.deleteNotification(
+        notificationId,
+        userId,
+      )
+
+      res.json(notificationDeleted)
+    } catch (error) {
+      handleError(res, error)
+    }
+  }
 }
 
 export default new NotificationController()

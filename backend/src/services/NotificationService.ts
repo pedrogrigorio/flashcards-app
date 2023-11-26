@@ -74,6 +74,26 @@ class NotificationService {
 
     return notification
   }
+
+  async deleteNotification(notificationId: number, userId: number) {
+    const notificationExists =
+      await NotificationRepository.findNotificationById(notificationId)
+
+    if (!notificationExists) {
+      throw new Error('Notification not found.')
+    }
+
+    if (userId !== notificationExists.receiverId) {
+      throw new Error(
+        'You do not have permission to perform this action on another user notification',
+      )
+    }
+
+    const deletedNotification =
+      await NotificationRepository.deleteNotification(notificationId)
+
+    return deletedNotification
+  }
 }
 
 export default new NotificationService()

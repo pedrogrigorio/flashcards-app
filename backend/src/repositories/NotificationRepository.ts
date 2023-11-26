@@ -43,6 +43,16 @@ class NotificationRepository {
 
     return notification
   }
+
+  async deleteNotification(notificationId: number) {
+    const notification = await prisma.notification.delete({
+      where: {
+        id: notificationId,
+      },
+    })
+
+    return notification
+  }
 }
 
 export default new NotificationRepository()

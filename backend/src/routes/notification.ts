@@ -22,4 +22,10 @@ notificationRoutes.put(
   NotificationController.rejectFriendRequest,
 )
 
+notificationRoutes.delete(
+  '/notifications/:id',
+  AuthMiddleware,
+  NotificationController.deleteNotification,
+)
+
 export default notificationRoutes
