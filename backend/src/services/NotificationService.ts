@@ -75,6 +75,10 @@ class NotificationService {
     return notification
   }
 
+  async getAllNotifications(userId: number) {
+    return await NotificationRepository.getAllNotifications(userId)
+  }
+
   async deleteNotification(notificationId: number, userId: number) {
     const notificationExists =
       await NotificationRepository.findNotificationById(notificationId)

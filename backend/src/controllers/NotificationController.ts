@@ -52,6 +52,19 @@ class NotificationController {
     }
   }
 
+  async getAllNotifications(req: Request, res: Response) {
+    try {
+      const userId = parseInt(req.userId)
+
+      const notifications =
+        await NotificationService.getAllNotifications(userId)
+
+      res.json(notifications)
+    } catch (error) {
+      handleError(res, error)
+    }
+  }
+
   async deleteNotification(req: Request, res: Response) {
     try {
       const notificationId = parseInt(req.params.id)

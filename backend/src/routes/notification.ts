@@ -4,6 +4,12 @@ import NotificationController from '../controllers/NotificationController'
 
 const notificationRoutes = Router()
 
+notificationRoutes.get(
+  '/notifications',
+  AuthMiddleware,
+  NotificationController.getAllNotifications,
+)
+
 notificationRoutes.post(
   '/notifications',
   AuthMiddleware,

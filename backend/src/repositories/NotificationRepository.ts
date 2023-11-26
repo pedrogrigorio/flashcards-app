@@ -44,6 +44,16 @@ class NotificationRepository {
     return notification
   }
 
+  async getAllNotifications(userId: number) {
+    const notifications = await prisma.notification.findMany({
+      where: {
+        receiverId: userId,
+      },
+    })
+
+    return notifications
+  }
+
   async deleteNotification(notificationId: number) {
     const notification = await prisma.notification.delete({
       where: {
