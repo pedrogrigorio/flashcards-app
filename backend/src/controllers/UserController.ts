@@ -7,9 +7,9 @@ class UserController {
   async register(req: Request, res: Response) {
     try {
       const userData = Validators.registerSchema.parse(req.body)
-      const user = await UserService.register(userData)
+      await UserService.register(userData)
 
-      return res.json(user)
+      return res.status(204).send()
     } catch (error) {
       handleError(res, error)
     }
@@ -42,9 +42,9 @@ class UserController {
     try {
       const userId = parseInt(req.params.id)
       const { cardsReviewed } = Validators.updateStatsSchema.parse(req.body)
-      const user = await UserService.updateStats(userId, cardsReviewed)
+      const updatedUser = await UserService.updateStats(userId, cardsReviewed)
 
-      return res.json(user)
+      return res.json(updatedUser)
     } catch (error) {
       handleError(res, error)
     }

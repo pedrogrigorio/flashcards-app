@@ -14,7 +14,7 @@ class NotificationController {
         senderId,
       )
 
-      res.json(notification)
+      return res.json(notification)
     } catch (error) {
       handleError(res, error)
     }
@@ -30,7 +30,7 @@ class NotificationController {
         userId,
       )
 
-      res.json(notification)
+      return res.json(notification)
     } catch (error) {
       handleError(res, error)
     }
@@ -46,7 +46,7 @@ class NotificationController {
         userId,
       )
 
-      res.json(notification)
+      return res.json(notification)
     } catch (error) {
       handleError(res, error)
     }
@@ -59,7 +59,7 @@ class NotificationController {
       const notifications =
         await NotificationService.getAllNotifications(userId)
 
-      res.json(notifications)
+      return res.json(notifications)
     } catch (error) {
       handleError(res, error)
     }
@@ -70,12 +70,9 @@ class NotificationController {
       const notificationId = parseInt(req.params.id)
       const userId = parseInt(req.userId)
 
-      const notificationDeleted = await NotificationService.deleteNotification(
-        notificationId,
-        userId,
-      )
+      await NotificationService.deleteNotification(notificationId, userId)
 
-      res.json(notificationDeleted)
+      return res.status(204).send()
     } catch (error) {
       handleError(res, error)
     }

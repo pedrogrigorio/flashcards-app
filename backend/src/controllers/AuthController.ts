@@ -9,7 +9,7 @@ class AuthController {
       const { email, password } = Validators.loginSchema.parse(req.body)
       const token = await AuthService.login(email, password)
 
-      res.json(token)
+      return res.json(token)
     } catch (error) {
       handleError(res, error)
     }

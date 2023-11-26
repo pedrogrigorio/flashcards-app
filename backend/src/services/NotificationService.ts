@@ -41,15 +41,14 @@ class NotificationService {
     if (notification.senderId) {
       FriendService.addFriend(notification.senderId, notification.receiverId)
 
-      const responseNotification =
-        await NotificationRepository.createNotification(
-          NotificationType.FriendRequestAccepted,
-          NotificationStatus.Accepted,
-          notification.senderId,
-          notification.receiverId,
-        )
+      await NotificationRepository.createNotification(
+        NotificationType.FriendRequestAccepted,
+        NotificationStatus.Accepted,
+        notification.senderId,
+        notification.receiverId,
+      )
 
-      return [notification, responseNotification]
+      return notification
     }
   }
 

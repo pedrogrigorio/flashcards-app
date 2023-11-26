@@ -6,15 +6,14 @@ class FriendService {
     const user = await UserService.getUser(userId)
     const newFriend = await UserService.getUser(newFriendId)
 
-    if (user && newFriend) {
-      const friendForward = await FriendRepository.createFriend(newFriend, user)
-      const friendBackward = await FriendRepository.createFriend(
-        user,
-        newFriend,
-      )
-
-      return [friendForward, friendBackward]
+    if (!user || !newFriend) {
+      throw new Error('User not found')
     }
+
+    const friendForward = await FriendRepository.createFriend(newFriend, user)
+    const friendBackward = await FriendRepository.createFriend(user, newFriend)
+
+    return [friendForward, friendBackward]
   }
 
   async getAllFriends(userId: number) {
@@ -38,7 +37,17 @@ class FriendService {
       throw new Error('Friend not found.')
     }
 
-    return await FriendRepository.deleteFriend(friendId, userId)
+    const deletedFriendForward = await FriendRepository.deleteFriend(
+      friendId,
+      userId,
+    )
+
+    const deletedFriendBackward = await FriendRepository.deleteFriend(
+      userId,
+      friendId,
+    )
+
+    return [deletedFriendForward, deletedFriendBackward]
   }
 }
 

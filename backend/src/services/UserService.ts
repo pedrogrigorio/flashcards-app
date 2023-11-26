@@ -49,7 +49,9 @@ class UserService {
       throw new Error('User not found')
     }
 
-    return await UserRepository.updateProfile(userId, name, imgSrc)
+    const updatedUser = await UserRepository.updateProfile(userId, name, imgSrc)
+
+    return updatedUser
   }
 
   async updateStats(userId: number, cardsReviewed: number) {
@@ -59,7 +61,7 @@ class UserService {
       throw new Error('User not found')
     }
 
-    // logic to calculate dayStreak
+    // TO DO: logic to calculate dayStreak
     const dayStreak = 0
     const newCardsReviewedCount = user?.cardsReviewed + cardsReviewed
 
