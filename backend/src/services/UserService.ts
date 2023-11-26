@@ -37,6 +37,12 @@ class UserService {
   }
 
   async updateProfile(userId: number, name: string, imgSrc: string) {
+    const user = await UserRepository.findUserById(userId)
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
     return await UserRepository.updateProfile(userId, name, imgSrc)
   }
 

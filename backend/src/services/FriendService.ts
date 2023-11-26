@@ -26,6 +26,12 @@ class FriendService {
   }
 
   async deleteFriend(friendId: number, userId: number) {
+    const friend = await FriendRepository.getFriendById(friendId, userId)
+
+    if (!friend) {
+      throw new Error('Friend not found.')
+    }
+
     return await FriendRepository.deleteFriend(friendId, userId)
   }
 }
