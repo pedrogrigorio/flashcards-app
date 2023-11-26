@@ -7,25 +7,27 @@ class NotificationService {
   async sendFriendRequest(receiverId: number, senderId: number) {
     const notification = await NotificationRepository.createNotification(
       NotificationType.FriendRequest,
+      NotificationStatus.Pending,
       receiverId,
       senderId,
-      NotificationStatus.Pending,
     )
 
     return notification
   }
 
   async acceptFriendRequest(notificationId: number) {
-    const notification = await NotificationRepository.updateNotificationStatus(
+    const notification = await NotificationRepository.updateStatus(
       notificationId,
       NotificationStatus.Accepted,
     )
 
     if (notification.senderId) {
       FriendService.addFriend(notification.senderId, notification.receiverId)
+
       const responseNotification =
         await NotificationRepository.createNotification(
           NotificationType.FriendRequestAccepted,
+          NotificationStatus.Accepted,
           notification.senderId,
           notification.receiverId,
         )
@@ -35,7 +37,7 @@ class NotificationService {
   }
 
   async rejectFriendRequest(notificationId: number) {
-    const notification = await NotificationRepository.updateNotificationStatus(
+    const notification = await NotificationRepository.updateStatus(
       notificationId,
       NotificationStatus.Rejected,
     )

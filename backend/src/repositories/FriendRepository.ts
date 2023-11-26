@@ -26,22 +26,30 @@ class FriendRepository {
     return newFriend
   }
 
-  async deleteFriend(friendId: number) {
-    // const friend = await prisma.friend.delete({
-    //   where: {
-    //     id: friendId,
-    //   },
-    // })
-    // return friend
+  async getFriendById(friendId: number, friendOfId: number) {
+    const friend = await prisma.friend.findUnique({
+      where: {
+        userId_friendOfId: {
+          userId: friendId,
+          friendOfId,
+        },
+      },
+    })
+
+    return friend
   }
 
-  async getFriendById(friendId: number) {
-    // const friend = await prisma.friend.findUnique({
-    //   where: {
-    //     id: friendId,
-    //   },
-    // })
-    // return friend
+  async deleteFriend(friendId: number, friendOfId: number) {
+    const friend = await prisma.friend.delete({
+      where: {
+        userId_friendOfId: {
+          userId: friendId,
+          friendOfId,
+        },
+      },
+    })
+
+    return friend
   }
 }
 

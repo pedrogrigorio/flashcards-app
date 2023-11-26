@@ -17,12 +17,12 @@ class FriendService {
     }
   }
 
-  async deleteFriend(friendId: number) {
-    return await FriendRepository.deleteFriend(friendId)
+  async getFriend(friendId: number, userId: number) {
+    return await FriendRepository.getFriendById(friendId, userId)
   }
 
-  async getFriendById(friendId: number) {
-    return await FriendRepository.getFriendById(friendId)
+  async deleteFriend(friendId: number, userId: number) {
+    return await FriendRepository.deleteFriend(friendId, userId)
   }
 }
 

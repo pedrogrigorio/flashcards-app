@@ -5,9 +5,9 @@ import { prisma } from '../lib/prisma'
 class NotificationRepository {
   async createNotification(
     type: NotificationType,
+    status: NotificationStatus,
     receiverId: number,
     senderId?: number,
-    status?: NotificationStatus,
   ) {
     const notification = await prisma.notification.create({
       data: {
@@ -21,10 +21,7 @@ class NotificationRepository {
     return notification
   }
 
-  async updateNotificationStatus(
-    notificationId: number,
-    status: NotificationStatus,
-  ) {
+  async updateStatus(notificationId: number, status: NotificationStatus) {
     const notification = await prisma.notification.update({
       where: {
         id: notificationId,
