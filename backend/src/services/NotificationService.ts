@@ -15,7 +15,20 @@ class NotificationService {
     return notification
   }
 
-  async acceptFriendRequest(notificationId: number) {
+  async acceptFriendRequest(notificationId: number, userId: number) {
+    const notificationExists =
+      await NotificationRepository.findNotificationById(notificationId)
+
+    if (!notificationExists) {
+      throw new Error('Notification not found.')
+    }
+
+    if (userId !== notificationExists.receiverId) {
+      throw new Error(
+        'You do not have permission to perform this action on another user notification',
+      )
+    }
+
     const notification = await NotificationRepository.updateStatus(
       notificationId,
       NotificationStatus.Accepted,
@@ -36,7 +49,20 @@ class NotificationService {
     }
   }
 
-  async rejectFriendRequest(notificationId: number) {
+  async rejectFriendRequest(notificationId: number, userId: number) {
+    const notificationExists =
+      await NotificationRepository.findNotificationById(notificationId)
+
+    if (!notificationExists) {
+      throw new Error('Notification not found.')
+    }
+
+    if (userId !== notificationExists.receiverId) {
+      throw new Error(
+        'You do not have permission to perform this action on another user notification',
+      )
+    }
+
     const notification = await NotificationRepository.updateStatus(
       notificationId,
       NotificationStatus.Rejected,

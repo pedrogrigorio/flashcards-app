@@ -21,6 +21,16 @@ class NotificationRepository {
     return notification
   }
 
+  async findNotificationById(notificationId: number) {
+    const notification = await prisma.notification.findUnique({
+      where: {
+        id: notificationId,
+      },
+    })
+
+    return notification
+  }
+
   async updateStatus(notificationId: number, status: NotificationStatus) {
     const notification = await prisma.notification.update({
       where: {

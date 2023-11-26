@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { AuthMiddleware } from '../middlewares/auth'
 import UserController from '../controllers/UserController'
+import { CheckUserOwnership } from '../middlewares/checkUserOwnership'
 
 const userRoutes = Router()
 
@@ -12,8 +13,15 @@ userRoutes.post('/users/search', AuthMiddleware, UserController.searchUsers)
 userRoutes.put(
   '/users/:id/profile',
   AuthMiddleware,
+  CheckUserOwnership,
   UserController.updateProfile,
 )
-userRoutes.put('/users/:id/stats', AuthMiddleware, UserController.updateStats)
+
+userRoutes.put(
+  '/users/:id/stats',
+  AuthMiddleware,
+  CheckUserOwnership,
+  UserController.updateStats,
+)
 
 export default userRoutes

@@ -6,9 +6,8 @@ import { handleError } from '../utils/errorHandler'
 class NotificationController {
   async sendFriendRequest(req: Request, res: Response) {
     try {
-      const { senderId, receiverId } = Validators.sendFriendRequestSchema.parse(
-        req.body,
-      )
+      const senderId = parseInt(req.userId)
+      const { receiverId } = Validators.sendFriendRequestSchema.parse(req.body)
 
       const notification = await NotificationService.sendFriendRequest(
         receiverId,
@@ -24,9 +23,12 @@ class NotificationController {
   async acceptFriendRequest(req: Request, res: Response) {
     try {
       const notificationId = parseInt(req.params.id)
+      const userId = parseInt(req.userId)
 
-      const notification =
-        await NotificationService.acceptFriendRequest(notificationId)
+      const notification = await NotificationService.acceptFriendRequest(
+        notificationId,
+        userId,
+      )
 
       res.json(notification)
     } catch (error) {
@@ -37,9 +39,12 @@ class NotificationController {
   async rejectFriendRequest(req: Request, res: Response) {
     try {
       const notificationId = parseInt(req.params.id)
+      const userId = parseInt(req.userId)
 
-      const notification =
-        await NotificationService.rejectFriendRequest(notificationId)
+      const notification = await NotificationService.rejectFriendRequest(
+        notificationId,
+        userId,
+      )
 
       res.json(notification)
     } catch (error) {
