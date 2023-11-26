@@ -4,12 +4,12 @@ import FriendController from '../controllers/FriendController'
 
 const friendRoutes = Router()
 
+friendRoutes.get('/friends', AuthMiddleware, FriendController.getAllFriends)
+friendRoutes.get('/friends/:id', AuthMiddleware, FriendController.getFriend)
 friendRoutes.delete(
   '/friends/:id',
   AuthMiddleware,
   FriendController.deleteFriend,
 )
-
-friendRoutes.get('/friends/:id', AuthMiddleware, FriendController.getFriendById)
 
 export default friendRoutes
