@@ -13,7 +13,7 @@ class FriendService {
         newFriend,
       )
 
-      return friendForward
+      return [friendForward, friendBackward]
     }
   }
 
