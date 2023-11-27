@@ -1,6 +1,8 @@
 import { hash } from 'bcryptjs'
 import UserRepository from '../repositories/UserRepository'
 import dayjs from 'dayjs'
+import path from 'path'
+import fs from 'fs'
 
 interface UserDataSchema {
   username: string
@@ -57,6 +59,16 @@ class UserService {
     let imgSrc = user.imgSrc
 
     if (file) {
+      // delete image from uploads
+      if (imgSrc !== '') {
+        const previousImagePath = path.join(
+          __dirname,
+          `../../uploads/${imgSrc}`,
+        )
+
+        fs.unlinkSync(previousImagePath)
+      }
+
       imgSrc = file.filename
     }
 
