@@ -80,3 +80,5 @@ class CardRepository {
     return card
   }
 }
+
+export default new CardRepository()
