@@ -42,11 +42,21 @@ class UserService {
     return user
   }
 
-  async updateProfile(userId: number, name: string, imgSrc: string) {
+  async updateProfile(
+    userId: number,
+    name: string,
+    file: Express.Multer.File | undefined,
+  ) {
     const user = await UserRepository.findUserById(userId)
 
     if (!user) {
       throw new Error('User not found')
+    }
+
+    let imgSrc = user.imgSrc
+
+    if (file) {
+      imgSrc = file.filename
     }
 
     const updatedUser = await UserRepository.updateProfile(userId, name, imgSrc)

@@ -29,8 +29,10 @@ class UserController {
   async updateProfile(req: Request, res: Response) {
     try {
       const userId = parseInt(req.params.id)
-      const { name, imgSrc } = Validators.updateProfileSchema.parse(req.body)
-      const updatedUser = await UserService.updateProfile(userId, name, imgSrc)
+      const file = req.file
+      const { name } = Validators.updateProfileSchema.parse(req.body)
+
+      const updatedUser = await UserService.updateProfile(userId, name, file)
 
       return res.json(updatedUser)
     } catch (error) {
