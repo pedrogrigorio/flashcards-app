@@ -23,6 +23,7 @@ model User {
   friends       Friend[]       @relation("UserFriends")
   friendsOf     Friend[]       @relation("UserFriendsOf")
   notifications Notification[]
+  decks         Deck[]
 }
 
 model Friend {
@@ -49,4 +50,27 @@ model Notification {
 
   receiver   User @relation(fields: [receiverId], references: [id])
   receiverId Int
+}
+
+model Deck {
+  id               Int    @id @default(autoincrement())
+  title            String @default("Novo Deck")
+  imgSrc           String @default("")
+  newCardsCount    Int    @default(0)
+  learnCardsCount  Int    @default(0)
+  reviewCardsCount Int    @default(0)
+  User             User?  @relation(fields: [userId], references: [id])
+  userId           Int?
+  cards            Card[]
+}
+
+model Card {
+  id         Int       @id @default(autoincrement())
+  frontText  String
+  backText   String
+  stampLevel Int?      @default(-1)
+  reviewedAt DateTime
+  nextReview DateTime?
+  Deck       Deck?     @relation(fields: [deckId], references: [id])
+  deckId     Int?
 }
