@@ -29,8 +29,10 @@ class UserController {
   async updateProfile(req: Request, res: Response) {
     try {
       const userId = parseInt(req.params.id)
-      const { name, imgSrc } = Validators.updateProfileSchema.parse(req.body)
-      const updatedUser = await UserService.updateProfile(userId, name, imgSrc)
+      const file = req.file
+      const { name } = Validators.updateProfileSchema.parse(req.body)
+
+      const updatedUser = await UserService.updateProfile(userId, name, file)
 
       return res.json(updatedUser)
     } catch (error) {
@@ -45,6 +47,18 @@ class UserController {
       const updatedUser = await UserService.updateStats(userId, cardsReviewed)
 
       return res.json(updatedUser)
+    } catch (error) {
+      handleError(res, error)
+    }
+  }
+
+  async verifyDayStreak(req: Request, res: Response) {
+    try {
+      const userId = parseInt(req.params.id)
+
+      await UserService.verifyDayStreak(userId)
+
+      return res.status(204).send()
     } catch (error) {
       handleError(res, error)
     }

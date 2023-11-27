@@ -1,5 +1,8 @@
 import { hash } from 'bcryptjs'
 import UserRepository from '../repositories/UserRepository'
+import dayjs from 'dayjs'
+import path from 'path'
+import fs from 'fs'
 
 interface UserDataSchema {
   username: string
@@ -42,11 +45,31 @@ class UserService {
     return user
   }
 
-  async updateProfile(userId: number, name: string, imgSrc: string) {
+  async updateProfile(
+    userId: number,
+    name: string,
+    file: Express.Multer.File | undefined,
+  ) {
     const user = await UserRepository.findUserById(userId)
 
     if (!user) {
       throw new Error('User not found')
+    }
+
+    let imgSrc = user.imgSrc
+
+    if (file) {
+      // delete image from uploads
+      if (imgSrc !== '') {
+        const previousImagePath = path.join(
+          __dirname,
+          `../../uploads/${imgSrc}`,
+        )
+
+        fs.unlinkSync(previousImagePath)
+      }
+
+      imgSrc = file.filename
     }
 
     const updatedUser = await UserRepository.updateProfile(userId, name, imgSrc)
@@ -61,14 +84,47 @@ class UserService {
       throw new Error('User not found')
     }
 
-    // TO DO: logic to calculate dayStreak
-    const dayStreak = 0
-    const newCardsReviewedCount = user?.cardsReviewed + cardsReviewed
+    const dateLastReview = dayjs(user.lastReview)
+    const today = dayjs()
+
+    let dayStreak = user.dayStreak
+    if (!user.lastReview || dateLastReview.isBefore(today, 'day')) {
+      dayStreak++
+    }
+
+    const newCardsReviewedCount = user.cardsReviewed + cardsReviewed
+    const dateNow = dayjs().toDate()
 
     const updatedUser = await UserRepository.updateStats(
       userId,
       dayStreak,
       newCardsReviewedCount,
+      dateNow,
+    )
+
+    return updatedUser
+  }
+
+  async verifyDayStreak(userId: number) {
+    const user = await UserRepository.findUserById(userId)
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    const dateLastReview = dayjs(user.lastReview)
+    const yesterday = dayjs().subtract(1, 'day')
+
+    let dayStreak = user.dayStreak
+    if (!user.lastReview || dateLastReview.isBefore(yesterday, 'day')) {
+      dayStreak = 0
+    }
+
+    const updatedUser = await UserRepository.updateStats(
+      userId,
+      dayStreak,
+      user.cardsReviewed,
+      user.lastReview,
     )
 
     return updatedUser
