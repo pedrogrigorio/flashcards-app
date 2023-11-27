@@ -45,6 +45,7 @@ class UserRepository {
         imgSrc: true,
         dayStreak: true,
         cardsReviewed: true,
+        lastReview: true,
       },
     })
 
@@ -73,7 +74,12 @@ class UserRepository {
     return user
   }
 
-  async updateStats(id: number, dayStreak: number, cardsReviewed: number) {
+  async updateStats(
+    id: number,
+    dayStreak: number,
+    cardsReviewed: number,
+    lastReview: Date | null,
+  ) {
     const user = await prisma.user.update({
       where: {
         id,
@@ -81,6 +87,7 @@ class UserRepository {
       data: {
         dayStreak,
         cardsReviewed,
+        lastReview,
       },
       select: {
         id: true,

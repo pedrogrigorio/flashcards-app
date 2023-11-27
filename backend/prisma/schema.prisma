@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id            Int    @id @default(autoincrement())
-  username      String @unique
-  name          String @default("")
-  email         String @unique
+  id            Int       @id @default(autoincrement())
+  username      String    @unique
+  name          String    @default("")
+  email         String    @unique
   password      String
-  imgSrc        String @default("")
-  dayStreak     Int    @default(0)
-  cardsReviewed Int    @default(0)
+  imgSrc        String    @default("")
+  dayStreak     Int       @default(0)
+  cardsReviewed Int       @default(0)
+  lastReview    DateTime?
 
   friends       Friend[]       @relation("UserFriends")
   friendsOf     Friend[]       @relation("UserFriendsOf")

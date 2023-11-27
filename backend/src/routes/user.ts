@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { AuthMiddleware } from '../middlewares/auth'
 import UserController from '../controllers/UserController'
 import { CheckUserOwnership } from '../middlewares/checkUserOwnership'
+import upload from '../lib/multer'
 
 const userRoutes = Router()
 
@@ -14,6 +15,7 @@ userRoutes.put(
   '/users/:id/profile',
   AuthMiddleware,
   CheckUserOwnership,
+  upload.single('file'),
   UserController.updateProfile,
 )
 
@@ -22,6 +24,13 @@ userRoutes.put(
   AuthMiddleware,
   CheckUserOwnership,
   UserController.updateStats,
+)
+
+userRoutes.put(
+  '/users/:id/dayStreak',
+  AuthMiddleware,
+  CheckUserOwnership,
+  UserController.verifyDayStreak,
 )
 
 export default userRoutes
