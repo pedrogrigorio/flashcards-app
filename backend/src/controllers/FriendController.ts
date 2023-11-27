@@ -1,39 +1,42 @@
 import { Request, Response } from 'express'
 import FriendService from '../services/FriendService'
+import { handleError } from '../utils/errorHandler'
 
 class FriendController {
-  async addFriend(req: Request, res: Response) {
-    const { newFriendId } = req.body
+  async getAllFriends(req: Request, res: Response) {
     try {
-      // send friend request notification
+      const userId = parseInt(req.userId)
+      const friends = await FriendService.getAllFriends(userId)
+
+      return res.json(friends)
     } catch (error) {
-      return res.status(400).json(error)
-    }
-
-    return res.status(400).json({ to_do: 'TO DO' })
-  }
-
-  async deleteFriend(req: Request, res: Response) {
-    const friendId = parseInt(req.params.id)
-
-    try {
-      const deletedFriend = await FriendService.deleteFriend(friendId)
-
-      return res.json(deletedFriend)
-    } catch (error) {
-      return res.status(400).json(error)
+      handleError(res, error)
     }
   }
 
-  async getFriendById(req: Request, res: Response) {
-    const friendId = parseInt(req.params.id)
-
+  async getFriend(req: Request, res: Response) {
     try {
-      const friend = await FriendService.getFriendById(friendId)
+      const friendId = parseInt(req.params.id)
+      const userId = parseInt(req.userId)
+
+      const friend = await FriendService.getFriend(friendId, userId)
 
       return res.json(friend)
     } catch (error) {
-      return res.status(400).json(error)
+      handleError(res, error)
+    }
+  }
+
+  async deleteFriend(req: Request, res: Response) {
+    try {
+      const friendId = parseInt(req.params.id)
+      const userId = parseInt(req.userId)
+
+      await FriendService.deleteFriend(friendId, userId)
+
+      return res.status(204).send()
+    } catch (error) {
+      handleError(res, error)
     }
   }
 }

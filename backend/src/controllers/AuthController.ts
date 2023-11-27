@@ -1,19 +1,17 @@
 import { Request, Response } from 'express'
 import AuthService from '../services/AuthService'
+import * as Validators from '../validators/auth'
+import { handleError } from '../utils/errorHandler'
 
 class AuthController {
   async login(req: Request, res: Response) {
-    const { email, password } = req.body
-
     try {
+      const { email, password } = Validators.loginSchema.parse(req.body)
       const token = await AuthService.login(email, password)
-      res.json(token)
-    } catch (error) {
-      if (error instanceof Error) {
-        return res.status(400).json({ error: error.message })
-      }
 
-      return res.status(500).json({ error: 'Internal Server Error' })
+      return res.json(token)
+    } catch (error) {
+      handleError(res, error)
     }
   }
 }
