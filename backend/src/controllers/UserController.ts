@@ -52,6 +52,18 @@ class UserController {
     }
   }
 
+  async verifyDayStreak(req: Request, res: Response) {
+    try {
+      const userId = parseInt(req.params.id)
+
+      await UserService.verifyDayStreak(userId)
+
+      return res.status(204).send()
+    } catch (error) {
+      handleError(res, error)
+    }
+  }
+
   async searchUsers(req: Request, res: Response) {
     try {
       const { query } = Validators.searchUsersSchema.parse(req.body)

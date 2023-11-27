@@ -26,4 +26,11 @@ userRoutes.put(
   UserController.updateStats,
 )
 
+userRoutes.put(
+  '/users/:id/dayStreak',
+  AuthMiddleware,
+  CheckUserOwnership,
+  UserController.verifyDayStreak,
+)
+
 export default userRoutes
