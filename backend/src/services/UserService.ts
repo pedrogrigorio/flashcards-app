@@ -8,16 +8,11 @@ interface UserDataSchema {
   username: string
   email: string
   password: string
-  passwordConfirmation: string
 }
 
 class UserService {
   async register(userData: UserDataSchema) {
-    const { username, email, password, passwordConfirmation } = userData
-
-    if (password !== passwordConfirmation) {
-      throw new Error('Passwords not match.')
-    }
+    const { username, email, password } = userData
 
     let user = await UserRepository.findUserByUsername(username)
     if (user) {
