@@ -1,19 +1,13 @@
 package com.example.flashcards_app.repositories;
 
 
-import android.widget.Toast;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.flashcards_app.api.DeckService;
 import com.example.flashcards_app.api.UserService;
+import com.example.flashcards_app.dto.LoginDTO;
 import com.example.flashcards_app.dto.RegisterDTO;
-import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.util.RetrofitClient;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,10 +56,8 @@ public class UserRepository {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    System.out.println(response.body().toString());
                     registerSuccess.setValue(true);
                 } else {
-                    System.out.println(response.message());
                     registerSuccess.setValue(false);
                 }
             }
@@ -78,5 +70,28 @@ public class UserRepository {
         });
 
         return registerSuccess;
+    }
+
+    public MutableLiveData<String> login(String email, String password) {
+        MutableLiveData<String> tokenLiveData = new MutableLiveData<>();
+
+        LoginDTO loginDTO = new LoginDTO(email, password);
+        Call<String> call = userService.login(loginDTO);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    tokenLiveData.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+        return tokenLiveData;
     }
 }

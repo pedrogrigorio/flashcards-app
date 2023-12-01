@@ -45,12 +45,18 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
+        initViews();
+
+        setupInitialConfig();
+
+        setupFieldsValidation();
+    }
+
+    private void initViews() {
         signup = findViewById(R.id.btn_signup);
         signing = findViewById(R.id.btn_signing);
         back = findViewById(R.id.btn_back);
@@ -60,9 +66,43 @@ public class RegisterActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.email_editText);
         passwordLayout = findViewById(R.id.password_field);
         passwordEditText = findViewById(R.id.password_editText);
+    }
 
+    private void setupInitialConfig() {
         signup.setEnabled(false);
 
+        back.setOnClickListener(v -> {
+            Intent in = new Intent(this, MainActivity.class);
+            startActivity(in);
+        });
+
+        signup.setOnClickListener(v -> {
+            configRegisterViewModel();
+        });
+
+        signing.setOnClickListener(v -> {
+            Intent in = new Intent(this, LoginActivity.class);
+            startActivity(in);
+        });
+    }
+
+    private void configRegisterViewModel() {
+        String username = usernameEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        registerViewModel.register(username, email, password).observe(this, isSuccess  -> {
+            if (isSuccess) {
+                Toast.makeText(this, "Registrado com sucesso", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Falha no cadastro", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupFieldsValidation() {
+
+        // TODO: separate responsibilities
         final boolean[] usernameIsValid = {false};
         final boolean[] passwordIsValid = {false};
         final boolean[] emailIsValid = {false};
@@ -153,43 +193,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-            }
-        });
-
-        back.setOnClickListener(v -> {
-            accessMainActivity();
-        });
-
-        signup.setOnClickListener(v -> {
-            configRegisterViewModel();
-        });
-
-        signing.setOnClickListener(v -> {
-            accessLoginScreen();
-        });
-    }
-
-    private void accessLoginScreen() {
-        Toast.makeText(this, usernameEditText.getText() + " " + emailEditText.getText() + " " + passwordEditText.getText(), Toast.LENGTH_LONG).show();
-        Intent in = new Intent(this, LoginActivity.class);
-        startActivity(in);
-    }
-
-    private void accessMainActivity() {
-        Intent in = new Intent(this, MainActivity.class);
-        startActivity(in);
-    }
-
-    private void configRegisterViewModel() {
-        String username = usernameEditText.getText().toString();
-        String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-
-        registerViewModel.register(username, email, password).observe(this, isSuccess  -> {
-            if (isSuccess) {
-                Toast.makeText(this, "Registrado com sucesso", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Falha no cadastro", Toast.LENGTH_SHORT).show();
             }
         });
     }
