@@ -11,7 +11,6 @@ export const updateProfileSchema = z.object({
   name: z
     .string()
     .min(2, { message: 'Name must contain at least 2 character(s).' }),
-  imgSrc: z.string(),
 })
 
 export const updateStatsSchema = z.object({
