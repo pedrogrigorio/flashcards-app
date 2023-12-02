@@ -12,12 +12,12 @@ public class SettingsViewModel extends ViewModel {
     private UserRepository userRepository;
 
     public SettingsViewModel() {
-//        userRepository = new UserRepository("");
+        userRepository = new UserRepository();
     }
 
-    public LiveData<User> getProfile() {
+    public LiveData<User> getProfile(String userId) {
         if (profileLiveData.getValue() == null) {
-//            profileLiveData = userRepository.getUser();
+            profileLiveData = userRepository.getUser(userId);
         }
 
         return profileLiveData;

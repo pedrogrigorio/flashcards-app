@@ -51,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
         setupInitialConfig();
 
         settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-        configSettingsViewModel();
+        fetchData();
     }
 
     private void initViews() {
@@ -86,13 +86,11 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void configSettingsViewModel() {
-        settingsViewModel.getProfile().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User updatedProfile) {
-                user = updatedProfile;
-                updateView();
-            }
+    private void fetchData() {
+        String userId = AppPreferences.getUserId();
+        settingsViewModel.getProfile(userId).observe(this, updatedProfile -> {
+            user = updatedProfile;
+            updateView();
         });
     }
 

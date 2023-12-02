@@ -87,7 +87,7 @@
             android:layout_gravity="center"
             android:text="username"
             android:textColor="@color/subtitles"
-            android:textSize="12dp" />
+            android:textSize="16dp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_edit_profile"

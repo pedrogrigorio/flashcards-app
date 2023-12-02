@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         configTabLayout();
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        getUser();
+        fetchData();
 
     }
 
@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         mediator.attach();
     }
 
-    private void getUser() {
+    private void fetchData() {
         String userId = AppPreferences.getUserId();
         homeViewModel.getUser(userId).observe(this, user -> {
             this.user = user;

@@ -23,18 +23,19 @@ public class UserRepository {
     }
 
     public MutableLiveData<User> getUser(String userId) {
-        MutableLiveData<User> profileLiveData = new MutableLiveData<>();
-        Call<User> call = userService.getUser(userId);
-        executeAsync(call, profileLiveData, null);
+        MutableLiveData<User> userLiveData = new MutableLiveData<>();
 
-        return profileLiveData;
+        Call<User> call = userService.getUser(userId);
+        executeAsync(call, userLiveData, null);
+
+        return userLiveData;
     }
 
     public MutableLiveData<Boolean> register(String username, String email, String password) {
+        MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
+
         RegisterDTO registerDTO = new RegisterDTO(username, email, password);
         Call<Void> call = userService.register(registerDTO);
-
-        MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
 
         executeAsync(call, null, response -> {
             if (response != null && response.isSuccessful()) {
@@ -49,11 +50,12 @@ public class UserRepository {
 
     public MutableLiveData<UserAuth> login(String email, String password) {
         MutableLiveData<UserAuth> authLiveData = new MutableLiveData<>();
+
         LoginDTO loginDTO = new LoginDTO(email, password);
 
         Call<UserAuth> call = userService.login(loginDTO);
-
         executeAsync(call, authLiveData, null);
+
         return authLiveData;
     }
 
