@@ -21,6 +21,7 @@ import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.dialogs.EditProfileDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.util.AppPreferences;
 import com.example.flashcards_app.viewmodel.ProfileViewModel;
 import com.example.flashcards_app.viewmodel.SettingsViewModel;
 import com.squareup.picasso.Picasso;
@@ -43,23 +44,30 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        initViews();
+
+        setupInitialConfig();
+
+        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        configSettingsViewModel();
+    }
+
+    private void initViews() {
         profileImg = findViewById(R.id.profile_img);
         name = findViewById(R.id.name_textView);
         username = findViewById(R.id.username_textView);
         logout = findViewById(R.id.btn_logout);
         back = findViewById(R.id.btn_back);
         editProfile = findViewById(R.id.btn_edit_profile);
+    }
 
-        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-        configSettingsViewModel();
-
+    /* Load buttons onClickListener */
+    private void setupInitialConfig() {
         logout.setOnClickListener(v -> {
-            // TODO: Clear SharedPreferences
-            accessInitialActivity();
+            AppPreferences.cleanUserSession();
+            accessMainActivity();
         });
 
         back.setOnClickListener(v -> {
@@ -104,7 +112,7 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    private void accessInitialActivity() {
+    private void accessMainActivity() {
         Intent in = new Intent(this, MainActivity.class);
         startActivity(in);
     }

@@ -13,13 +13,9 @@ import okhttp3.Response;
 
 public class AuthInterceptor implements Interceptor {
 
-    public AuthInterceptor() {
-    }
-
     @Override
     public Response intercept(Chain chain) throws IOException {
         String authToken = AppPreferences.getAccessToken();
-        System.out.println("TESTE232323: " + authToken);
 
         Request newRequest = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer " + authToken)

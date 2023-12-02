@@ -24,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         AppPreferences.setup(this);
 
+        String token = AppPreferences.getAccessToken();
+        if (token != null && !token.isEmpty()) {
+            accessHomeActivity();
+        }
+
         initViews();
 
         setupInitialConfig();
@@ -45,5 +50,10 @@ public class MainActivity extends AppCompatActivity {
             Intent in = new Intent(this, LoginActivity.class);
             startActivity(in);
         });
+    }
+
+    private void accessHomeActivity() {
+        Intent in = new Intent(this, HomeActivity.class);
+        startActivity(in);
     }
 }

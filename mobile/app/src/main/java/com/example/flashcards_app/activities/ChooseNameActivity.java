@@ -1,6 +1,7 @@
 package com.example.flashcards_app.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Build;
@@ -13,6 +14,9 @@ import android.widget.ImageButton;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.HomeActivity;
+import com.example.flashcards_app.util.AppPreferences;
+import com.example.flashcards_app.viewmodel.ChooseNameViewModel;
+import com.example.flashcards_app.viewmodel.LoginViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -21,34 +25,60 @@ import java.util.regex.Pattern;
 
 public class ChooseNameActivity extends AppCompatActivity {
 
+    ChooseNameViewModel chooseNameViewModel;
+
     TextInputLayout nameLayout;
     TextInputEditText nameEditText;
     Button continueButton;
-    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_name);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        chooseNameViewModel = new ViewModelProvider(this).get(ChooseNameViewModel.class);
+
+        initViews();
+
+        setupInitialConfig();
+
+        setupFieldsValidation();
+    }
+
+    private void initViews() {
         nameLayout = findViewById(R.id.name_field);
         nameEditText = findViewById(R.id.name_editText);
         continueButton = findViewById(R.id.btn_continue);
-        back = findViewById(R.id.btn_back);
+    }
+
+    /* Load buttons onClickListener */
+    private void setupInitialConfig() {
         continueButton.setEnabled(false);
 
         continueButton.setOnClickListener(v -> {
-            accessHomeActivity();
+            updateProfile();
         });
+    }
 
-        back.setOnClickListener(v -> {
-            accessMainActivity();
+    private void updateProfile() {
+        String name = nameEditText.getText().toString();
+        String userId = AppPreferences.getUserId();
+
+        chooseNameViewModel.updateProfile(userId, name).observe(this, user -> {
+            if (user != null && !user.getName().isEmpty()) {
+                accessHomeActivity();
+            }
         });
+    }
 
+    private void accessHomeActivity() {
+        Intent in = new Intent(this, HomeActivity.class);
+        startActivity(in);
+    }
+
+    private void setupFieldsValidation() {
         nameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,15 +119,5 @@ public class ChooseNameActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-    }
-
-    private void accessHomeActivity() {
-        Intent in = new Intent(this, HomeActivity.class);
-        startActivity(in);
-    }
-
-    private void accessMainActivity() {
-        Intent in = new Intent(this, MainActivity.class);
-        startActivity(in);
     }
 }

@@ -13,20 +13,20 @@ export function AuthMiddleware(
   next: NextFunction,
 ) {
   const { authorization } = req.headers
+
   if (!authorization) {
     return res.status(401).json({ error: 'Token not provided.' })
   }
 
   const [, token] = authorization.split(' ')
-  console.log(authorization)
 
   try {
     const SECRET_KEY = process.env.SECRET_KEY
-    console.log('oi')
+
     if (!SECRET_KEY) {
       throw new Error('Secret key not provided')
     }
-    console.log(token)
+
     const decoded = verify(token, SECRET_KEY)
     const { id } = decoded as TokenPayload
 

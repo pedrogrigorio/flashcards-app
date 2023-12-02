@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.flashcards_app.api.UserService;
 import com.example.flashcards_app.dto.LoginDTO;
 import com.example.flashcards_app.dto.RegisterDTO;
+import com.example.flashcards_app.dto.UpdateProfileDTO;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.models.UserAuth;
 import com.example.flashcards_app.network.RetrofitClient;
@@ -54,6 +55,16 @@ public class UserRepository {
 
         executeAsync(call, authLiveData, null);
         return authLiveData;
+    }
+
+    public MutableLiveData<User> updateProfile(String userId, String name) {
+        MutableLiveData<User> userLiveData = new MutableLiveData<>();
+        UpdateProfileDTO updateProfileDTO = new UpdateProfileDTO(name);
+
+        Call<User> call = userService.updateProfile(userId, updateProfileDTO);
+
+        executeAsync(call, userLiveData, null);
+        return userLiveData;
     }
 
     private <T> void executeAsync(Call<T> call, MutableLiveData<T> liveData, ResponseCallback<T> responseCallback) {

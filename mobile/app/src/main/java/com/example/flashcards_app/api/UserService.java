@@ -2,6 +2,7 @@ package com.example.flashcards_app.api;
 
 import com.example.flashcards_app.dto.LoginDTO;
 import com.example.flashcards_app.dto.RegisterDTO;
+import com.example.flashcards_app.dto.UpdateProfileDTO;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.models.UserAuth;
 
@@ -10,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface UserService {
@@ -21,4 +23,7 @@ public interface UserService {
 
     @POST("auth")
     Call<UserAuth> login(@Body LoginDTO loginDTO);
+
+    @PUT("users/{id}/profile")
+    Call<User> updateProfile(@Path("id") String id, @Body UpdateProfileDTO updateProfileDTO);
 }

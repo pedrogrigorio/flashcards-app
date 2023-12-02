@@ -29,6 +29,11 @@ public class AppPreferences {
         getKey(Key.USERID).setString("userId", userId);
     }
 
+    public static void cleanUserSession() {
+        getKey(Key.TOKEN).remove("token");
+        getKey(Key.USERID).remove("userId");
+    }
+
     private enum Key {
         TOKEN, USERID; // Replace these cases with your stored values keys
 
@@ -40,7 +45,7 @@ public class AppPreferences {
             if (value != null) {
                 sharedPreferences.edit().putString(name, value).apply();
             } else {
-                remove();
+                remove(name);
             }
         }
 
@@ -48,8 +53,8 @@ public class AppPreferences {
             return sharedPreferences.contains("token");
         }
 
-        public void remove() {
-            sharedPreferences.edit().remove("token").apply();
+        public void remove(String name) {
+            sharedPreferences.edit().remove(name).apply();
         }
     }
 

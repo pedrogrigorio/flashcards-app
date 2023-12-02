@@ -27,10 +27,13 @@ class UserController {
   }
 
   async updateProfile(req: Request, res: Response) {
+    console.log('oi')
     try {
       const userId = parseInt(req.params.id)
       const file = req.file
       const { name } = Validators.updateProfileSchema.parse(req.body)
+
+      console.log(name)
 
       const updatedUser = await UserService.updateProfile(userId, name, file)
 

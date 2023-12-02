@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        context = this;
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         initViews();

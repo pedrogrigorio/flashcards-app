@@ -92,6 +92,11 @@ public class HomeActivity extends AppCompatActivity {
         String userId = AppPreferences.getUserId();
         homeViewModel.getUser(userId).observe(this, user -> {
             this.user = user;
+
+            if (user.getName().isEmpty()) {
+                accessChooseNameActivity();
+            }
+
             updateView();
         });
     }
@@ -128,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         profileImg.setOnClickListener(v -> {
-            accessProfile();
+            accessProfileActivity();
         });
 
         notifications.setOnClickListener(v -> {
@@ -138,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
 
     /* Change page methods */
 
-    private void accessProfile() {
+    private void accessProfileActivity() {
         Intent in = new Intent(this, ProfileActivity.class);
         startActivity(in);
     }
@@ -150,6 +155,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void accessSettingsScreen() {
         Intent in = new Intent(this, SettingsActivity.class);
+        startActivity(in);
+    }
+
+    private void accessChooseNameActivity() {
+        Intent in = new Intent(this, ChooseNameActivity.class);
         startActivity(in);
     }
 
