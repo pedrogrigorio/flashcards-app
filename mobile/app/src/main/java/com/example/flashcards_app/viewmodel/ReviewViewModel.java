@@ -1,13 +1,11 @@
 package com.example.flashcards_app.viewmodel;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.activities.ReviewActivity;
+import com.example.flashcards_app.adapters.ReviewAdapter;
 import com.example.flashcards_app.models.Review;
 
 import java.util.ArrayList;
@@ -16,9 +14,11 @@ import java.util.List;
 public class ReviewViewModel extends ViewModel {
     private MutableLiveData<List<Review>> reviewLiveData = new MutableLiveData<>();
     private List<Review> reviewTemp = new ArrayList<>();
+    private OnRefreshProgressBar onRefreshProgressBar;
     private int indexLastCardReviewed;
     public ReviewViewModel() {
         loadReviewCardsData();
+
     }
 
     private void loadReviewCardsData() {
@@ -35,8 +35,8 @@ public class ReviewViewModel extends ViewModel {
 
         for (Review review : reviewTemp) {
             if (review.getStampLevel() == null) {
-                this.indexLastCardReviewed = reviewTemp.indexOf(review) + 1;
                 tempLiveData.add(review);
+                setIndexLastCardReviewed();
                 break;
             }
             else if (review.getStampLevel() != null){
@@ -45,6 +45,7 @@ public class ReviewViewModel extends ViewModel {
         }
 
         if (tempLiveData.equals(reviewLiveData.getValue())) return;
+
 
         this.reviewLiveData.setValue(tempLiveData);
     }
@@ -56,25 +57,26 @@ public class ReviewViewModel extends ViewModel {
             currentCards.remove(position);
             reviewTemp.remove(position);
 
-            nextNotReviewed(currentCards);
-
-
             reviewLiveData.setValue(currentCards);
         }
+
+        setIndexLastCardReviewed();
     }
 
-    private void nextNotReviewed(List<Review> currentCards) {
 
-        
-        for (Review review : currentCards)  {
+    private void setIndexLastCardReviewed() {
+        if (reviewLiveData.getValue() != null && !reviewLiveData.getValue().isEmpty()) {
+            for (Review review: reviewLiveData.getValue()) {
                 if (review.getStampLevel() == null) {
-                    this.indexLastCardReviewed = currentCards.indexOf(review) + 1;
-                } else if (review.getStampLevel() != null && (currentCards.indexOf(review) == currentCards.size() -1 )) {
-                    this.indexLastCardReviewed = currentCards.indexOf(review) + 1;
+                    indexLastCardReviewed = reviewLiveData.getValue().indexOf(review);
+                    onRefreshProgressBar.refreshProgressBar();
+                    return;
                 }
+            }
+
+            indexLastCardReviewed = reviewLiveData.getValue().size();
         }
     }
-
 
     public void updateCard(Review updatedCard, int position) {
         List<Review> currentCards = reviewLiveData.getValue();
@@ -85,6 +87,8 @@ public class ReviewViewModel extends ViewModel {
 
             reviewLiveData.setValue(currentCards);
         }
+
+        setIndexLastCardReviewed();
     }
     public Review getCurrentCard(int position) {
         return reviewLiveData.getValue().get(position);
@@ -107,10 +111,17 @@ public class ReviewViewModel extends ViewModel {
         return this.indexLastCardReviewed;
     }
 
-
     public LiveData<List<Review>> getReviewData() {
         return this.reviewLiveData;
 
+    }
+
+    public interface OnRefreshProgressBar {
+        void refreshProgressBar();
+    }
+
+    public void setOnRefreshProgressBar(OnRefreshProgressBar onRefreshProgressBar) {
+        this.onRefreshProgressBar = onRefreshProgressBar;
     }
 
 }

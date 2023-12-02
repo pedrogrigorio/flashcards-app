@@ -10,12 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.flashcards_app.R;
-import com.example.flashcards_app.activities.ReviewActivity;
-import com.example.flashcards_app.dialogs.DeleteCardDialog;
-import com.example.flashcards_app.dialogs.EditCardDialog;
 import com.example.flashcards_app.models.Animator;
 import com.example.flashcards_app.models.Review;
-import com.example.flashcards_app.util.ViewModelAdapterMethods;
 import com.example.flashcards_app.viewmodel.ViewModelLogic.Review.AudioCard;
 
 
@@ -28,7 +24,12 @@ import java.util.List;
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHolder> {
 
     private List<Review> reviews = new ArrayList<>();
-    private ViewModelAdapterMethods viewModelAdapterMethods;
+
+    private OnDeleteCardButtonListener onDeleteCardButtonListener;
+    private OnEditCardButtonListener onEditCardButtonListener;
+    private OnVisibilityListenerButton onVisibilityListenerButton;
+
+
 
     @NonNull
     @Override
@@ -43,9 +44,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         holder.frontTextCard.setText(currentReview.getFrontText());
         holder.backTextCard.setText(currentReview.getBackText());
 
+
         holder.frontCard.setOnClickListener(v -> {
             holder.animator.makeAnimationRight();
-            ReviewActivity.setVisibilityDifficultButtons(true);
+            onVisibilityListenerButton.setVisibilityButton(true);
             holder.setAnimatorState(false);
         });
         holder.backCard.setOnClickListener(v -> {
@@ -58,24 +60,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         });
 
         holder.editButton.setOnClickListener(v -> {
-            EditCardDialog dialog = new EditCardDialog(currentReview);
-            dialog.setDialogResult(new EditCardDialog.onDialogResult() {
-                @Override
-                public void finish(Review updatedCard) {
-                    viewModelAdapterMethods.updateCard(updatedCard, position);
-                }
-            });
+            onEditCardButtonListener.editCard();
         });
 
         holder.deleteButton.setOnClickListener(v -> {
-            Review card = new Review("currently card", "currently card", 444, null);
-            DeleteCardDialog dialog = new DeleteCardDialog(card);
-            dialog.setDialogResult(new DeleteCardDialog.onDialogResult() {
-                @Override
-                public void finish() {
-                    viewModelAdapterMethods.deleteCard(position);
-                }
-            });
+            onDeleteCardButtonListener.deleteCard(position);
         });
 
     }
@@ -83,7 +72,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     public void onViewRecycled(@NonNull ReviewHolder holder) {
         super.onViewRecycled(holder);
         holder.resetAnimatorState();
-        holder.cleanAudio();
     }
 
     @Override
@@ -97,7 +85,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         notifyDataSetChanged();
 
     }
-
 
     public static class ReviewHolder extends RecyclerView.ViewHolder {
         private View frontCard;
@@ -165,4 +152,29 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         }
     }
 
+    public interface OnDeleteCardButtonListener {
+
+        void deleteCard(int position);
+    }
+
+    public void setOnDeleteCardButtonListener(OnDeleteCardButtonListener onDeleteCardButtonListener) {
+        this.onDeleteCardButtonListener = onDeleteCardButtonListener;
+    }
+
+    public interface OnEditCardButtonListener {
+        void editCard();
+    }
+
+    public void setOnEditCardButtonListener(OnEditCardButtonListener onEditCardButtonListener) {
+        this.onEditCardButtonListener = onEditCardButtonListener;
+    }
+
+
+    public void setOnVisibilityListenerButton(OnVisibilityListenerButton onVisibilityListenerButton) {
+        this.onVisibilityListenerButton = onVisibilityListenerButton;
+    }
+
+    public interface OnVisibilityListenerButton {
+        void setVisibilityButton(boolean visibility);
+    }
 }
