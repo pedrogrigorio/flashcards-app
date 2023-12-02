@@ -47,7 +47,7 @@ public class FriendsFragment extends Fragment {
         configRecyclerView();
 
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        configFriendViewModel();
+//        configFriendViewModel();
 
         Button addButton = homeActivity.getAddFriendsButton();
 //        addButton.setOnClickListener(v -> {

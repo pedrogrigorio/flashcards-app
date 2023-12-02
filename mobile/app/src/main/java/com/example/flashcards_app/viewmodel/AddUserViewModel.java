@@ -67,7 +67,6 @@ public class AddUserViewModel extends ViewModel {
             currentUsers = new ArrayList<>();
         }
 
-        user.setIsFriend(false);
         currentUsers.set(position, user);
 
         addFriendsLiveData.setValue(currentUsers);

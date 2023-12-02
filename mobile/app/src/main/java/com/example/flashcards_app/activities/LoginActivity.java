@@ -3,26 +3,25 @@ package com.example.flashcards_app.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.util.AppPreferences;
 import com.example.flashcards_app.viewmodel.LoginViewModel;
-import com.example.flashcards_app.viewmodel.RegisterViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
     LoginViewModel loginViewModel;
-    SharedPreferences sharedPreferences;
+    Context context;
 
     Button signup;
     Button signing;
@@ -39,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        sharedPreferences = getSharedPreferences("MyPrefs", this.MODE_PRIVATE);
+        context = this;
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         initViews();
@@ -60,18 +59,26 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setupInitialConfig() {
         back.setOnClickListener(v -> {
-            Intent in = new Intent(this, MainActivity.class);
-            startActivity(in);
+            accessMainActivity();
         });
 
         signup.setOnClickListener(v -> {
-            Intent in = new Intent(this, RegisterActivity.class);
-            startActivity(in);
+            accessRegisterActivity();
         });
 
         signing.setOnClickListener(v -> {
-            setupViewModel();
+            login();
         });
+    }
+
+    private void accessRegisterActivity() {
+        Intent in = new Intent(this, RegisterActivity.class);
+        startActivity(in);
+    }
+
+    private void accessMainActivity() {
+        Intent in = new Intent(this, MainActivity.class);
+        startActivity(in);
     }
 
     private void accessHomeActivity() {
@@ -79,23 +86,16 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    private void accessChooseNameActivity() {
-        Intent in = new Intent(this, ChooseNameActivity.class);
-        startActivity(in);
-    }
-
-    private void setupViewModel() {
+    private void login() {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        loginViewModel.login(email, password).observe(this, token  -> {
-            if (token != null && !token.isEmpty()) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("token", token);
+        loginViewModel.login(email, password).observe(this, authData  -> {
+            if (authData != null) {
+                AppPreferences.setAccessToken(authData.getToken());
+                AppPreferences.setUserId(authData.getUserId());
 
-                editor.apply();
-
-                String savedToken = sharedPreferences.getString("token", "");
+                String savedToken = AppPreferences.getAccessToken();
                 if (!savedToken.isEmpty()) {
                     accessHomeActivity();
                 } else {

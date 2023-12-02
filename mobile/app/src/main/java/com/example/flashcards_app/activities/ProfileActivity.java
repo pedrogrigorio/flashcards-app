@@ -146,7 +146,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void configProfileViewModel() {
-        profileViewModel.getProfile().observe(this, new Observer<User>() {
+        profileViewModel.getUser().observe(this, new Observer<User>() {
             @Override
             public void onChanged(User updatedProfile) {
                 user = updatedProfile;

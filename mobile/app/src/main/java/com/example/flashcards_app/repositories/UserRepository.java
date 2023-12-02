@@ -7,7 +7,8 @@ import com.example.flashcards_app.api.UserService;
 import com.example.flashcards_app.dto.LoginDTO;
 import com.example.flashcards_app.dto.RegisterDTO;
 import com.example.flashcards_app.models.User;
-import com.example.flashcards_app.util.RetrofitClient;
+import com.example.flashcards_app.models.UserAuth;
+import com.example.flashcards_app.network.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,28 +21,10 @@ public class UserRepository {
         userService = RetrofitClient.getRetrofitInstance().create(UserService.class);
     }
 
-    public MutableLiveData<User> getProfile() {
+    public MutableLiveData<User> getUser(String userId) {
         MutableLiveData<User> profileLiveData = new MutableLiveData<>();
-
-        Call<User> call = userService.getProfile();
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    System.out.println("PRINT: requisition OK");
-                    profileLiveData.setValue(response.body());
-                } else {
-                    // error treatment
-                    System.out.println("PRINT: getAllDecks error");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                System.out.println("PRINT: requisition fail " + t.getMessage());
-                t.printStackTrace();
-            }
-        });
+        Call<User> call = userService.getUser(userId);
+        executeAsync(call, profileLiveData, null);
 
         return profileLiveData;
     }
@@ -52,46 +35,48 @@ public class UserRepository {
 
         MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
 
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    registerSuccess.setValue(true);
-                } else {
-                    registerSuccess.setValue(false);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                registerSuccess.setValue(false); // Falha na requisição
-                t.printStackTrace();
+        executeAsync(call, null, response -> {
+            if (response != null && response.isSuccessful()) {
+                registerSuccess.setValue(true);
+            } else {
+                registerSuccess.setValue(false);
             }
         });
 
         return registerSuccess;
     }
 
-    public MutableLiveData<String> login(String email, String password) {
-        MutableLiveData<String> tokenLiveData = new MutableLiveData<>();
-
+    public MutableLiveData<UserAuth> login(String email, String password) {
+        MutableLiveData<UserAuth> authLiveData = new MutableLiveData<>();
         LoginDTO loginDTO = new LoginDTO(email, password);
-        Call<String> call = userService.login(loginDTO);
 
-        call.enqueue(new Callback<String>() {
+        Call<UserAuth> call = userService.login(loginDTO);
+
+        executeAsync(call, authLiveData, null);
+        return authLiveData;
+    }
+
+    private <T> void executeAsync(Call<T> call, MutableLiveData<T> liveData, ResponseCallback<T> responseCallback) {
+        call.enqueue(new Callback<T>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<T> call, Response<T> response) {
+                if (responseCallback != null) {
+                    responseCallback.onResponseReceived(response);
+                }
                 if (response.isSuccessful() && response.body() != null) {
-                    tokenLiveData.setValue(response.body());
+                    liveData.setValue(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
+            public void onFailure(Call<T> call, Throwable t) {
+                // Tratamento de falhas comuns
+                t.printStackTrace();
             }
         });
+    }
 
-        return tokenLiveData;
+    interface ResponseCallback<T> {
+        void onResponseReceived(Response<T> response);
     }
 }

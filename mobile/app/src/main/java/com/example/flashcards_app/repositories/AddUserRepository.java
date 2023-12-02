@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.flashcards_app.api.AddUserService;
 import com.example.flashcards_app.models.User;
-import com.example.flashcards_app.util.RetrofitClient;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class AddUserRepository {
 
 
     public AddUserRepository() {
-        addUserService = RetrofitClient.getRetrofitInstance().create(AddUserService.class);
+//        addUserService = RetrofitClient.getRetrofitInstance("").create(AddUserService.class);
     }
 
     public MutableLiveData<List<User>> getNewFriendsToAdd() {

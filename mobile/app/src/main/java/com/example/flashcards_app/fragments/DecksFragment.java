@@ -117,11 +117,11 @@ public class DecksFragment extends Fragment {
     }
 
     private void configDeckViewModel() {
-        deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
-            @Override
-            public void onChanged(List<Deck> decks) {
-                adapter.setDecks(decks);
-            }
-        });
+//        deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
+//            @Override
+//            public void onChanged(List<Deck> decks) {
+//                adapter.setDecks(decks);
+//            }
+//        });
     }
 }

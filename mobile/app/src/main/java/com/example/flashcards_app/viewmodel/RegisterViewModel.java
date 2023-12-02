@@ -12,7 +12,7 @@ public class RegisterViewModel extends ViewModel {
     private UserRepository userRepository;
 
     public RegisterViewModel() {
-        userRepository = new UserRepository();
+//        userRepository = new UserRepository("");
     }
 
     public LiveData<Boolean> register(String username, String email, String password) {

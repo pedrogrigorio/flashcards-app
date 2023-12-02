@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.flashcards_app.api.NotificationsService;
 import com.example.flashcards_app.models.Notification;
-import com.example.flashcards_app.util.RetrofitClient;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class NotificationsRepository {
 
 
     public NotificationsRepository() {
-        notificationsService = RetrofitClient.getRetrofitInstance().create(NotificationsService.class);
+//        notificationsService = RetrofitClient.getRetrofitInstance("").create(NotificationsService.class);
     }
 
     public MutableLiveData<List<Notification>> getNotifications() {

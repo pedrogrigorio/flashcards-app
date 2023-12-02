@@ -116,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String username = s.toString();
 
-                if (username.length() >= 5) {
+                if (username.length() >= 4) {
                     usernameIsValid[0] = username.matches("^[^\\s]+$");
                     usernameLayout.setHelperText(null);
                 } else {

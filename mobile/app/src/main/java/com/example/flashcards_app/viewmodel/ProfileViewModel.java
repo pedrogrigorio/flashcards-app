@@ -15,12 +15,12 @@ public class ProfileViewModel extends ViewModel {
     private UserRepository userRepository;
 
     public ProfileViewModel() {
-        userRepository = new UserRepository();
+//        userRepository = new UserRepository("");
     }
 
-    public LiveData<User> getProfile() {
+    public LiveData<User> getUser() {
         if (profileLiveData.getValue() == null) {
-            profileLiveData = userRepository.getProfile();
+//            profileLiveData = userRepository.getUser();
         }
 
         return profileLiveData;
