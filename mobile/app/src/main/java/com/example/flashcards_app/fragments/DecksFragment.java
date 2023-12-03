@@ -59,6 +59,8 @@ public class DecksFragment extends Fragment {
         deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
         fetchAllDecks();
 
+
+
         return view;
     }
 
@@ -73,6 +75,7 @@ public class DecksFragment extends Fragment {
         addButton.setOnClickListener(v -> {
             deckViewModel.insertDeck(new Deck());
         });
+
     }
 
     private void configAdapter() {
@@ -98,7 +101,7 @@ public class DecksFragment extends Fragment {
                     dialog.setDialogResult(new DeleteDeckDialog.onDialogResult() {
                         @Override
                         public void finish() {
-                            deckViewModel.deleteDeck(position);
+                            deckViewModel.deleteDeck(deck, position);
                         }
                     });
                     dialog.show(manager, "delete_deck_popup");
@@ -134,7 +137,6 @@ public class DecksFragment extends Fragment {
         deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
             @Override
             public void onChanged(List<Deck> decks) {
-                Toast.makeText(getContext(), "CHAMOU", Toast.LENGTH_SHORT).show();
                 adapter.setDecks(decks);
             }
         });

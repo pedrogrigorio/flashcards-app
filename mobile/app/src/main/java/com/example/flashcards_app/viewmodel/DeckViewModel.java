@@ -33,35 +33,43 @@ public class DeckViewModel extends ViewModel {
     /*
     *   Methods to be implemented in repository
     * =================================================== */
+//    public void insertDeck() {
+//        List<Deck> temp = deckRepository.addNewDeck().getValue();
+//        temp.addAll(decksLiveData.getValue());
+//        decksLiveData.setValue(temp);
+//
+//    }
+
     public void insertDeck(Deck deck) {
-        List<Deck> currentDecks = decksLiveData.getValue();
+        deckRepository.addNewDeck();
 
-        if (currentDecks == null) {
-            currentDecks = new ArrayList<>();
+        if(decksLiveData.getValue() != null) {
+            List<Deck> temp =  decksLiveData.getValue();
+            temp.add(deck);
+            decksLiveData.setValue(temp);
         }
-
-        currentDecks.add(deck);
-
-        decksLiveData.setValue(currentDecks);
     }
+
+
 
     public void updateDeck(Deck deck, int position) {
-        List<Deck> currentDecks = decksLiveData.getValue();
-        List<Deck> tmp = currentDecks;
+        deckRepository.updateDeck(deck);
+        List<Deck> temp = decksLiveData.getValue();
+        if(temp != null) {
+            temp.set(position, deck);
+            decksLiveData.setValue(temp);
+        }
 
-        tmp.remove(1);
-        tmp.remove(0);
-
-        decksLiveData.setValue(tmp);
     }
 
-    public void deleteDeck(int position) {
-        List<Deck> currentDecks = decksLiveData.getValue();
-
-        if (currentDecks != null && !currentDecks.isEmpty()) {
-            currentDecks.remove(position);
-
-            decksLiveData.setValue(currentDecks);
+    public void deleteDeck(Deck deck, int position) {
+        System.out.println(String.valueOf(deck.getId()));
+        deckRepository.deleteDeck(deck);
+        List<Deck> temp = decksLiveData.getValue();
+        if(temp != null) {
+            temp.remove(position);
+            decksLiveData.setValue(temp);
         }
+
     }
 }

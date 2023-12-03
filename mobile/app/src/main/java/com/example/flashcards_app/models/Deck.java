@@ -26,7 +26,8 @@ public class Deck {
         this.reviewCardsCount = 0;
     }
 
-    public Deck(String imgSrc, String title, int newCardsNumber, int learnCardsNumber, int reviewCardsNumber) {
+    public Deck(int id, String imgSrc, String title, int newCardsNumber, int learnCardsNumber, int reviewCardsNumber) {
+        this.id = id;
         this.imgSrc = imgSrc;
         this.title = title;
         this.newCardsCount = newCardsNumber;
