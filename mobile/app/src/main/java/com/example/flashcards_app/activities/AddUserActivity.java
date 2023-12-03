@@ -56,7 +56,7 @@ public class AddUserActivity extends AppCompatActivity {
     /* Load views */
     private void initViews() {
         recyclerView = findViewById(R.id.users_recycle_view);
-        backButtonAction = findViewById(R.id.back_button_users);
+        backButtonAction = findViewById(R.id.btn_back);
         searchView = findViewById(R.id.user_search);
     }
 
@@ -106,20 +106,19 @@ public class AddUserActivity extends AppCompatActivity {
     }
 
     private void configAdapter() {
-        adapter.setDeleteFriendListener(new AddUserAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(User user, int position) {
-                Friend friend = new Friend(0, user.getName(), user.getUsername());
-                DeleteFriendDialog dialog = new DeleteFriendDialog(friend);
-                dialog.setDialogResult(new DeleteFriendDialog.onDialogResult() {
-                    @Override
-                    public void finish() {
-                        User user = addUserViewModel.getUser(position);
-                        addUserViewModel.deleteFriend(user, position);
-                    }
-                });
-                dialog.show(getSupportFragmentManager(), "delete friend");
-            }
+        adapter.setAddFriendListener(user -> {
+           addUserViewModel.addFriend(user);
+        });
+
+
+        adapter.setDeleteFriendListener(user -> {
+            DeleteFriendDialog dialog = new DeleteFriendDialog(user.getName());
+
+            dialog.setDialogResult(() -> {
+                addUserViewModel.deleteFriend(user);
+            });
+
+            dialog.show(getSupportFragmentManager(), "delete friend");
         });
     }
 

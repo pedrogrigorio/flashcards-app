@@ -16,11 +16,11 @@ import com.example.flashcards_app.models.Friend;
 
 public class DeleteFriendDialog extends AppCompatDialogFragment {
 
-    Friend currentFriend;
+    String friendName;
     onDialogResult dialogResult;
 
-    public DeleteFriendDialog(Friend currentFriend) {
-        this.currentFriend = currentFriend;
+    public DeleteFriendDialog(String friendName) {
+        this.friendName = friendName;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class DeleteFriendDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_delete_friend, null);
         TextView msgView = view.findViewById(R.id.delete_friend_message);
-        String msg = "Tem certeza que deseja remover <b>" + currentFriend.getName() + "</b> das amizades?";
+        String msg = "Tem certeza que deseja remover <b>" + friendName + "</b> das amizades?";
         msgView.setText(Html.fromHtml(msg));
 
         builder.setView(view)

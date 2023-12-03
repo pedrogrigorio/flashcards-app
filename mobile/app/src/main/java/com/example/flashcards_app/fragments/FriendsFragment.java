@@ -67,7 +67,7 @@ public class FriendsFragment extends Fragment {
         adapter.setDeleteFriendListener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Friend friend, int position) {
-                DeleteFriendDialog dialog = new DeleteFriendDialog(friend);
+                DeleteFriendDialog dialog = new DeleteFriendDialog(friend.getName());
                 dialog.setDialogResult(new DeleteFriendDialog.onDialogResult() {
                     @Override
                     public void finish() {

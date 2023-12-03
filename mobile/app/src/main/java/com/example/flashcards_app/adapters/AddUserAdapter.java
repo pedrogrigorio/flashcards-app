@@ -29,6 +29,7 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFrien
 
 
     private List<User> users = new ArrayList<>();
+    private OnItemClickListener addFriendListener;
     private OnItemClickListener deleteFriendListener;
 
     @NonNull
@@ -52,10 +53,13 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFrien
                     .into(holder.userImage);
         }
 
-        holder.deleteFriend.setOnClickListener(v -> {
-            deleteFriendListener.onItemClick(currentUser, position);
+        holder.addFriend.setOnClickListener(v -> {
+            addFriendListener.onItemClick(currentUser);
         });
 
+        holder.deleteFriend.setOnClickListener(v -> {
+            deleteFriendListener.onItemClick(currentUser);
+        });
     }
 
     @Override
@@ -90,7 +94,11 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFrien
     }
 
     public interface OnItemClickListener {
-        void onItemClick(User user, int position);
+        void onItemClick(User user);
+    }
+
+    public void setAddFriendListener(OnItemClickListener listener) {
+        this.addFriendListener = listener;
     }
 
     public void setDeleteFriendListener(OnItemClickListener listener) {
