@@ -34,6 +34,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.Properties;
 
 public class EditProfileDialog extends AppCompatDialogFragment {
 

@@ -82,7 +82,6 @@ public class SettingsActivity extends AppCompatActivity {
             dialog.setDialogResult(new EditProfileDialog.onDialogResult() {
                 @Override
                 public void finish(User updatedProfile) {
-                    System.out.println("FINALIZAÇÃO DO POPUP NA ACTIVITY");
                     settingsViewModel.updateProfile(updatedProfile);
                 }
             });

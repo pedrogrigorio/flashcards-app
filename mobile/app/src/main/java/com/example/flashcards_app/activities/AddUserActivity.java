@@ -32,8 +32,8 @@ public class AddUserActivity extends AppCompatActivity {
     private AddUserViewModel addUserViewModel;
     private RecyclerView recyclerView;
     private AddUserAdapter adapter;
-
-
+    private ImageButton backButtonAction;
+    private SearchView searchView;
 
 
     @Override
@@ -41,32 +41,32 @@ public class AddUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_users);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
-        
-        adapter = new AddUserAdapter();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        recyclerView = findViewById(R.id.users_recycle_view);
-        ConfigRecyclerView();
+        initViews();
+        setupInitialConfig();
+
+        configRecyclerView();
+
         configAdapter();
 
         addUserViewModel = new ViewModelProvider(this).get(AddUserViewModel.class);
-        configUserViewModel();
+    }
 
-        Button addButton = findViewById(R.id.add_user_button);
-        ImageButton backButtonAction = findViewById(R.id.back_button_users);
+    /* Load views */
+    private void initViews() {
+        recyclerView = findViewById(R.id.users_recycle_view);
+        backButtonAction = findViewById(R.id.back_button_users);
+        searchView = findViewById(R.id.user_search);
+    }
 
-        addButton.setOnClickListener(v -> {
-            addUserViewModel.insertFriend(new User("User", "User@"));
-        });
+    /* Load buttons onClickListener */
+    private void setupInitialConfig() {
+        adapter = new AddUserAdapter();
 
         backButtonAction.setOnClickListener(v -> {
             backButton();
         });
-
-
-        SearchView searchView = findViewById(R.id.user_search);
 
         searchView.setOnClickListener(v -> {
             searchView.requestFocus();
@@ -74,11 +74,10 @@ public class AddUserActivity extends AppCompatActivity {
             imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
         });
 
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                addUserViewModel.getSearchRequest(s);
+                searchUsers(s);
                 return true;
             }
 
@@ -87,28 +86,20 @@ public class AddUserActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
 
-    private void ConfigRecyclerView() {
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        this.recyclerView.setHasFixedSize(true);
+    private void configRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
 
-    public void configUserViewModel() {
-        addUserViewModel.getAddFriends().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                adapter.setUsers(users);
-            }
+    public void searchUsers(String query) {
+        addUserViewModel.searchUsers(query).observe(this, users -> {
+            adapter.setUsers(users);
         });
-
-
     }
-
 
     private void backButton() {
         finish();
@@ -123,7 +114,6 @@ public class AddUserActivity extends AppCompatActivity {
                 dialog.setDialogResult(new DeleteFriendDialog.onDialogResult() {
                     @Override
                     public void finish() {
-
                         User user = addUserViewModel.getUser(position);
                         addUserViewModel.deleteFriend(user, position);
                     }

@@ -106,8 +106,10 @@ public class HomeActivity extends AppCompatActivity {
         usernameTextView.setText(user.getUsername());
 
         if (!user.getImgSrc().isEmpty()) {
+            String imageUrl = "http://10.0.2.2:3000/image/" + user.getImgSrc();
+
             Picasso.get()
-                    .load(user.getImgSrc())
+                    .load(imageUrl)
                     .into(profileImg);
         }
     }

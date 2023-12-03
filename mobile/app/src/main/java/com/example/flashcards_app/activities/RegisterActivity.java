@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         signup.setOnClickListener(v -> {
-            configRegisterViewModel();
+            register();
         });
 
         signing.setOnClickListener(v -> {
@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void configRegisterViewModel() {
+    private void register() {
         String username = usernameEditText.getText().toString();
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();

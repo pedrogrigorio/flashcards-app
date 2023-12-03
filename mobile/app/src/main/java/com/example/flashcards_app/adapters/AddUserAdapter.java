@@ -44,17 +44,11 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFrien
         holder.textViewFriendName.setText(currentUser.getName());
         holder.textViewFriendUserName.setText(currentUser.getUsername());
 
-//        if (currentUser.getIsFriend()) {
-//            holder.addFriend.setVisibility(View.GONE);
-//            holder.deleteFriend.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.deleteFriend.setVisibility(View.GONE);
-//            holder.addFriend.setVisibility(View.VISIBLE);
-//        }
-
         if (!currentUser.getImgSrc().isEmpty()) {
+            String imageUrl = "http://10.0.2.2:3000/image/" + currentUser.getImgSrc();
+
             Picasso.get()
-                    .load(currentUser.getImgSrc())
+                    .load(imageUrl)
                     .into(holder.userImage);
         }
 

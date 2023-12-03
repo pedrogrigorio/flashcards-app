@@ -2,9 +2,12 @@ package com.example.flashcards_app.api;
 
 import com.example.flashcards_app.dto.LoginDTO;
 import com.example.flashcards_app.dto.RegisterDTO;
+import com.example.flashcards_app.dto.SearchUsersDTO;
 import com.example.flashcards_app.dto.UpdateProfileDTO;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.models.UserAuth;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -34,4 +37,7 @@ public interface UserService {
     @Multipart
     @PUT("users/{id}/profile")
     Call<User> updateProfile(@Path("id") String id, @Part MultipartBody.Part file, @Part("name") RequestBody name);
+
+    @POST("users/search")
+    Call<List<User>> searchUsers(@Body SearchUsersDTO searchUsersDTO);
 }

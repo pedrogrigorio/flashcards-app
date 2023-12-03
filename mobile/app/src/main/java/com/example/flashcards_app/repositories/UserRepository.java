@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.flashcards_app.api.UserService;
 import com.example.flashcards_app.dto.LoginDTO;
 import com.example.flashcards_app.dto.RegisterDTO;
+import com.example.flashcards_app.dto.SearchUsersDTO;
 import com.example.flashcards_app.dto.UpdateProfileDTO;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.models.UserAuth;
@@ -20,6 +21,7 @@ import com.example.flashcards_app.util.RealPathUtil;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -117,6 +119,16 @@ public class UserRepository {
             });
         }
 
+    }
+
+    public MutableLiveData<List<User>> searchUsers(String query) {
+        MutableLiveData<List<User>> usersLiveData = new MutableLiveData<>();
+        SearchUsersDTO searchUsersDTO = new SearchUsersDTO(query);
+
+        Call<List<User>> call = userService.searchUsers(searchUsersDTO);
+
+        executeAsync(call, usersLiveData, null);
+        return usersLiveData;
     }
 
     private <T> void executeAsync(Call<T> call, MutableLiveData<T> liveData, ResponseCallback<T> responseCallback) {
