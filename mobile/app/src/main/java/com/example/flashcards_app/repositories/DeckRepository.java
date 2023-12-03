@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.flashcards_app.api.DeckService;
 import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.network.RetrofitClient;
+import com.example.flashcards_app.util.AppPreferences;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class DeckRepository {
     private DeckService deckService;
 
     public DeckRepository() {
-//        deckService = RetrofitClient.getRetrofitInstance("").create(DeckService.class);
+        deckService = RetrofitClient.getRetrofitInstance().create(DeckService.class);
     }
 
     public MutableLiveData<List<Deck>> getAllDecks() {

@@ -47,12 +47,12 @@ public class DeckViewModel extends ViewModel {
 
     public void updateDeck(Deck deck, int position) {
         List<Deck> currentDecks = decksLiveData.getValue();
+        List<Deck> tmp = currentDecks;
 
-        if (currentDecks != null && !currentDecks.isEmpty()) {
-            currentDecks.set(position, deck);
+        tmp.remove(1);
+        tmp.remove(0);
 
-            decksLiveData.setValue(currentDecks);
-        }
+        decksLiveData.setValue(tmp);
     }
 
     public void deleteDeck(int position) {

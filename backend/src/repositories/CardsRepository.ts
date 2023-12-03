@@ -2,6 +2,7 @@ import { prisma } from '../lib/prisma'
 
 class CardRepository {
   async createCard(deckId: number, frontText: string, backText: string) {
+    console.log(deckId)
     const card = await prisma.card.create({
       data: {
         frontText,
@@ -51,12 +52,11 @@ class CardRepository {
   }
 
   async getAllCards(deckId: number) {
-    const cards = await prisma.deck.findMany({
+    const cards = await prisma.card.findMany({
       where: {
-        id: deckId,
-      },
-      include: {
-        cards: true,
+        Deck: {
+          id: deckId,
+        },
       },
     })
 

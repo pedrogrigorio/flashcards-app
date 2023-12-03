@@ -4,6 +4,7 @@ import CardService from '../services/CardService'
 class CardController {
   async createCard(req: Request, res: Response) {
     try {
+      console.log(req.body)
       const newCard = await CardService.createCard(
         parseInt(req.body.deckId),
         req.body.frontText,

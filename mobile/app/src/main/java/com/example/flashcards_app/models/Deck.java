@@ -13,25 +13,25 @@ public class Deck {
     private int id;
     private String imgSrc;
     private String title;
-    private int newCardsNumber;
-    private int learnCardsNumber;
-    private int reviewCardsNumber;
+    private int newCardsCount;
+    private int learnCardCount;
+    private int reviewCardsCount;
 
     public Deck() {
         this.id = 0;
         this.imgSrc = "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg";
         this.title = "Novo baralho";
-        this.newCardsNumber = 0;
-        this.learnCardsNumber = 0;
-        this.reviewCardsNumber = 0;
+        this.newCardsCount = 0;
+        this.learnCardCount = 0;
+        this.reviewCardsCount = 0;
     }
 
     public Deck(String imgSrc, String title, int newCardsNumber, int learnCardsNumber, int reviewCardsNumber) {
         this.imgSrc = imgSrc;
         this.title = title;
-        this.newCardsNumber = newCardsNumber;
-        this.learnCardsNumber = learnCardsNumber;
-        this.reviewCardsNumber = reviewCardsNumber;
+        this.newCardsCount = newCardsNumber;
+        this.learnCardCount = learnCardsNumber;
+        this.reviewCardsCount = reviewCardsNumber;
     }
 
     public int getId() {
@@ -59,26 +59,26 @@ public class Deck {
     }
 
     public int getNewCardsNumber() {
-        return newCardsNumber;
+        return newCardsCount;
     }
 
     public void setNewCardsNumber(int newCardsNumber) {
-        this.newCardsNumber = newCardsNumber;
+        this.newCardsCount = newCardsNumber;
     }
 
     public int getLearnCardsNumber() {
-        return learnCardsNumber;
+        return learnCardCount;
     }
 
     public void setLearnCardsNumber(int learnCardsNumber) {
-        this.learnCardsNumber = learnCardsNumber;
+        this.learnCardCount = learnCardsNumber;
     }
 
     public int getReviewCardsNumber() {
-        return reviewCardsNumber;
+        return reviewCardsCount;
     }
 
     public void setReviewCardsNumber(int reviewCardsNumber) {
-        this.reviewCardsNumber = reviewCardsNumber;
+        this.reviewCardsCount = reviewCardsNumber;
     }
 }

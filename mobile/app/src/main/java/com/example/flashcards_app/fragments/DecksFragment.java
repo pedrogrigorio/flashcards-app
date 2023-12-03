@@ -131,11 +131,12 @@ public class DecksFragment extends Fragment {
     }
 
     private void fetchAllDecks() {
-//        deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
-//            @Override
-//            public void onChanged(List<Deck> decks) {
-//                adapter.setDecks(decks);
-//            }
-//        });
+        deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
+            @Override
+            public void onChanged(List<Deck> decks) {
+                Toast.makeText(getContext(), "CHAMOU", Toast.LENGTH_SHORT).show();
+                adapter.setDecks(decks);
+            }
+        });
     }
 }
