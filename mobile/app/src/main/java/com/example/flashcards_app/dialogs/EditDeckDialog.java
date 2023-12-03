@@ -64,6 +64,7 @@ public class EditDeckDialog extends AppCompatDialogFragment {
                 .setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        updatedDeck.setId(currentDeck.getId());
                         updatedDeck.setTitle(title.getText().toString());
                         updatedDeck.setLearnCardsNumber(currentDeck.getLearnCardsNumber());
                         updatedDeck.setNewCardsNumber(currentDeck.getNewCardsNumber());
