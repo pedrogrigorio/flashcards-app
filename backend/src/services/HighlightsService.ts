@@ -33,9 +33,8 @@ class HighLightService {
     return update
   }
 
-  async getAllHighlights(highlightId: number) {
-    const allHighlights =
-      await HighlightRepository.getAllHighlights(highlightId)
+  async getAllHighlights(cardId: number) {
+    const allHighlights = await HighlightRepository.getAllHighlights(cardId)
 
     return allHighlights
   }

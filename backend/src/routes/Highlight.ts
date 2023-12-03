@@ -8,10 +8,12 @@ highlightRoutes.post(
   HighLightController.createHighlight,
 )
 highlightRoutes.post(
-  '/highlight/updateHighlight',
+  '/highlight/:id/updateHighlight',
   HighLightController.updateHighlight,
 )
 highlightRoutes.post(
-  '/highlight/getAlHighlight',
+  '/highlight/:id/getAllHighlight',
   HighLightController.getAllHighlights,
 )
+
+export default highlightRoutes

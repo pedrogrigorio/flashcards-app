@@ -6,8 +6,11 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface DeckService {
-    @GET("decks")
+    @GET("deck/getAllDeck")
     Call<List<Deck>> getAllDecks();
+
+
 }

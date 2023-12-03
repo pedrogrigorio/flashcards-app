@@ -48,7 +48,9 @@ class DeckController {
 
   async getAllDeck(req: Request, res: Response) {
     try {
-      const deck = await DeckService.getAllDeck(parseInt(req.body.userId))
+      const userId = parseInt(req.userId)
+      console.log('oi')
+      const deck = await DeckService.getAllDeck(userId)
       return res.json(deck)
     } catch (error) {
       return res.status(400).json(error)

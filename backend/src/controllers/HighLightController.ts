@@ -37,7 +37,7 @@ class HighLightController {
   async getAllHighlights(req: Request, res: Response) {
     try {
       const allHighlights = await HighlightsService.getAllHighlights(
-        parseInt(req.body.highlightId),
+        parseInt(req.body.cardId),
       )
 
       return res.status(201).json(allHighlights)

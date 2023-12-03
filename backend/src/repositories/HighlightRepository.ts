@@ -42,10 +42,12 @@ class Highlights {
     return updated
   }
 
-  async getAllHighlights(highlightId: number) {
-    const allHighlights = await prisma.highlight.findUnique({
+  async getAllHighlights(cardId: number) {
+    const allHighlights = await prisma.highlight.findMany({
       where: {
-        id: highlightId,
+        Card: {
+          id: cardId,
+        },
       },
     })
     return allHighlights
