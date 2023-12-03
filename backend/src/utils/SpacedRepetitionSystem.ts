@@ -1,6 +1,7 @@
 interface ReturnNexReview {
   newStartEasy: number
   newDate: Date
+  newSuccessfulReview: Date | null
 }
 
 class SpacedRepetitionSystem {
@@ -17,7 +18,7 @@ class SpacedRepetitionSystem {
   }
 
   private HardComputeNextReview(
-    lastSuccessfulReview: Date,
+    lastSuccessfulReview: Date | null,
     startEasy: number,
   ): ReturnNexReview {
     const hard = new Date()
@@ -44,13 +45,14 @@ class SpacedRepetitionSystem {
     const newNextReview: ReturnNexReview = {
       newStartEasy: (startEasy -= 15),
       newDate: hard,
+      newSuccessfulReview: lastSuccessfulReview,
     }
 
     return newNextReview
   }
 
   private GoodComputeNextReview(
-    lastSuccessfulReview: Date,
+    lastSuccessfulReview: Date | null,
     startEasy: number,
   ): ReturnNexReview {
     const good = new Date()
@@ -72,16 +74,20 @@ class SpacedRepetitionSystem {
       good.setDate(good.getDate() + days)
     }
 
+    lastSuccessfulReview = new Date()
+    lastSuccessfulReview.setDate(lastSuccessfulReview.getDate())
+
     const newNextReview: ReturnNexReview = {
       newStartEasy: startEasy,
       newDate: good,
+      newSuccessfulReview: lastSuccessfulReview,
     }
 
     return newNextReview
   }
 
   private easyComputeNextReview(
-    lastSuccessfulReview: Date,
+    lastSuccessfulReview: Date | null,
     startEasy: number,
   ): ReturnNexReview {
     const easy = new Date()
@@ -109,47 +115,35 @@ class SpacedRepetitionSystem {
       easy.setDate(easy.getDate() + days)
     }
 
+    lastSuccessfulReview = new Date()
+    lastSuccessfulReview.setDate(lastSuccessfulReview.getDate())
+
     const newNextReview: ReturnNexReview = {
       newStartEasy: (startEasy += 15),
       newDate: easy,
+      newSuccessfulReview: lastSuccessfulReview,
     }
 
     return newNextReview
   }
 
   nextReview(
-    lastSuccessfulReview: Date,
-    nextReview: Date,
-    stampLevel: number,
+    lastSuccessfulReview: Date | null,
+    stampLevel: number | null,
     startEasy: number,
-  ) {
+  ): ReturnNexReview {
     switch (stampLevel) {
       case 1:
-        nextReview.setDate(
-          this.HardComputeNextReview(
-            lastSuccessfulReview,
-            startEasy,
-          ).newDate.getDate(),
-        )
-        break
+        return this.HardComputeNextReview(lastSuccessfulReview, startEasy)
 
       case 2:
-        nextReview.setDate(
-          this.GoodComputeNextReview(
-            lastSuccessfulReview,
-            startEasy,
-          ).newDate.getDate(),
-        )
-        break
+        return this.GoodComputeNextReview(lastSuccessfulReview, startEasy)
 
       case 3:
-        nextReview.setDate(
-          this.easyComputeNextReview(
-            lastSuccessfulReview,
-            startEasy,
-          ).newDate.getDate(),
-        )
-        break
+        return this.easyComputeNextReview(lastSuccessfulReview, startEasy)
+
+      default:
+        throw new Error('Unexpected stampLevel: ${stampLevel')
     }
   }
 }

@@ -1,31 +1,49 @@
-import { Card } from '@prisma/client'
 import { prisma } from '../lib/prisma'
-import deck from '../routes/deck'
 
 class CardRepository {
-  async createCard(Card: Card) {
+  async createCard(deckId: number, frontText: string, backText: string) {
     const card = await prisma.card.create({
-      data: Card,
+      data: {
+        frontText,
+        backText,
+        Deck: {
+          connect: { id: deckId },
+        },
+      },
     })
 
     return card
   }
 
-  async updateCard(Card: Card) {
+  async updateCard(
+    deckId: number,
+    cardId: number,
+    frontText: string,
+    backText: string,
+  ) {
     const card = await prisma.card.update({
       where: {
-        id: Card.id,
+        id: cardId,
       },
-      data: Card,
+      data: {
+        frontText,
+        backText,
+        Deck: {
+          connect: { id: deckId },
+        },
+      },
     })
 
     return card
   }
 
-  async deleteCard(cardId: number) {
+  async deleteCard(deckId: number, cardId: number) {
     const card = await prisma.card.delete({
       where: {
         id: cardId,
+        Deck: {
+          id: deckId,
+        },
       },
     })
 
@@ -45,21 +63,27 @@ class CardRepository {
     return cards
   }
 
-  async getCardById(cardId: number) {
+  async getCardById(deckId: number, cardId: number) {
     const card = await prisma.card.findUnique({
       where: {
         id: cardId,
+        Deck: {
+          id: deckId,
+        },
       },
     })
 
     return card
   }
 
-  async getCardsForToday(date: Date) {
+  async getCardsForToday(deckId: number, date: Date) {
     const cards = await prisma.card.findMany({
       where: {
         nextReview: {
           lte: date,
+        },
+        Deck: {
+          id: deckId,
         },
       },
     })
@@ -67,13 +91,26 @@ class CardRepository {
     return cards
   }
 
-  async updateCardsReviewed(cardId: number, date: Date) {
+  async updateCardsReviewed(
+    DeckId: number,
+    CardId: number,
+    StampLevel: number,
+    StartEasy: number,
+    NextReview: Date | null,
+    newLastSucessfulReview: Date | null,
+  ) {
     const card = await prisma.card.update({
       where: {
-        id: cardId,
+        id: CardId,
+        Deck: {
+          id: DeckId,
+        },
       },
       data: {
-        reviewedAt: date,
+        stampLevel: StampLevel,
+        startingEasy: StartEasy,
+        nextReview: NextReview,
+        lastSuccessfulReview: newLastSucessfulReview,
       },
     })
 
