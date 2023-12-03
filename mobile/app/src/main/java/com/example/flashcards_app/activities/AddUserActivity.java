@@ -65,7 +65,7 @@ public class AddUserActivity extends AppCompatActivity {
         adapter = new AddUserAdapter();
 
         backButtonAction.setOnClickListener(v -> {
-            backButton();
+            finish();
         });
 
         searchView.setOnClickListener(v -> {
@@ -88,6 +88,11 @@ public class AddUserActivity extends AppCompatActivity {
         });
     }
 
+    public void searchUsers(String query) {
+        addUserViewModel.searchUsers(query).observe(this, users -> {
+            adapter.setUsers(users);
+        });
+    }
 
     private void configRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -95,21 +100,10 @@ public class AddUserActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    public void searchUsers(String query) {
-        addUserViewModel.searchUsers(query).observe(this, users -> {
-            adapter.setUsers(users);
-        });
-    }
-
-    private void backButton() {
-        finish();
-    }
-
     private void configAdapter() {
         adapter.setAddFriendListener(user -> {
-           addUserViewModel.addFriend(user);
+            sendFriendRequest(user);
         });
-
 
         adapter.setDeleteFriendListener(user -> {
             DeleteFriendDialog dialog = new DeleteFriendDialog(user.getName());
@@ -119,6 +113,12 @@ public class AddUserActivity extends AppCompatActivity {
             });
 
             dialog.show(getSupportFragmentManager(), "delete friend");
+        });
+    }
+
+    private void sendFriendRequest(User user) {
+        addUserViewModel.sendFriendRequest(user).observe(this, notificationSent -> {
+            Toast.makeText(this, "SOLICITAÇÃO ENVIADA", Toast.LENGTH_SHORT).show();
         });
     }
 

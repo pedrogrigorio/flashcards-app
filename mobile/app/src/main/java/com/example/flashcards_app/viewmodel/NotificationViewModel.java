@@ -7,54 +7,41 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.flashcards_app.models.Notification;
-import com.example.flashcards_app.repositories.NotificationsRepository;
+import com.example.flashcards_app.repositories.NotificationRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationViewModel extends ViewModel {
 
-    private MutableLiveData<List<Notification>> notificationLiveData = new MutableLiveData<>();
-    private NotificationsRepository notificationsRepository;
+    private MutableLiveData<List<Notification>> notificationsLiveData = new MutableLiveData<>();
+    private NotificationRepository notificationRepository;
 
 
     public NotificationViewModel() {
-        notificationsRepository = new NotificationsRepository();
+        notificationRepository = new NotificationRepository();
     }
 
-    public LiveData<List<Notification>> getNotification() {
-        if (notificationLiveData.getValue() == null || notificationLiveData.getValue().isEmpty()) {
-            notificationLiveData = notificationsRepository.getNotifications();
-        }
+    public LiveData<List<Notification>> getAllNotifications() {
+        notificationsLiveData = notificationRepository.getAllNotifications();
 
-//        MutableLiveData<List<Notification>> tempDataLive = new MutableLiveData<>();
-//        List<Notification> tempData = new ArrayList<>();
-//
-//        tempData.add(new Notification("Ficando Gigante"));
-//        tempData.add(new Notification("140kg"));
-//        tempData.add(new Notification("Ficando monstro"));
-//        tempData.add(new Notification("Bora buscar"));
-//
-//
-//        tempDataLive.setValue(tempData);
-//        notificationLiveData = tempDataLive;
+        return notificationsLiveData;
+    }
+
+    public LiveData<Notification> acceptFriendRequest(Notification notification) {
+        MutableLiveData<Notification> notificationLiveData;
+
+        notificationLiveData = notificationRepository.acceptFriendRequest(notification.getId());
 
         return notificationLiveData;
     }
 
+    public LiveData<Notification> rejectFriendRequest(Notification notification) {
+        MutableLiveData<Notification> notificationLiveData;
 
-    // Metodo de teste para adicionar novas notificações na tela ( Isso deve sumir logo logo )
-    public void insertNotification(Notification notification, Context context) {
-        List<Notification> currentNotification = notificationLiveData.getValue();
+        notificationLiveData = notificationRepository.rejectFriendRequest(notification.getId());
 
-        if (currentNotification == null) {
-            currentNotification = new ArrayList<>();
-        }
-
-        currentNotification.add(notification);
-
-        notificationLiveData.setValue(currentNotification);
-
+        return notificationLiveData;
     }
 
 }

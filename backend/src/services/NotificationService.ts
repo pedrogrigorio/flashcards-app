@@ -1,6 +1,7 @@
 import NotificationStatus from '../constants/NotificationStatus'
 import NotificationType from '../constants/NotificationType'
 import NotificationRepository from '../repositories/NotificationRepository'
+import UserRepository from '../repositories/UserRepository'
 import FriendService from './FriendService'
 
 class NotificationService {
@@ -9,11 +10,19 @@ class NotificationService {
       throw new Error('You cannot send an notification to yourself.')
     }
 
+    const sender = await UserRepository.findUserById(senderId)
+
+    if (!sender) {
+      throw new Error('Sender not found')
+    }
+
     const notification = await NotificationRepository.createNotification(
       NotificationType.FriendRequest,
       NotificationStatus.Pending,
       receiverId,
+      sender.name,
       senderId,
+      sender.imgSrc,
     )
 
     return notification
@@ -41,10 +50,13 @@ class NotificationService {
     if (notification.senderId) {
       FriendService.addFriend(notification.senderId, notification.receiverId)
 
+      const text = 'Friend request accepted'
+
       await NotificationRepository.createNotification(
         NotificationType.FriendRequestAccepted,
         NotificationStatus.Accepted,
         notification.senderId,
+        text,
         notification.receiverId,
       )
 
