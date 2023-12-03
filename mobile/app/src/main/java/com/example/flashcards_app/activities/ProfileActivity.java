@@ -24,10 +24,13 @@ import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
+import com.example.flashcards_app.dialogs.EditProfileDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.util.AppPreferences;
 import com.example.flashcards_app.viewmodel.FriendViewModel;
 import com.example.flashcards_app.viewmodel.ProfileViewModel;
+import com.example.flashcards_app.viewmodel.SettingsViewModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -69,27 +72,66 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        initViews();
+        setupInitialConfig();
+
+        fetchProfileData();
+
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+        fusedLocationProviderClient = (FusedLocationProviderClient) LocationServices.getFusedLocationProviderClient(this);
+
+        getPermission();
+    }
+
+    private void initViews() {
         profileImg = findViewById(R.id.profile_img);
         name = findViewById(R.id.name_textView);
         username = findViewById(R.id.username_textView);
         dayStreak = findViewById(R.id.day_streak);
         reviewedCardsNumber = findViewById(R.id.cards_reviewed_number);
         back = findViewById(R.id.btn_back);
+    }
 
+    private void setupInitialConfig() {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        configProfileViewModel();
-
-        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-        fusedLocationProviderClient = (FusedLocationProviderClient) LocationServices.getFusedLocationProviderClient(this);
 
         back.setOnClickListener(v -> {
             accessHomeActivity();
         });
+    }
 
+    private void fetchProfileData() {
+        String userId = AppPreferences.getUserId();
+        profileViewModel.getUser(userId).observe(this, updatedProfile -> {
+            user = updatedProfile;
+            updateView();
+        });
+    }
+
+    private void updateView() {
+        name.setText(user.getName());
+        username.setText(user.getUsername());
+        dayStreak.setText(user.getDayStreak() + "");
+        reviewedCardsNumber.setText(user.getCardsReviewed() + "");
+
+        if (user.getImgSrc() != null && !user.getImgSrc().isEmpty()) {
+            String imageUrl = "http://10.0.2.2:3000/image/" + user.getImgSrc();
+
+            Picasso.get()
+                    .load(imageUrl)
+                    .into(profileImg);
+        }
+    }
+
+    public void accessHomeActivity() {
+        Intent in = new Intent(this, HomeActivity.class);
+        startActivity(in);
+    }
+
+
+    public void getPermission() {
         Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
                     @Override
@@ -142,33 +184,5 @@ public class ProfileActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    private void configProfileViewModel() {
-        profileViewModel.getUser().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User updatedProfile) {
-                user = updatedProfile;
-                updateView();
-            }
-        });
-    }
-
-    private void updateView() {
-        name.setText(user.getName());
-        username.setText(user.getUsername());
-        dayStreak.setText(user.getDayStreak() + "");
-        reviewedCardsNumber.setText(user.getCardsReviewed() + "");
-
-        if (!user.getImgSrc().isEmpty()) {
-            Picasso.get()
-                    .load(user.getImgSrc())
-                    .into(profileImg);
-        }
-    }
-
-    public void accessHomeActivity() {
-        Intent in = new Intent(this, HomeActivity.class);
-        startActivity(in);
     }
 }
