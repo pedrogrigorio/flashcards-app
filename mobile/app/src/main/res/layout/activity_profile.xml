@@ -217,16 +217,16 @@
         app:layout_constraintStart_toEndOf="@+id/cards_reviewed_number"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/map_fragment"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginTop="12dp"-->
-<!--        android:layout_marginBottom="12dp"-->
-<!--        class="com.google.android.gms.maps.SupportMapFragment"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textView18" />-->
+    <fragment
+        android:id="@+id/map_fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

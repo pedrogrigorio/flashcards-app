@@ -1,6 +1,8 @@
 package com.example.flashcards_app.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Build;
@@ -15,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.viewmodel.ProfileViewModel;
+import com.example.flashcards_app.viewmodel.RegisterViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -22,6 +27,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    RegisterViewModel registerViewModel;
 
     Button signup;
     Button signing;
@@ -38,10 +45,18 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+
+        initViews();
+
+        setupInitialConfig();
+
+        setupFieldsValidation();
+    }
+
+    private void initViews() {
         signup = findViewById(R.id.btn_signup);
         signing = findViewById(R.id.btn_signing);
         back = findViewById(R.id.btn_back);
@@ -51,9 +66,43 @@ public class RegisterActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.email_editText);
         passwordLayout = findViewById(R.id.password_field);
         passwordEditText = findViewById(R.id.password_editText);
+    }
 
+    private void setupInitialConfig() {
         signup.setEnabled(false);
 
+        back.setOnClickListener(v -> {
+            Intent in = new Intent(this, MainActivity.class);
+            startActivity(in);
+        });
+
+        signup.setOnClickListener(v -> {
+            register();
+        });
+
+        signing.setOnClickListener(v -> {
+            Intent in = new Intent(this, LoginActivity.class);
+            startActivity(in);
+        });
+    }
+
+    private void register() {
+        String username = usernameEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        registerViewModel.register(username, email, password).observe(this, isSuccess  -> {
+            if (isSuccess) {
+                Toast.makeText(this, "Registrado com sucesso", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Falha no cadastro", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupFieldsValidation() {
+
+        // TODO: separate responsibilities
         final boolean[] usernameIsValid = {false};
         final boolean[] passwordIsValid = {false};
         final boolean[] emailIsValid = {false};
@@ -67,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String username = s.toString();
 
-                if (username.length() >= 5) {
+                if (username.length() >= 4) {
                     usernameIsValid[0] = username.matches("^[^\\s]+$");
                     usernameLayout.setHelperText(null);
                 } else {
@@ -146,28 +195,5 @@ public class RegisterActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
-        back.setOnClickListener(v -> {
-            accessMainActivity();
-        });
-
-        signup.setOnClickListener(v -> {
-            accessLoginScreen();
-        });
-
-        signing.setOnClickListener(v -> {
-            accessLoginScreen();
-        });
-    }
-
-    private void accessLoginScreen() {
-        Toast.makeText(this, usernameEditText.getText() + " " + emailEditText.getText() + " " + passwordEditText.getText(), Toast.LENGTH_LONG).show();
-        Intent in = new Intent(this, LoginActivity.class);
-        startActivity(in);
-    }
-
-    private void accessMainActivity() {
-        Intent in = new Intent(this, MainActivity.class);
-        startActivity(in);
     }
 }

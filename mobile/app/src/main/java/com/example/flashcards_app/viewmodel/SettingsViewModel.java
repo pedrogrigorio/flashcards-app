@@ -15,9 +15,9 @@ public class SettingsViewModel extends ViewModel {
         userRepository = new UserRepository();
     }
 
-    public LiveData<User> getProfile() {
+    public LiveData<User> getProfile(String userId) {
         if (profileLiveData.getValue() == null) {
-            profileLiveData = userRepository.getProfile();
+            profileLiveData = userRepository.getUser(userId);
         }
 
         return profileLiveData;

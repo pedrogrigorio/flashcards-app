@@ -47,7 +47,7 @@ public class FriendsFragment extends Fragment {
         configRecyclerView();
 
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        configFriendViewModel();
+//        configFriendViewModel();
 
         Button addButton = homeActivity.getAddFriendsButton();
 //        addButton.setOnClickListener(v -> {
@@ -67,7 +67,7 @@ public class FriendsFragment extends Fragment {
         adapter.setDeleteFriendListener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Friend friend, int position) {
-                DeleteFriendDialog dialog = new DeleteFriendDialog(friend);
+                DeleteFriendDialog dialog = new DeleteFriendDialog(friend.getName());
                 dialog.setDialogResult(new DeleteFriendDialog.onDialogResult() {
                     @Override
                     public void finish() {

@@ -1,76 +1,46 @@
 package com.example.flashcards_app.viewmodel;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.models.User;
-import com.example.flashcards_app.repositories.AddUserRepository;
+import com.example.flashcards_app.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddUserViewModel extends ViewModel {
 
-    private MutableLiveData<List<User>> addFriendsLiveData = new MutableLiveData<>();
-    private AddUserRepository addUserRepository;
+    private MutableLiveData<List<User>> usersLiveData = new MutableLiveData<>();
+    private UserRepository userRepository;
 
     public AddUserViewModel() {
-        addUserRepository = new AddUserRepository();
+        userRepository = new UserRepository();
     }
 
 
-    public void getSearchRequest(String request) {
-//        if (addFriendsLiveData.getValue() == null || addFriendsLiveData.getValue().isEmpty()) {
-//            addFriendsLiveData = addUserRepository.getNewFriendsToAdd();
+    public MutableLiveData<List<User>> searchUsers(String query) {
+
+        usersLiveData = userRepository.searchUsers(query);
+
+        return usersLiveData;
+
+    }
+
+    public void addFriend(User user) {
+
+    }
+
+    public void deleteFriend(User user) {
+//        List<User> currentUsers = usersLiveData.getValue();
+//
+//        if (currentUsers == null) {
+//            currentUsers = new ArrayList<>();
 //        }
-
-        MutableLiveData<List<User>> tempDataLive = new MutableLiveData<>();
-
-        List<User> tempData = new ArrayList<>();
-
-        tempData.add(new User("Em busca do shape inexplicavel", "@ShapeBolado"));
-        tempData.add(new User("Maromberio raiz", "@EmBuscaDos140KG"));
-        tempData.add(new User("Buscando 170kg", "@PeitroalArnold"));
-
-//        tempDataLive.setValue(tempData);
-        addFriendsLiveData.setValue(tempData);
-
-
-    }
-
-
-    public LiveData<List<User>> getAddFriends() {
-        return addFriendsLiveData;
-    }
-    public void insertFriend(User user) {
-        List<User> currentFriends = addFriendsLiveData.getValue();
-
-        if (currentFriends == null) {
-            currentFriends = new ArrayList<>();
-        }
-
-        currentFriends.add(user);
-
-        addFriendsLiveData.setValue(currentFriends);
-    }
-
-    public User getUser(int position) {
-        return addFriendsLiveData.getValue().get(position);
-    }
-
-    public void deleteFriend(User user, int position) {
-        List<User> currentUsers = addFriendsLiveData.getValue();
-
-        if (currentUsers == null) {
-            currentUsers = new ArrayList<>();
-        }
-
-        user.setIsFriend(false);
-        currentUsers.set(position, user);
-
-        addFriendsLiveData.setValue(currentUsers);
+//
+//        currentUsers.set(position, user);
+//
+//        usersLiveData.setValue(currentUsers);
     }
 
 

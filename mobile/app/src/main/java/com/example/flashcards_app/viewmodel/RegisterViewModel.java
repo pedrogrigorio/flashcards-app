@@ -7,19 +7,17 @@ import androidx.lifecycle.ViewModel;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.repositories.UserRepository;
 
-public class HomeViewModel extends ViewModel {
-    private MutableLiveData<User> profileLiveData = new MutableLiveData<>();
+public class RegisterViewModel extends ViewModel {
+    private MutableLiveData<Boolean> registerSuccess = new MutableLiveData<>();
     private UserRepository userRepository;
 
-    public HomeViewModel() {
+    public RegisterViewModel() {
         userRepository = new UserRepository();
     }
 
-    public LiveData<User> getUser(String userId) {
-        if (profileLiveData.getValue() == null) {
-            profileLiveData = userRepository.getUser(userId);
-        }
+    public LiveData<Boolean> register(String username, String email, String password) {
+        registerSuccess = userRepository.register(username, email, password);
 
-        return profileLiveData;
-    }
+        return registerSuccess;
+    };
 }

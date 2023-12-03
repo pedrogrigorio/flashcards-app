@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.flashcards_app.api.FriendService;
 import com.example.flashcards_app.models.Friend;
-import com.example.flashcards_app.util.RetrofitClient;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class FriendRepository {
     private FriendService friendService;
 
     public FriendRepository() {
-        friendService = RetrofitClient.getRetrofitInstance().create(FriendService.class);
+//        friendService = RetrofitClient.getRetrofitInstance("").create(FriendService.class);
     }
 
     public MutableLiveData<List<Friend>> getAllFriends() {

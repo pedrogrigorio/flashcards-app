@@ -7,9 +7,9 @@ class AuthController {
   async login(req: Request, res: Response) {
     try {
       const { email, password } = Validators.loginSchema.parse(req.body)
-      const token = await AuthService.login(email, password)
+      const authData = await AuthService.login(email, password)
 
-      return res.json(token)
+      return res.json(authData)
     } catch (error) {
       handleError(res, error)
     }

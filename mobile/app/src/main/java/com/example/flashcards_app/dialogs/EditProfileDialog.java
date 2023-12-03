@@ -25,24 +25,30 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.repositories.UserRepository;
+import com.example.flashcards_app.util.AppPreferences;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.util.Properties;
+
 public class EditProfileDialog extends AppCompatDialogFragment {
 
     User user;
     User updatedUser;
     onDialogResult dialogResult;
+    UserRepository userRepository;
 
     ImageView profileImg;
     FloatingActionButton camButton;
     TextInputLayout nameLayout;
     TextInputEditText nameEditText;
 
-    Button positiveButton;
+    Uri newImgUri;
 
     public EditProfileDialog(User user) {
         this.user = user;
@@ -60,43 +66,28 @@ public class EditProfileDialog extends AppCompatDialogFragment {
                 .setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        updatedUser.setName(nameEditText.getText().toString());
-                        dialogResult.finish(updatedUser);
+                        String name = nameEditText.getText().toString();
+
+                        userRepository.updateProfile(getContext(), name, newImgUri, new UserRepository.UpdateProfileCallback() {
+                            @Override
+                            public void onUpdateSuccess(User updatedUser) {
+                                dialogResult.finish(updatedUser);
+                            }
+
+                            @Override
+                            public void onUpdateFailure(String errorMessage) {
+                            }
+                        });
                     }
                 });
 
-        AlertDialog dialog = builder.create();
-//        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-//        button.setBackgroundColor(Color.BLUE);
-//        button.setTextColor(Color.GREEN);
+        initViews(view);
 
-        camButton = view.findViewById(R.id.btn_edit_img);
-        profileImg = view.findViewById(R.id.profile_img);
-        nameLayout = view.findViewById(R.id.edit_name_field);
-        nameEditText = view.findViewById(R.id.edit_name_editText);
-
-        if (!user.getImgSrc().isEmpty()) {
-            Picasso.get()
-                    .load(user.getImgSrc())
-                    .into(profileImg);
-        }
-
-        nameEditText.setText(user.getName());
-
-        updatedUser = new User(user.getName(), user.getUsername());
+        setupInitialConfig();
 
         configNameFieldValidation();
 
-        camButton.setOnClickListener(v -> {
-            ImagePicker.with(this)
-                    .crop(1f, 1f)
-                    .compress(1024)
-                    .maxResultSize(1080, 1080)
-                    .createIntent(intent -> {
-                        startForMediaPickerResult.launch(intent);
-                        return null;
-                    });
-        });
+        AlertDialog dialog = builder.create();
 
         return dialog;
     }
@@ -106,13 +97,8 @@ public class EditProfileDialog extends AppCompatDialogFragment {
         result -> {
             Intent data = result.getData();
             if (data != null && result.getResultCode() == Activity.RESULT_OK) {
-                Uri newImgUri = data.getData();
+                newImgUri = data.getData();
                 profileImg.setImageURI(newImgUri);
-                // TODO: upload image on backend
-
-                // url_backend must be loaded by url given by backend
-                String url_backend = newImgUri.toString();
-                updatedUser.setImgSrc(url_backend);
             } else {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
             }
@@ -124,6 +110,40 @@ public class EditProfileDialog extends AppCompatDialogFragment {
 
     public void setDialogResult(onDialogResult dialogResult) {
         this.dialogResult = dialogResult;
+    }
+
+    private void initViews(View view) {
+        camButton = view.findViewById(R.id.btn_edit_img);
+        profileImg = view.findViewById(R.id.profile_img);
+        nameLayout = view.findViewById(R.id.edit_name_field);
+        nameEditText = view.findViewById(R.id.edit_name_editText);
+    }
+
+    private void setupInitialConfig() {
+        userRepository = new UserRepository();
+
+        updatedUser = new User(user.getName(), user.getUsername());
+
+        nameEditText.setText(user.getName());
+
+        if (!user.getImgSrc().isEmpty()) {
+            String imageUrl = "http://10.0.2.2:3000/image/" + user.getImgSrc();
+
+            Picasso.get()
+                    .load(imageUrl)
+                    .into(profileImg);
+        }
+
+        camButton.setOnClickListener(v -> {
+            ImagePicker.with(this)
+                    .crop(1f, 1f)
+                    .compress(1024)
+                    .maxResultSize(1080, 1080)
+                    .createIntent(intent -> {
+                        startForMediaPickerResult.launch(intent);
+                        return null;
+                    });
+        });
     }
 
     private void configNameFieldValidation() {

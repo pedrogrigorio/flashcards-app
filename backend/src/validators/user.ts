@@ -4,7 +4,6 @@ export const registerSchema = z.object({
   username: z.string(),
   email: z.string().email(),
   password: z.string(),
-  passwordConfirmation: z.string(),
 })
 
 export const updateProfileSchema = z.object({

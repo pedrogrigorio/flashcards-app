@@ -25,7 +25,12 @@ class AuthService {
       expiresIn: '30d',
     })
 
-    return token
+    const response = {
+      token,
+      userId: String(user.id),
+    }
+
+    return response
   }
 }
 export default new AuthService()

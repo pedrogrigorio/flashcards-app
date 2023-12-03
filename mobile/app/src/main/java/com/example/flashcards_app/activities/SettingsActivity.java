@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,14 +16,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.dialogs.EditProfileDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.util.AppPreferences;
 import com.example.flashcards_app.viewmodel.ProfileViewModel;
 import com.example.flashcards_app.viewmodel.SettingsViewModel;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -43,23 +47,30 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        initViews();
+
+        setupInitialConfig();
+
+        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        fetchData();
+    }
+
+    private void initViews() {
         profileImg = findViewById(R.id.profile_img);
         name = findViewById(R.id.name_textView);
         username = findViewById(R.id.username_textView);
         logout = findViewById(R.id.btn_logout);
         back = findViewById(R.id.btn_back);
         editProfile = findViewById(R.id.btn_edit_profile);
+    }
 
-        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-        configSettingsViewModel();
-
+    /* Load buttons onClickListener */
+    private void setupInitialConfig() {
         logout.setOnClickListener(v -> {
-            // TODO: Clear SharedPreferences
-            accessInitialActivity();
+            AppPreferences.cleanUserSession();
+            accessMainActivity();
         });
 
         back.setOnClickListener(v -> {
@@ -78,13 +89,11 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void configSettingsViewModel() {
-        settingsViewModel.getProfile().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User updatedProfile) {
-                user = updatedProfile;
-                updateView();
-            }
+    private void fetchData() {
+        String userId = AppPreferences.getUserId();
+        settingsViewModel.getProfile(userId).observe(this, updatedProfile -> {
+            user = updatedProfile;
+            updateView();
         });
     }
 
@@ -92,9 +101,11 @@ public class SettingsActivity extends AppCompatActivity {
         name.setText(user.getName());
         username.setText(user.getUsername());
 
-        if (!user.getImgSrc().isEmpty()) {
+        if (user.getImgSrc() != null && !user.getImgSrc().isEmpty()) {
+            String imageUrl = "http://10.0.2.2:3000/image/" + user.getImgSrc();
+
             Picasso.get()
-                    .load(user.getImgSrc())
+                    .load(imageUrl)
                     .into(profileImg);
         }
     }
@@ -104,7 +115,7 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    private void accessInitialActivity() {
+    private void accessMainActivity() {
         Intent in = new Intent(this, MainActivity.class);
         startActivity(in);
     }

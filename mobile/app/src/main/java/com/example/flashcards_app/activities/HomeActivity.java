@@ -1,6 +1,8 @@
 package com.example.flashcards_app.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.example.flashcards_app.fragments.FriendsFragment;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.ViewPagerAdapter;
 import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.util.AppPreferences;
 import com.example.flashcards_app.viewmodel.HomeViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -27,9 +30,11 @@ import com.squareup.picasso.Picasso;
 public class HomeActivity extends AppCompatActivity {
 
     User user;
+    HomeViewModel homeViewModel;
 
     ViewPager2 viewPager;
     TabLayout tabLayout;
+
     Button createDeck;
     Button addFriends;
     ImageView settings;
@@ -38,43 +43,21 @@ public class HomeActivity extends AppCompatActivity {
     TextView nameTextView;
     TextView usernameTextView;
 
-    HomeViewModel homeViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        createDeck = findViewById(R.id.btn_create_deck);
-        addFriends = findViewById(R.id.btn_add_friends);
-        viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
-        settings = findViewById(R.id.settings);
-        notifications = findViewById(R.id.notifications);
-        profileImg = findViewById(R.id.profile_img);
-        nameTextView = findViewById(R.id.name_textView);
-        usernameTextView = findViewById(R.id.username_textView);
-
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        configHomeViewModel();
-
-        settings.setOnClickListener(v -> {
-            accessSettingsScreen();
-        });
-
-        profileImg.setOnClickListener(v -> {
-            accessProfile();
-        });
-
-        notifications.setOnClickListener(v -> {
-            accessNotifications();
-        });
+        initViews();
+        setupInitialConfig();
 
         configTabLayout();
+
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        fetchData();
+
     }
 
     private void configTabLayout() {
@@ -105,13 +88,16 @@ public class HomeActivity extends AppCompatActivity {
         mediator.attach();
     }
 
-    private void configHomeViewModel() {
-        homeViewModel.getProfile().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User profile) {
-                user = profile;
-                updateView();
+    private void fetchData() {
+        String userId = AppPreferences.getUserId();
+        homeViewModel.getUser(userId).observe(this, user -> {
+            this.user = user;
+
+            if (user.getName().isEmpty()) {
+                accessChooseNameActivity();
             }
+
+            updateView();
         });
     }
 
@@ -120,15 +106,46 @@ public class HomeActivity extends AppCompatActivity {
         usernameTextView.setText(user.getUsername());
 
         if (!user.getImgSrc().isEmpty()) {
+            String imageUrl = "http://10.0.2.2:3000/image/" + user.getImgSrc();
+
             Picasso.get()
-                    .load(user.getImgSrc())
+                    .load(imageUrl)
                     .into(profileImg);
         }
     }
 
+    /* Load views */
+    private void initViews() {
+        createDeck = findViewById(R.id.btn_create_deck);
+        addFriends = findViewById(R.id.btn_add_friends);
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
+        settings = findViewById(R.id.settings);
+        notifications = findViewById(R.id.notifications);
+        profileImg = findViewById(R.id.profile_img);
+        nameTextView = findViewById(R.id.name_textView);
+        usernameTextView = findViewById(R.id.username_textView);
+
+    }
+
+    /* Load buttons onClickListener */
+    private void setupInitialConfig() {
+        settings.setOnClickListener(v -> {
+            accessSettingsScreen();
+        });
+
+        profileImg.setOnClickListener(v -> {
+            accessProfileActivity();
+        });
+
+        notifications.setOnClickListener(v -> {
+            accessNotifications();
+        });
+    }
+
     /* Change page methods */
 
-    private void accessProfile() {
+    private void accessProfileActivity() {
         Intent in = new Intent(this, ProfileActivity.class);
         startActivity(in);
     }
@@ -140,6 +157,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void accessSettingsScreen() {
         Intent in = new Intent(this, SettingsActivity.class);
+        startActivity(in);
+    }
+
+    private void accessChooseNameActivity() {
+        Intent in = new Intent(this, ChooseNameActivity.class);
         startActivity(in);
     }
 

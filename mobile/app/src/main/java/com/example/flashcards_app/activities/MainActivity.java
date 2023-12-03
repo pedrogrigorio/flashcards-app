@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.flashcards_app.R;
+import com.example.flashcards_app.util.AppPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,29 +21,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        AppPreferences.setup(this);
+
+        String token = AppPreferences.getAccessToken();
+        if (token != null && !token.isEmpty()) {
+            accessHomeActivity();
         }
 
+        initViews();
+
+        setupInitialConfig();
+    }
+
+    private void initViews() {
         signup = findViewById(R.id.btn_signup);
         signin = findViewById(R.id.btn_signing);
 
+    }
+
+    private void setupInitialConfig() {
         signup.setOnClickListener(v -> {
-            accessRegisterScreen();
+            Intent in = new Intent(this, RegisterActivity.class);
+            startActivity(in);
         });
 
         signin.setOnClickListener(v -> {
-            accessLoginScreen();
+            Intent in = new Intent(this, LoginActivity.class);
+            startActivity(in);
         });
     }
 
-    private void accessRegisterScreen() {
-        Intent in = new Intent(this, RegisterActivity.class);
-        startActivity(in);
-    }
-
-    private void accessLoginScreen() {
-        Intent in = new Intent(this, LoginActivity.class);
+    private void accessHomeActivity() {
+        Intent in = new Intent(this, HomeActivity.class);
         startActivity(in);
     }
 }

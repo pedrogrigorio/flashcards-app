@@ -14,10 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.flashcards_app.activities.ReviewActivity;
+import com.example.flashcards_app.adapters.AddUserAdapter;
 import com.example.flashcards_app.adapters.DeckAdapter;
 import com.example.flashcards_app.dialogs.AddCardsDialog;
 import com.example.flashcards_app.dialogs.DeleteDeckDialog;
@@ -34,31 +37,42 @@ public class DecksFragment extends Fragment {
     private DeckViewModel deckViewModel;
     private RecyclerView recyclerView;
     private DeckAdapter adapter;
-    private Context context;
+
+    Button addButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                 Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_decks, container, false);
-        HomeActivity homeActivity = (HomeActivity) getActivity();
-        context = getActivity();
 
-        adapter = new DeckAdapter();
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+
+        initViews(view, homeActivity);
+
+        setupInitialConfig();
+
         configAdapter();
 
-        recyclerView = view.findViewById(R.id.decks_recycler_view);
         configRecyclerView();
 
         deckViewModel = new ViewModelProvider(this).get(DeckViewModel.class);
-        configDeckViewModel();
+        fetchAllDecks();
 
-        Button addButton = homeActivity.getCreateDeckButton();
+        return view;
+    }
+
+    private void initViews(View view, HomeActivity homeActivity) {
+        recyclerView = view.findViewById(R.id.decks_recycler_view);
+        addButton = homeActivity.getCreateDeckButton();
+    }
+
+    private void setupInitialConfig() {
+        adapter = new DeckAdapter();
+
         addButton.setOnClickListener(v -> {
             deckViewModel.insertDeck(new Deck());
         });
-
-        return view;
     }
 
     private void configAdapter() {
@@ -103,9 +117,9 @@ public class DecksFragment extends Fragment {
 //                    return;
 //                }
 
-                Intent in = new Intent(context, ReviewActivity.class);
+                Intent in = new Intent(getContext(), ReviewActivity.class);
                 in.putExtra("deckId", deck.getId());
-                context.startActivity(in);
+                getContext().startActivity(in);
             }
         });
     }
@@ -116,12 +130,12 @@ public class DecksFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void configDeckViewModel() {
-        deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
-            @Override
-            public void onChanged(List<Deck> decks) {
-                adapter.setDecks(decks);
-            }
-        });
+    private void fetchAllDecks() {
+//        deckViewModel.getDecks().observe(getActivity(), new Observer<List<Deck>>() {
+//            @Override
+//            public void onChanged(List<Deck> decks) {
+//                adapter.setDecks(decks);
+//            }
+//        });
     }
 }
