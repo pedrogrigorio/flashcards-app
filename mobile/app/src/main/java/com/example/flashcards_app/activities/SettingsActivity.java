@@ -53,7 +53,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         setupInitialConfig();
 
-        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         fetchData();
     }
 
@@ -68,6 +67,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     /* Load buttons onClickListener */
     private void setupInitialConfig() {
+        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+
         logout.setOnClickListener(v -> {
             AppPreferences.cleanUserSession();
             accessMainActivity();

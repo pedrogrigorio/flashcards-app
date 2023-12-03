@@ -38,9 +38,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         holder.name.setText(currentFriend.getName());
         holder.username.setText(currentFriend.getUsername());
 
-        if (!currentFriend.getImgSrc().isEmpty()) {
+        if (currentFriend.getImgSrc() != null && !currentFriend.getImgSrc().isEmpty()) {
+            String imageUrl = "http://10.0.2.2:3000/image/" + currentFriend.getImgSrc();
+
             Picasso.get()
-                    .load(currentFriend.getImgSrc())
+                    .load(imageUrl)
                     .into(holder.friendImage);
         }
 
@@ -58,6 +60,19 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
     public void setFriends(List<Friend> friends) {
         this.friends = friends;
         notifyDataSetChanged();
+    }
+
+    public void deleteFriend(int friendId) {
+        for (int i = 0; i < friends.size(); i++) {
+            Friend friend = friends.get(i);
+            if (friend.getUserId() == friendId) {
+                friends.remove(i);
+
+                notifyItemRemoved(i);
+                notifyItemRangeChanged(i, friends.size());
+                break;
+            }
+        }
     }
 
     public class FriendHolder extends RecyclerView.ViewHolder {

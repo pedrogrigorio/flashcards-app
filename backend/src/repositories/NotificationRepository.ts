@@ -7,7 +7,9 @@ class NotificationRepository {
     type: NotificationType,
     status: NotificationStatus,
     receiverId: number,
+    text: string,
     senderId?: number,
+    imgSrc?: string,
   ) {
     const notification = await prisma.notification.create({
       data: {
@@ -15,6 +17,8 @@ class NotificationRepository {
         status,
         receiverId,
         senderId,
+        text,
+        imgSrc,
       },
     })
 

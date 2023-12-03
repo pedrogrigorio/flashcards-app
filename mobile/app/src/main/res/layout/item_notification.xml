@@ -54,7 +54,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/AcceptButtonNotification"
+                android:id="@+id/accept_button_notification"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_gravity="center"
@@ -67,7 +67,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/NegativeButtonNotification"
+                android:id="@+id/reject_button_notification"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_gravity="center"
