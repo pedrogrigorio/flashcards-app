@@ -68,12 +68,24 @@ model Deck {
 }
 
 model Card {
-  id         Int       @id @default(autoincrement())
-  frontText  String
-  backText   String
-  stampLevel Int?      @default(-1)
-  reviewedAt DateTime
-  nextReview DateTime?
-  Deck       Deck?     @relation(fields: [deckId], references: [id])
-  deckId     Int?
+  id                   Int         @id @default(autoincrement())
+  frontText            String
+  backText             String
+  stampLevel           Int?        @default(-1)
+  reviewedAt           DateTime?
+  nextReview           DateTime?
+  lastSuccessfulReview DateTime?
+  startingEasy         Int         @default(230)
+  Deck                 Deck?       @relation(fields: [deckId], references: [id])
+  deckId               Int?
+  highlights           Highlight[]
+}
+
+model Highlight {
+  id            Int    @id @default(autoincrement())
+  color         String
+  startPosition Int
+  endPosition   Int
+  Card          Card?  @relation(fields: [cardId], references: [id])
+  cardId        Int?
 }
