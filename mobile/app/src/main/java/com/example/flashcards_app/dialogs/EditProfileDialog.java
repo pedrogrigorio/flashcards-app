@@ -68,15 +68,8 @@ public class EditProfileDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         String name = nameEditText.getText().toString();
 
-                        userRepository.updateProfile(getContext(), name, newImgUri, new UserRepository.UpdateProfileCallback() {
-                            @Override
-                            public void onUpdateSuccess(User updatedUser) {
-                                dialogResult.finish(updatedUser);
-                            }
-
-                            @Override
-                            public void onUpdateFailure(String errorMessage) {
-                            }
+                        userRepository.updateProfile(getContext(), name, newImgUri).observe(getActivity(), updatedProfile -> {
+                            dialogResult.finish(updatedProfile);
                         });
                     }
                 });

@@ -40,4 +40,8 @@ public interface UserService {
 
     @POST("users/search")
     Call<List<User>> searchUsers(@Body SearchUsersDTO searchUsersDTO);
+
+//    @PUT("users/{id}/stats")
+
+//    @PUT("users/{id}/dayStreak")
 }

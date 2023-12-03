@@ -12,10 +12,14 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.adapters.NotificationsAdapter;
+import com.example.flashcards_app.dialogs.EditProfileDialog;
 import com.example.flashcards_app.models.Notification;
+import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.util.AppPreferences;
 import com.example.flashcards_app.viewmodel.NotificationViewModel;
 
 import java.util.List;
@@ -24,60 +28,66 @@ public class NotificationsActivity extends AppCompatActivity {
 
     private NotificationViewModel notificationViewModel;
     private RecyclerView recyclerView;
-    private NotificationsAdapter notificationsAdapter;
+    private NotificationsAdapter adapter;
 
-    ImageButton back;
+    private ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        initViews();
 
-        notificationsAdapter = new NotificationsAdapter();
+        setupInitialConfig();
 
-        recyclerView = findViewById(R.id.notification_recycle_view);
         configRecyclerView();
 
-        notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
-        configNotificationViewModel();
+        fetchAllNotifications();
+    }
 
-
-        Button addNotification  = findViewById(R.id.add_notification_button);
+    private void initViews() {
+        recyclerView = findViewById(R.id.notification_recycle_view);
         back = findViewById(R.id.btn_back);
+    }
+
+    private void setupInitialConfig() {
+        adapter = new NotificationsAdapter();
+        notificationViewModel = new ViewModelProvider(this).get(NotificationViewModel.class);
 
         back.setOnClickListener(v -> {
             accessHomeActivity();
         });
-
-        addNotification.setOnClickListener(v -> {
-            notificationViewModel.insertNotification(new Notification("Test notification", "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg"), this);
-        });
     }
 
     private void configRecyclerView() {
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        this.recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(this.notificationsAdapter);
-    }
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
 
-
-    public void configNotificationViewModel() {
-        notificationViewModel.getNotification().observe(this, new Observer<List<Notification>>() {
-            @Override
-            public void onChanged(List<Notification> notifications) {
-                notificationsAdapter.setNotifications(notifications);
-            }
+        adapter.setAcceptButtonListener(notification -> {
+            notificationViewModel.acceptFriendRequest(notification).observe(this, updatedNotification -> {
+                Toast.makeText(this, "Solicitação aceita", Toast.LENGTH_SHORT).show();
+                adapter.updateNotification(updatedNotification);
+            });
         });
 
+        adapter.setRejectButtonListener(notification -> {
+            notificationViewModel.rejectFriendRequest(notification).observe(this, updatedNotification -> {
+                Toast.makeText(this, "Solicitação recusada", Toast.LENGTH_SHORT).show();
+                adapter.updateNotification(updatedNotification);
+            });
+        });
     }
 
-    public void backButton() {
-        finish();
+
+    public void fetchAllNotifications() {
+        notificationViewModel.getAllNotifications().observe(this, notifications -> {
+            adapter.setNotifications(notifications);
+        });
+
     }
 
     private void accessHomeActivity() {

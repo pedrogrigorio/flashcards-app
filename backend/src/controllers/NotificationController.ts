@@ -9,12 +9,9 @@ class NotificationController {
       const senderId = parseInt(req.userId)
       const { receiverId } = Validators.sendFriendRequestSchema.parse(req.body)
 
-      const notification = await NotificationService.sendFriendRequest(
-        receiverId,
-        senderId,
-      )
+      await NotificationService.sendFriendRequest(receiverId, senderId)
 
-      return res.json(notification)
+      return res.status(204).send()
     } catch (error) {
       handleError(res, error)
     }

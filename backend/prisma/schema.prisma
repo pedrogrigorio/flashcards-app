@@ -44,10 +44,12 @@ model Friend {
 }
 
 model Notification {
-  id       Int  @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   type     Int
   status   Int?
   senderId Int?
+  text     String
+  imgSrc   String?
 
   receiver   User @relation(fields: [receiverId], references: [id])
   receiverId Int

@@ -4,11 +4,6 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
-Properties properties = new Properties()
-if (project.rootProject.file('local.properties').canRead()) {
-    properties.load(project.rootProject.file("local.properties").newDataInputStream())
-}
-
 android {
     namespace 'com.example.flashcards_app'
     compileSdk 33
@@ -28,10 +23,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            buildConfigField 'String', 'SERVER_URL', properties.getProperty('SERVER_URL', "http://10.0.2.2:3000/")
-//            resValue("string", "SERVER_URL", localProperties['SERVER_URL'])
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

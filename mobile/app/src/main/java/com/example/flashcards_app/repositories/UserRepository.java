@@ -84,7 +84,7 @@ public class UserRepository {
         return userLiveData;
     }
 
-    public void updateProfile(Context context, String name, Uri newImgUri, UpdateProfileCallback callback) {
+    public MutableLiveData<User> updateProfile(Context context, String name, Uri newImgUri) {
         //TODO: Separate responsibilities later
 
         String userId = AppPreferences.getUserId();
@@ -108,17 +108,16 @@ public class UserRepository {
             Call<User> call = userService.updateName(userId, updateProfileDTO);
             executeAsync(call, userLiveData, response -> {
                 userLiveData.setValue(response.body());
-                callback.onUpdateSuccess(userLiveData.getValue());
             });
         } else {
             Call<User> call = userService.updateProfile(userId, filePart, namePart);
 
             executeAsync(call, userLiveData, response -> {
                 userLiveData.setValue(response.body());
-                callback.onUpdateSuccess(userLiveData.getValue());
             });
         }
 
+        return userLiveData;
     }
 
     public MutableLiveData<List<User>> searchUsers(String query) {
@@ -153,10 +152,5 @@ public class UserRepository {
 
     interface ResponseCallback<T> {
         void onResponseReceived(Response<T> response);
-    }
-
-    public interface UpdateProfileCallback {
-        void onUpdateSuccess(User updatedUser);
-        void onUpdateFailure(String errorMessage);
     }
 }

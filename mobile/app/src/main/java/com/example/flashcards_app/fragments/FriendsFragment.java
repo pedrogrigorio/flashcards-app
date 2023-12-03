@@ -18,8 +18,10 @@ import android.widget.Button;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.AddUserActivity;
 import com.example.flashcards_app.activities.HomeActivity;
+import com.example.flashcards_app.adapters.DeckAdapter;
 import com.example.flashcards_app.adapters.FriendAdapter;
 import com.example.flashcards_app.dialogs.DeleteFriendDialog;
+import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.Friend;
 import com.example.flashcards_app.viewmodel.FriendViewModel;
 
@@ -38,40 +40,46 @@ public class FriendsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
         HomeActivity homeActivity = (HomeActivity) getActivity();
-        context = getActivity();
 
-        adapter = new FriendAdapter();
+        initViews(view, homeActivity);
+
+        setupInitialConfig();
+
         configAdapter();
 
-        recyclerView = view.findViewById(R.id.friends_recycler_view);
         configRecyclerView();
 
-        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-//        configFriendViewModel();
+        getAllFriends();
 
+        return view;
+    }
+
+    private void initViews(View view, HomeActivity homeActivity) {
+        recyclerView = view.findViewById(R.id.friends_recycler_view);
         Button addButton = homeActivity.getAddFriendsButton();
-//        addButton.setOnClickListener(v -> {
-//            friendViewModel.insertFriend(new Friend(0, "User", "user"));
-//        });
 
         addButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddUserActivity.class);
             startActivity(intent);
         });
+    }
 
-
-        return view;
+    private void setupInitialConfig() {
+        adapter = new FriendAdapter();
+        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
     }
 
     private void configAdapter() {
         adapter.setDeleteFriendListener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Friend friend, int position) {
-                DeleteFriendDialog dialog = new DeleteFriendDialog(friend.getName());
+                DeleteFriendDialog dialog = new DeleteFriendDialog(friend.getName(), friend.getUserId());
                 dialog.setDialogResult(new DeleteFriendDialog.onDialogResult() {
                     @Override
                     public void finish() {
-                        friendViewModel.deleteFriend(position);
+                        friendViewModel.deleteFriend(friend).observe(getActivity(), friendDeleted -> {
+                            adapter.deleteFriend(friend.getUserId());
+                        });
                     }
                 });
                 dialog.show(getChildFragmentManager(), "delete friend popup");
@@ -85,12 +93,9 @@ public class FriendsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void configFriendViewModel() {
-        friendViewModel.getFriends().observe(getActivity(), new Observer<List<Friend>>() {
-            @Override
-            public void onChanged(List<Friend> friends) {
-                adapter.setFriends(friends);
-            }
+    private void getAllFriends() {
+        friendViewModel.getAllFriends().observe(getActivity(), friends -> {
+            adapter.setFriends(friends);
         });
     }
 }
