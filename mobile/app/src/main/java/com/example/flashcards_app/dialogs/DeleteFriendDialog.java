@@ -10,17 +10,30 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Friend;
+import com.example.flashcards_app.models.User;
+import com.example.flashcards_app.repositories.FriendRepository;
+import com.example.flashcards_app.util.AppPreferences;
+import com.example.flashcards_app.viewmodel.SettingsViewModel;
 
 public class DeleteFriendDialog extends AppCompatDialogFragment {
 
+    int friendId;
     String friendName;
-    onDialogResult dialogResult;
 
-    public DeleteFriendDialog(String friendName) {
+    TextView msgView;
+
+    onDialogResult dialogResult;
+    FriendRepository friendRepository;
+
+    public DeleteFriendDialog(String friendName, int friendId) {
         this.friendName = friendName;
+        this.friendId = friendId;
+
+        friendRepository = new FriendRepository();
     }
 
     @Override
@@ -29,9 +42,6 @@ public class DeleteFriendDialog extends AppCompatDialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_delete_friend, null);
-        TextView msgView = view.findViewById(R.id.delete_friend_message);
-        String msg = "Tem certeza que deseja remover <b>" + friendName + "</b> das amizades?";
-        msgView.setText(Html.fromHtml(msg));
 
         builder.setView(view)
                 .setNegativeButton("Cancelar", null)
@@ -42,9 +52,21 @@ public class DeleteFriendDialog extends AppCompatDialogFragment {
                     }
                 });
 
+        initViews(view);
+        setupInitialConfig();
+
         return builder.create();
     }
 
+    private void initViews(View view) {
+        msgView = view.findViewById(R.id.delete_friend_message);
+    }
+
+    private void setupInitialConfig() {
+        String msg = "Tem certeza que deseja remover <b>" + friendName + "</b> das amizades?";
+
+        msgView.setText(Html.fromHtml(msg));
+    }
     public interface onDialogResult {
         void finish();
     }

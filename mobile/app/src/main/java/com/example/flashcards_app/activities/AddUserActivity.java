@@ -106,7 +106,7 @@ public class AddUserActivity extends AppCompatActivity {
         });
 
         adapter.setDeleteFriendListener(user -> {
-            DeleteFriendDialog dialog = new DeleteFriendDialog(user.getName());
+            DeleteFriendDialog dialog = new DeleteFriendDialog(user.getName(), user.getId());
 
             dialog.setDialogResult(() -> {
                 addUserViewModel.deleteFriend(user);

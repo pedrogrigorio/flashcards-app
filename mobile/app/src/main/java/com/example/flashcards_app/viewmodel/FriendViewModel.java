@@ -18,7 +18,7 @@ public class FriendViewModel extends ViewModel {
         friendRepository = new FriendRepository();
     }
 
-    public LiveData<List<Friend>> getFriends() {
+    public LiveData<List<Friend>> getAllFriends() {
         if (friendsLiveData.getValue() == null || friendsLiveData.getValue().isEmpty()) {
             friendsLiveData = friendRepository.getAllFriends();
         }
@@ -26,27 +26,10 @@ public class FriendViewModel extends ViewModel {
         return friendsLiveData;
     }
 
-    public void insertFriend(Friend friend) {
-        List<Friend> currentFriends = friendsLiveData.getValue();
+    public LiveData<Boolean> deleteFriend(Friend friend) {
+        MutableLiveData<Boolean> friendDeleted;
+        friendDeleted = friendRepository.deleteFriend(friend.getUserId());
 
-        if (currentFriends == null) {
-            currentFriends = new ArrayList<>();
-        }
-
-        currentFriends.add(friend);
-
-        friendsLiveData.setValue(currentFriends);
-    }
-
-    public void deleteFriend(int position) {
-        List<Friend> currentFriends = friendsLiveData.getValue();
-
-        if (currentFriends == null) {
-            currentFriends = new ArrayList<>();
-        }
-
-        currentFriends.remove(position);
-
-        friendsLiveData.setValue(currentFriends);
+        return friendDeleted;
     }
 }

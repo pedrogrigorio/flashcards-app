@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
-import com.example.flashcards_app.dialogs.EditNameDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.viewmodel.FriendViewModel;
