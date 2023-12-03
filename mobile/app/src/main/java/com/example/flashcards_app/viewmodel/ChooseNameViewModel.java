@@ -18,7 +18,7 @@ public class ChooseNameViewModel extends ViewModel {
     }
 
     public LiveData<User> updateProfile(String userId, String name) {
-        userLiveData = userRepository.updateProfile(userId, name);
+        userLiveData = userRepository.updateName(userId, name);
 
         return userLiveData;
     };

@@ -1,6 +1,11 @@
 package com.example.flashcards_app.repositories;
 
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.flashcards_app.api.UserService;
@@ -10,7 +15,15 @@ import com.example.flashcards_app.dto.UpdateProfileDTO;
 import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.models.UserAuth;
 import com.example.flashcards_app.network.RetrofitClient;
+import com.example.flashcards_app.util.AppPreferences;
+import com.example.flashcards_app.util.RealPathUtil;
 
+import java.io.File;
+import java.io.InputStream;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,14 +72,51 @@ public class UserRepository {
         return authLiveData;
     }
 
-    public MutableLiveData<User> updateProfile(String userId, String name) {
+    public MutableLiveData<User> updateName(String userId, String name) {
         MutableLiveData<User> userLiveData = new MutableLiveData<>();
         UpdateProfileDTO updateProfileDTO = new UpdateProfileDTO(name);
 
-        Call<User> call = userService.updateProfile(userId, updateProfileDTO);
+        Call<User> call = userService.updateName(userId, updateProfileDTO);
 
         executeAsync(call, userLiveData, null);
         return userLiveData;
+    }
+
+    public void updateProfile(Context context, String name, Uri newImgUri, UpdateProfileCallback callback) {
+        //TODO: Separate responsibilities later
+
+        String userId = AppPreferences.getUserId();
+        MutableLiveData<User> userLiveData = new MutableLiveData<>();
+        MultipartBody.Part filePart = null;
+        RequestBody namePart = null;
+
+        if (newImgUri != null) {
+            String path = RealPathUtil.getRealPath(context, newImgUri);
+
+            File file = new File(path);
+
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+            filePart = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+            namePart = RequestBody.create(MediaType.parse("multipart/form-data"), name);
+        }
+
+        if (filePart == null) {
+            UpdateProfileDTO updateProfileDTO = new UpdateProfileDTO(name);
+            Call<User> call = userService.updateName(userId, updateProfileDTO);
+            executeAsync(call, userLiveData, response -> {
+                userLiveData.setValue(response.body());
+                callback.onUpdateSuccess(userLiveData.getValue());
+            });
+        } else {
+            Call<User> call = userService.updateProfile(userId, filePart, namePart);
+
+            executeAsync(call, userLiveData, response -> {
+                userLiveData.setValue(response.body());
+                callback.onUpdateSuccess(userLiveData.getValue());
+            });
+        }
+
     }
 
     private <T> void executeAsync(Call<T> call, MutableLiveData<T> liveData, ResponseCallback<T> responseCallback) {
@@ -76,6 +126,7 @@ public class UserRepository {
                 if (responseCallback != null) {
                     responseCallback.onResponseReceived(response);
                 }
+
                 if (response.isSuccessful() && response.body() != null) {
                     liveData.setValue(response.body());
                 }
@@ -83,7 +134,6 @@ public class UserRepository {
 
             @Override
             public void onFailure(Call<T> call, Throwable t) {
-                // Tratamento de falhas comuns
                 t.printStackTrace();
             }
         });
@@ -91,5 +141,10 @@ public class UserRepository {
 
     interface ResponseCallback<T> {
         void onResponseReceived(Response<T> response);
+    }
+
+    public interface UpdateProfileCallback {
+        void onUpdateSuccess(User updatedUser);
+        void onUpdateFailure(String errorMessage);
     }
 }

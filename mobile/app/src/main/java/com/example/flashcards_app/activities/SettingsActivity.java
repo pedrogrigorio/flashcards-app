@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.dialogs.EditDeckDialog;
@@ -24,6 +26,7 @@ import com.example.flashcards_app.models.User;
 import com.example.flashcards_app.util.AppPreferences;
 import com.example.flashcards_app.viewmodel.ProfileViewModel;
 import com.example.flashcards_app.viewmodel.SettingsViewModel;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -79,6 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
             dialog.setDialogResult(new EditProfileDialog.onDialogResult() {
                 @Override
                 public void finish(User updatedProfile) {
+                    System.out.println("FINALIZAÇÃO DO POPUP NA ACTIVITY");
                     settingsViewModel.updateProfile(updatedProfile);
                 }
             });
@@ -98,9 +102,11 @@ public class SettingsActivity extends AppCompatActivity {
         name.setText(user.getName());
         username.setText(user.getUsername());
 
-        if (!user.getImgSrc().isEmpty()) {
+        if (user.getImgSrc() != null && !user.getImgSrc().isEmpty()) {
+            String imageUrl = "http://10.0.2.2:3000/image/" + user.getImgSrc();
+
             Picasso.get()
-                    .load(user.getImgSrc())
+                    .load(imageUrl)
                     .into(profileImg);
         }
     }
