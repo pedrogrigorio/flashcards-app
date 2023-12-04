@@ -62,6 +62,10 @@ public class DeckViewModel extends ViewModel {
 
     }
 
+    public void addNewCardDeck(String frontText, String backText, Deck deck) {
+
+    }
+
     public void deleteDeck(Deck deck, int position) {
         System.out.println(String.valueOf(deck.getId()));
         deckRepository.deleteDeck(deck);

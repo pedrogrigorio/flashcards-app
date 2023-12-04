@@ -35,6 +35,8 @@ class CardController {
 
   async deleteCard(req: Request, res: Response) {
     try {
+      console.log(req.body.deckId)
+      console.log(req.body.cardId)
       const deleteCard = await CardService.deleteCard(
         parseInt(req.body.deckId),
         parseInt(req.body.cardId),
@@ -74,6 +76,7 @@ class CardController {
       const cardsForToday = await CardService.getCardsForToday(
         parseInt(req.body.deckId),
       )
+      console.log('CARDS PARA REVER' + cardsForToday[0].backText)
       return res.status(201).json(cardsForToday)
     } catch (error) {
       console.error('Error to get card for today: ', error)

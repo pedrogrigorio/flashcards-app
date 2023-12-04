@@ -1,8 +1,10 @@
 package com.example.flashcards_app.api;
 
+import com.example.flashcards_app.dto.CreateCardDTO;
 import com.example.flashcards_app.dto.DeleteDeckDTO;
 import com.example.flashcards_app.dto.UpdateDeckDTO;
 import com.example.flashcards_app.models.Deck;
+import com.example.flashcards_app.models.Review;
 
 import java.util.List;
 
@@ -27,9 +29,11 @@ public interface DeckService {
     @DELETE("/deck/{deckId}/deleteDeck")
     Call<List<Deck>> deleteDeck(@Path("deckId") int deckId);
 
-    // No useges for now
+    // No usages for now
     @GET("/deck/:id/getDeckById")
     Call<List<Deck>> getDeckById();
+
+
 
 
 

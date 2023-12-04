@@ -28,6 +28,7 @@ import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.HomeActivity;
+import com.example.flashcards_app.repositories.CardRepository;
 import com.example.flashcards_app.viewmodel.DeckViewModel;
 
 import java.util.List;
@@ -86,6 +87,15 @@ public class DecksFragment extends Fragment {
 
                 if (option == 0) {
                     AddCardsDialog dialog = new AddCardsDialog(deck);
+
+                    dialog.setDialogResult(new AddCardsDialog.onDialogResult() {
+                        @Override
+                        public void finish(String frontText, String backText) {
+                            CardRepository repository = new CardRepository();
+                            repository.addNewCardDeck(frontText, backText, deck);
+                        }
+                    });
+
                     dialog.show(manager, "edit_deck_popup");
                 } else if (option == 1) {
                     EditDeckDialog dialog = new EditDeckDialog(deck);

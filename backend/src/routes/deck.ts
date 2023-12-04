@@ -4,19 +4,15 @@ import DeckController from '../controllers/DeckController'
 
 const deckRoutes = Router()
 // test (add AuthMiddleware)
-deckRoutes.post('/deck/create', AuthMiddleware, DeckController.createDeck)
-deckRoutes.put(
-  '/deck/:id/updateDeck',
-  AuthMiddleware,
-  DeckController.updateDeck,
-)
-deckRoutes.post(
-  '/deck/:id/deleteDeck',
+deckRoutes.get('/deck/create', AuthMiddleware, DeckController.createDeck)
+deckRoutes.put('/decK/updateDeck', AuthMiddleware, DeckController.updateDeck)
+deckRoutes.delete(
+  '/deck/:deckId/deleteDeck',
   AuthMiddleware,
   DeckController.deleteDeck,
 )
 deckRoutes.get('/deck/getAllDeck', AuthMiddleware, DeckController.getAllDeck)
-deckRoutes.post(
+deckRoutes.get(
   '/deck/:id/getDeckById',
   AuthMiddleware,
   DeckController.getDeckById,

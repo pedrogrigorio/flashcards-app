@@ -6,7 +6,7 @@ class DeckController {
   async createDeck(req: Request, res: Response) {
     try {
       console.log(req.body.userId)
-      const deck = await DeckService.createDeck(parseInt(req.body.userId))
+      const deck = await DeckService.createDeck(parseInt(req.userId))
 
       return res.json(deck)
     } catch (error) {
@@ -22,7 +22,7 @@ class DeckController {
       newCardsCount: req.body.newCardsCount || 0,
       learnCardsCount: req.body.learnCardsCount || 0,
       reviewCardsCount: req.body.reviewCardsCount || 0,
-      userId: req.body.userId || null,
+      userId: parseInt(req.userId),
     }
 
     try {
@@ -39,7 +39,7 @@ class DeckController {
 
   async deleteDeck(req: Request, res: Response) {
     try {
-      const deck = await DeckService.deleteDeck(parseInt(req.body.deckId))
+      const deck = await DeckService.deleteDeck(parseInt(req.params.deckId))
       return res.json(deck)
     } catch (error) {
       return res.status(400).json(error)
@@ -49,7 +49,6 @@ class DeckController {
   async getAllDeck(req: Request, res: Response) {
     try {
       const userId = parseInt(req.userId)
-      console.log('oi')
       const deck = await DeckService.getAllDeck(userId)
       return res.json(deck)
     } catch (error) {

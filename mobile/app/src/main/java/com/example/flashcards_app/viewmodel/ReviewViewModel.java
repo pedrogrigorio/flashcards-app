@@ -1,13 +1,20 @@
 package com.example.flashcards_app.viewmodel;
 
+import android.app.Activity;
+import android.content.Context;
+
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.flashcards_app.activities.ReviewActivity;
 import com.example.flashcards_app.adapters.ReviewAdapter;
+import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.Review;
+import com.example.flashcards_app.repositories.CardRepository;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +22,22 @@ public class ReviewViewModel extends ViewModel {
     private MutableLiveData<List<Review>> reviewLiveData = new MutableLiveData<>();
     private List<Review> reviewTemp = new ArrayList<>();
     private OnRefreshProgressBar onRefreshProgressBar;
+    private CardRepository cardRepository;
     private int indexLastCardReviewed;
-    public ReviewViewModel() {
-        loadReviewCardsData();
 
+    public ReviewViewModel() {
+        cardRepository = new CardRepository();
     }
 
-    private void loadReviewCardsData() {
-        reviewTemp.add(new Review("Good Nigth", "Boa Noite", 0, null));
-        reviewTemp.add(new Review("Have a nice day", "Tenha um bom dia", 1,null));
-        reviewTemp.add(new Review("So far, so good", "Até agora, tudo bem", 2,null));
-        reviewTemp.add(new Review("I'm lost", "Eu estou perdido", 3,null));
+    public void loadReviewCardsData(LifecycleOwner owner, int deckId) {
+        System.out.println("RODOU ANTES DO IF");
+        cardRepository.getCardsForToday(deckId).observe(owner, reviews -> {
+            reviewTemp.addAll(reviews);
+            System.out.println("DENTRO DO OBSERVER");
+            loadUiCards();
+        });
 
-
+        System.out.println("RODOU DEPOIS DO IF");
     }
 
     public void loadUiCards() {
@@ -50,10 +60,11 @@ public class ReviewViewModel extends ViewModel {
         this.reviewLiveData.setValue(tempLiveData);
     }
 
-    public void deleteCard(int position) {
+    public void deleteCard(int deckId, int position) {
         List<Review> currentCards = reviewLiveData.getValue();
 
         if (currentCards != null && !currentCards.isEmpty()) {
+            cardRepository.deleteCard(deckId, currentCards.get(position).getId());
             currentCards.remove(position);
             reviewTemp.remove(position);
 
@@ -78,11 +89,12 @@ public class ReviewViewModel extends ViewModel {
         }
     }
 
-    public void updateCard(Review updatedCard, int position) {
+    public void updateCard(Review updatedCard, int position, int deckId) {
         List<Review> currentCards = reviewLiveData.getValue();
 
         if (currentCards != null && !currentCards.isEmpty()) {
             currentCards.set(position, updatedCard);
+            cardRepository.updateCard(deckId, currentCards.get(position).getId(), updatedCard.getFrontText(), updatedCard.getBackText());
             reviewTemp.set(position, updatedCard);
 
             reviewLiveData.setValue(currentCards);
@@ -123,5 +135,4 @@ public class ReviewViewModel extends ViewModel {
     public void setOnRefreshProgressBar(OnRefreshProgressBar onRefreshProgressBar) {
         this.onRefreshProgressBar = onRefreshProgressBar;
     }
-
 }

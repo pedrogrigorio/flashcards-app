@@ -32,6 +32,7 @@ import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.models.Review;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,8 +43,8 @@ public class EditCardDialog extends AppCompatDialogFragment {
     Review currentCard;
     Review updatedCard;
     onDialogResult dialogResult;
-    EditText frontCardEditText;
-    EditText backCardEditText;
+    TextInputEditText frontCardEditText;
+    TextInputEditText backCardEditText;
     Resources resources;
 
     public EditCardDialog(Review currentCard) {
