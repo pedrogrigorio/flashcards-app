@@ -1,5 +1,7 @@
 package com.example.flashcards_app.viewmodel;
 
+import android.content.Context;
+import android.net.Uri;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,8 +54,8 @@ public class DeckViewModel extends ViewModel {
 
 
 
-    public void updateDeck(Deck deck, int position) {
-        deckRepository.updateDeck(deck);
+    public void updateDeck(Context context, Deck deck, int position, Uri newimageUri) {
+        deckRepository.updateDeck(context, deck, newimageUri);
         List<Deck> temp = decksLiveData.getValue();
         if(temp != null) {
             temp.set(position, deck);

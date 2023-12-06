@@ -1,11 +1,17 @@
 import { Router } from 'express'
 import { AuthMiddleware } from '../middlewares/auth'
 import DeckController from '../controllers/DeckController'
+import upload from '../lib/multer'
 
 const deckRoutes = Router()
 // test (add AuthMiddleware)
 deckRoutes.get('/deck/create', AuthMiddleware, DeckController.createDeck)
-deckRoutes.put('/decK/updateDeck', AuthMiddleware, DeckController.updateDeck)
+deckRoutes.put(
+  '/decK/updateDeck',
+  AuthMiddleware,
+  upload.single('file'),
+  DeckController.updateDeck,
+)
 deckRoutes.delete(
   '/deck/:deckId/deleteDeck',
   AuthMiddleware,

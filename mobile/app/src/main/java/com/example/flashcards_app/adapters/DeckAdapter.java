@@ -49,10 +49,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         holder.newCardsNumberTextView.setText(currentDeck.getNewCardsNumber() + "");
         holder.reviewCardsNumberTextView.setText(currentDeck.getReviewCardsNumber() + "");
         holder.learnCardsNumberTextView.setText(currentDeck.getLearnCardsNumber() + "");
-
+        String imageUrl = "http://10.0.2.2:3000/image/" + currentDeck.getImgSrc();
         if (!currentDeck.getImgSrc().isEmpty()) {
             Picasso.get()
-                    .load(currentDeck.getImgSrc())
+                    .load(imageUrl)
                     .into(holder.deckImage);
         }
 

@@ -15,20 +15,24 @@ class DeckController {
   }
 
   async updateDeck(req: Request, res: Response) {
-    const deckData: Deck = {
-      id: req.body.deckId,
-      title: req.body.title || 'Novo Deck',
+    const file = req.file
+    const updateDeckDTO = JSON.parse(req.body.updateDeckDTO)
+    console.log('file' + file)
+    const deckData = {
+      id: updateDeckDTO.deckId,
+      title: updateDeckDTO.title || 'Novo Deck',
       imgSrc: req.body.imgSrc || '',
-      newCardsCount: req.body.newCardsCount || 0,
-      learnCardsCount: req.body.learnCardsCount || 0,
-      reviewCardsCount: req.body.reviewCardsCount || 0,
+      newCardsCount: updateDeckDTO.newCardsCount || 0,
+      learnCardsCount: updateDeckDTO.learnCardsCount || 0,
+      reviewCardsCount: updateDeckDTO.reviewCardsCount || 0,
       userId: parseInt(req.userId),
     }
 
     try {
       const deck = await DeckService.updateDeck(
-        parseInt(req.body.deckId),
+        parseInt(updateDeckDTO.deckId),
         deckData,
+        file,
       )
 
       return res.json(deck)
