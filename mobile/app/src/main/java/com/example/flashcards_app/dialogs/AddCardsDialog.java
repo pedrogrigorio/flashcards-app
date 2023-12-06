@@ -28,6 +28,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.models.Deck;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,9 @@ public class AddCardsDialog extends AppCompatDialogFragment {
 
     Deck currentDeck;
     Resources resources;
+    TextInputEditText frontCardEditText;
+    TextInputEditText backCardEditText;
+    onDialogResult dialogResult;
 
     public AddCardsDialog(Deck currentDeck) {
         this.currentDeck = currentDeck;
@@ -48,20 +52,23 @@ public class AddCardsDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add_cards, null);
 
+
+        Button colorPickerFrontCard = view.findViewById(R.id.btn_change_color_front_card);
+        Button colorPickerBackCard = view.findViewById(R.id.btn_change_color_back_card);
+        frontCardEditText = view.findViewById(R.id.front_card_text);
+        backCardEditText = view.findViewById(R.id.back_card_text);
+        resources = getResources();
+
+
         builder.setView(view)
                 .setNegativeButton("Cancelar", null)
                 .setPositiveButton("ADICIONAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO: implement add cards
+                        dialogResult.finish(frontCardEditText.getText().toString(), backCardEditText.getText().toString());
                     }
                 });
 
-        Button colorPickerFrontCard = view.findViewById(R.id.btn_change_color_front_card);
-        Button colorPickerBackCard = view.findViewById(R.id.btn_change_color_back_card);
-        EditText frontCardEditText = view.findViewById(R.id.front_card_text);
-        EditText backCardEditText = view.findViewById(R.id.back_card_text);
-        resources = getResources();
 
         colorPickerFrontCard.setOnClickListener(v -> {
             showPopupMenu(colorPickerFrontCard, frontCardEditText);
@@ -73,6 +80,16 @@ public class AddCardsDialog extends AppCompatDialogFragment {
 
         return builder.create();
     }
+
+    public interface onDialogResult {
+        void finish(String frontText, String backText);
+    }
+
+    public void setDialogResult(onDialogResult dialogResult) {
+        this.dialogResult = dialogResult;
+    }
+
+
 
     public void showPopupMenu(View buttonView, EditText cardText) {
         View view = View.inflate(requireContext(), R.layout.dialog_color_picker, null);

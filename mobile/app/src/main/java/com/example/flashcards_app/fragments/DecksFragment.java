@@ -2,6 +2,7 @@ package com.example.flashcards_app.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +29,7 @@ import com.example.flashcards_app.dialogs.EditDeckDialog;
 import com.example.flashcards_app.models.Deck;
 import com.example.flashcards_app.R;
 import com.example.flashcards_app.activities.HomeActivity;
+import com.example.flashcards_app.repositories.CardRepository;
 import com.example.flashcards_app.viewmodel.DeckViewModel;
 
 import java.util.List;
@@ -39,6 +41,7 @@ public class DecksFragment extends Fragment {
     private DeckAdapter adapter;
 
     Button addButton;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,13 +89,22 @@ public class DecksFragment extends Fragment {
 
                 if (option == 0) {
                     AddCardsDialog dialog = new AddCardsDialog(deck);
+
+                    dialog.setDialogResult(new AddCardsDialog.onDialogResult() {
+                        @Override
+                        public void finish(String frontText, String backText) {
+                            CardRepository repository = new CardRepository();
+                            repository.addNewCardDeck(frontText, backText, deck);
+                        }
+                    });
+
                     dialog.show(manager, "edit_deck_popup");
                 } else if (option == 1) {
                     EditDeckDialog dialog = new EditDeckDialog(deck);
                     dialog.setDialogResult(new EditDeckDialog.onDialogResult() {
                         @Override
-                        public void finish(Deck updatedDeck) {
-                            deckViewModel.updateDeck(updatedDeck, position);
+                        public void finish(Deck updatedDeck, Uri newImgUri) {
+                            deckViewModel.updateDeck(getContext(),updatedDeck, position, newImgUri);
                         }
                     });
                     dialog.show(manager, "edit_deck_popup");

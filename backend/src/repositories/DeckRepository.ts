@@ -19,12 +19,22 @@ class DeckRepository {
     return deck
   }
 
-  async upadateDeck(deckId: number, updateDeck: Deck) {
+  async upadateDeck(
+    deckId: number,
+    updateDeck: Deck,
+    imgSrc: string | undefined,
+  ) {
     const deck = await prisma.deck.update({
       where: {
         id: deckId,
       },
-      data: updateDeck,
+      data: {
+        title: updateDeck.title,
+        newCardsCount: updateDeck.newCardsCount,
+        learnCardsCount: updateDeck.learnCardsCount,
+        reviewCardsCount: updateDeck.reviewCardsCount,
+        imgSrc,
+      },
     })
     return deck
   }

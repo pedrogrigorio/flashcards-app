@@ -51,6 +51,7 @@ public class ReviewActivity extends AppCompatActivity  {
     Button deleteButton;
     Button editButton;
     ImageButton back;
+    private int deckId;
 
 
     @Override
@@ -64,7 +65,7 @@ public class ReviewActivity extends AppCompatActivity  {
 
         Intent intent = getIntent();
         if (intent.hasExtra("deckId")) {
-            int deckId = intent.getIntExtra("deckId", -1);
+            deckId = intent.getIntExtra("deckId", -1);
             Toast.makeText(this, "ID: " + deckId, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Erro ao carregar o deck", Toast.LENGTH_SHORT).show();
@@ -166,8 +167,7 @@ public class ReviewActivity extends AppCompatActivity  {
         // View Model Config
         this.reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
         configReviewViewModel();
-        this.reviewViewModel.loadUiCards();
-
+        this.reviewViewModel.loadReviewCardsData(this, deckId);
     }
 
     private void configRecyclerView() {
@@ -225,7 +225,7 @@ public class ReviewActivity extends AppCompatActivity  {
                 dialog.setDialogResult(new DeleteCardDialog.onDialogResult() {
                     @Override
                     public void finish() {
-                        reviewViewModel.deleteCard(position);
+                        reviewViewModel.deleteCard(deckId, position);
                     }
                 });
                 dialog.show(getSupportFragmentManager(), "delete_card_popup");
@@ -244,7 +244,7 @@ public class ReviewActivity extends AppCompatActivity  {
                 dialog.setDialogResult(new EditCardDialog.onDialogResult() {
                     @Override
                     public void finish(Review updatedCard) {
-                        reviewViewModel.updateCard(updatedCard, position);
+                        reviewViewModel.updateCard(updatedCard, position, deckId);
                     }
                 });
                 dialog.show(getSupportFragmentManager(), "edit_card_popup");

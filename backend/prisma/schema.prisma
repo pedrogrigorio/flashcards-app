@@ -71,7 +71,7 @@ model Card {
   id                   Int         @id @default(autoincrement())
   frontText            String
   backText             String
-  stampLevel           Int?        @default(-1)
+  stampLevel           Int?
   reviewedAt           DateTime?
   nextReview           DateTime?
   lastSuccessfulReview DateTime?

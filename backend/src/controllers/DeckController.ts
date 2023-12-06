@@ -6,7 +6,7 @@ class DeckController {
   async createDeck(req: Request, res: Response) {
     try {
       console.log(req.body.userId)
-      const deck = await DeckService.createDeck(parseInt(req.body.userId))
+      const deck = await DeckService.createDeck(parseInt(req.userId))
 
       return res.json(deck)
     } catch (error) {
@@ -15,20 +15,24 @@ class DeckController {
   }
 
   async updateDeck(req: Request, res: Response) {
-    const deckData: Deck = {
-      id: req.body.deckId,
-      title: req.body.title || 'Novo Deck',
+    const file = req.file
+    const updateDeckDTO = JSON.parse(req.body.updateDeckDTO)
+    console.log('file' + file)
+    const deckData = {
+      id: updateDeckDTO.deckId,
+      title: updateDeckDTO.title || 'Novo Deck',
       imgSrc: req.body.imgSrc || '',
-      newCardsCount: req.body.newCardsCount || 0,
-      learnCardsCount: req.body.learnCardsCount || 0,
-      reviewCardsCount: req.body.reviewCardsCount || 0,
-      userId: req.body.userId || null,
+      newCardsCount: updateDeckDTO.newCardsCount || 0,
+      learnCardsCount: updateDeckDTO.learnCardsCount || 0,
+      reviewCardsCount: updateDeckDTO.reviewCardsCount || 0,
+      userId: parseInt(req.userId),
     }
 
     try {
       const deck = await DeckService.updateDeck(
-        parseInt(req.body.deckId),
+        parseInt(updateDeckDTO.deckId),
         deckData,
+        file,
       )
 
       return res.json(deck)
@@ -39,7 +43,7 @@ class DeckController {
 
   async deleteDeck(req: Request, res: Response) {
     try {
-      const deck = await DeckService.deleteDeck(parseInt(req.body.deckId))
+      const deck = await DeckService.deleteDeck(parseInt(req.params.deckId))
       return res.json(deck)
     } catch (error) {
       return res.status(400).json(error)
@@ -49,7 +53,6 @@ class DeckController {
   async getAllDeck(req: Request, res: Response) {
     try {
       const userId = parseInt(req.userId)
-      console.log('oi')
       const deck = await DeckService.getAllDeck(userId)
       return res.json(deck)
     } catch (error) {

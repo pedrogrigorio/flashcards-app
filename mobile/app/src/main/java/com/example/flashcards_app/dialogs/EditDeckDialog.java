@@ -47,6 +47,7 @@ public class EditDeckDialog extends AppCompatDialogFragment {
     ImageView currentDeckImg;
     FloatingActionButton camButton;
     EditText title;
+    Uri newImgUri;
 
     public EditDeckDialog(Deck currentDeck) {
         this.currentDeck = currentDeck;
@@ -69,7 +70,7 @@ public class EditDeckDialog extends AppCompatDialogFragment {
                         updatedDeck.setLearnCardsNumber(currentDeck.getLearnCardsNumber());
                         updatedDeck.setNewCardsNumber(currentDeck.getNewCardsNumber());
                         updatedDeck.setReviewCardsNumber(currentDeck.getReviewCardsNumber());
-                        dialogResult.finish(updatedDeck);
+                        dialogResult.finish(updatedDeck, newImgUri);
                     }
                 });
 
@@ -78,10 +79,10 @@ public class EditDeckDialog extends AppCompatDialogFragment {
         camButton = view.findViewById(R.id.btn_cam_edit_deck);
         currentDeckImg = view.findViewById(R.id.deck_img_edit_deck);
         title = view.findViewById(R.id.deck_title_edit_deck);
-
-        if (!currentDeck.getImgSrc().isEmpty()) {
+        String imageUrl = "http://10.0.2.2:3000/image/" + currentDeck.getImgSrc();
+        if (currentDeck != null && !currentDeck.getImgSrc().isEmpty()) {
             Picasso.get()
-                    .load(currentDeck.getImgSrc())
+                    .load(imageUrl)
                     .into(currentDeckImg);
         }
 
@@ -110,7 +111,7 @@ public class EditDeckDialog extends AppCompatDialogFragment {
         result -> {
             Intent data = result.getData();
             if (data != null && result.getResultCode() == Activity.RESULT_OK) {
-                Uri newImgUri = data.getData();
+                newImgUri = data.getData();
                 currentDeckImg.setImageURI(newImgUri);
                 // TODO: upload image on backend
 
@@ -123,7 +124,7 @@ public class EditDeckDialog extends AppCompatDialogFragment {
         });
 
     public interface onDialogResult {
-        void finish(Deck updatedDeck);
+        void finish(Deck updatedDeck, Uri newImgUri);
     }
 
     public void setDialogResult(onDialogResult dialogResult) {
