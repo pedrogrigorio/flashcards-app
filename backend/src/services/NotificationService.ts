@@ -16,11 +16,12 @@ class NotificationService {
       throw new Error('Sender not found')
     }
 
+    const message = `${sender.name} quer ser seu amigo.`
     const notification = await NotificationRepository.createNotification(
       NotificationType.FriendRequest,
       NotificationStatus.Pending,
       receiverId,
-      sender.name,
+      message,
       senderId,
       sender.imgSrc,
     )
@@ -50,7 +51,7 @@ class NotificationService {
     if (notification.senderId) {
       FriendService.addFriend(notification.senderId, notification.receiverId)
 
-      const text = 'Friend request accepted'
+      const text = `Sua solicitação de amizade foi aceita.`
 
       await NotificationRepository.createNotification(
         NotificationType.FriendRequestAccepted,
