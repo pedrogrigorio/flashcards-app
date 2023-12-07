@@ -74,7 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/trash" />
+            app:srcCompat="@drawable/trash2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

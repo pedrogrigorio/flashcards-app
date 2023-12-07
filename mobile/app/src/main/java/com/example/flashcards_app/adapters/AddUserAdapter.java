@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -78,8 +79,8 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddFrien
         TextView textViewFriendName;
         TextView textViewFriendUserName;
         ImageView userImage;
-        ImageView deleteFriend;
-        ImageView addFriend;
+        Button deleteFriend;
+        Button addFriend;
 
         public AddFriendHolder(@NonNull View itemView) {
             super(itemView);
