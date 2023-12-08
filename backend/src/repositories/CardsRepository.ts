@@ -79,12 +79,20 @@ class CardRepository {
   async getCardsForToday(deckId: number, date: Date) {
     const cards = await prisma.card.findMany({
       where: {
-        nextReview: {
-          lte: date,
-        },
-        Deck: {
-          id: deckId,
-        },
+        AND: [
+          {
+            OR: [{ nextReview: null }, { nextReview: { lte: date } }],
+            Deck: {
+              id: deckId,
+            },
+          },
+          {
+            OR: [
+              { stampLevel: null },
+              { stampLevel: undefined }, // Adicione esta condição se null e undefined devem ser tratados da mesma forma
+            ],
+          },
+        ],
       },
     })
 

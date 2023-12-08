@@ -26,6 +26,7 @@ import com.example.flashcards_app.models.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.flashcards_app.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
@@ -49,12 +50,29 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         holder.newCardsNumberTextView.setText(currentDeck.getNewCardsNumber() + "");
         holder.reviewCardsNumberTextView.setText(currentDeck.getReviewCardsNumber() + "");
         holder.learnCardsNumberTextView.setText(currentDeck.getLearnCardsNumber() + "");
+
         String imageUrl = "http://10.0.2.2:3000/image/" + currentDeck.getImgSrc();
+
+        // Is necessary (probably) build in backend a route to get new image source from directly backend
+
         if (!currentDeck.getImgSrc().isEmpty()) {
             Picasso.get()
                     .load(imageUrl)
-                    .into(holder.deckImage);
+                    .into(holder.deckImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            localImage(holder.deckImage, currentDeck);
+                        }
+                    });
         }
+
+
+
 
         holder.editButton.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(v.getContext(), holder.editButton, Gravity.END);
@@ -85,6 +103,12 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.DeckHolder> {
         holder.reviewButton.setOnClickListener(v -> {
             reviewButtonListener.onItemClick(currentDeck);
         });
+    }
+
+    private void localImage(ImageView imgView, Deck deck) {
+        Picasso.get()
+                .load(deck.getImgSrc())
+                .into(imgView);
     }
 
     @Override

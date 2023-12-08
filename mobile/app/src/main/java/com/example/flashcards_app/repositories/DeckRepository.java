@@ -76,7 +76,6 @@ public class DeckRepository {
         RequestBody updateDeckDTORequestBody = RequestBody.create(MediaType.parse("application/json"), updateDeckDTOJson);
 
         if(newImgUri != null) {
-            System.out.println("TESTANDO IMAGEM");
             String path = RealPathUtil.getRealPath(context, newImgUri);
             File file = new File(path);
 

@@ -4,7 +4,7 @@ import DeckController from '../controllers/DeckController'
 import upload from '../lib/multer'
 
 const deckRoutes = Router()
-// test (add AuthMiddleware)
+// test (add AuthMiddleware) Is necessary fixing problem with default add in data base (prisma). When the imgSrc is in default the update dosen't works
 deckRoutes.get('/deck/create', AuthMiddleware, DeckController.createDeck)
 deckRoutes.put(
   '/decK/updateDeck',

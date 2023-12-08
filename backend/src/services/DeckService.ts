@@ -29,7 +29,8 @@ class DeckService {
 
       imgSrc = file.filename
     }
-    console.log('UPDATE DECK: ' + upadateDeck)
+
+    console.log('IMAGE FIRST')
 
     const deckUpdated = await DeckRepository.upadateDeck(
       deckId,

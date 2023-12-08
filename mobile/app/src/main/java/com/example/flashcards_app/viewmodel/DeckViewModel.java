@@ -1,10 +1,13 @@
 package com.example.flashcards_app.viewmodel;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -32,16 +35,6 @@ public class DeckViewModel extends ViewModel {
         return decksLiveData;
     }
 
-    /*
-    *   Methods to be implemented in repository
-    * =================================================== */
-//    public void insertDeck() {
-//        List<Deck> temp = deckRepository.addNewDeck().getValue();
-//        temp.addAll(decksLiveData.getValue());
-//        decksLiveData.setValue(temp);
-//
-//    }
-
     public void insertDeck(Deck deck) {
         deckRepository.addNewDeck();
 
@@ -52,12 +45,11 @@ public class DeckViewModel extends ViewModel {
         }
     }
 
-
-
     public void updateDeck(Context context, Deck deck, int position, Uri newimageUri) {
         deckRepository.updateDeck(context, deck, newimageUri);
         List<Deck> temp = decksLiveData.getValue();
         if(temp != null) {
+            deck.setImgSrc(newimageUri.toString());
             temp.set(position, deck);
             decksLiveData.setValue(temp);
         }
