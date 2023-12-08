@@ -58,7 +58,7 @@ model Notification {
 model Deck {
   id               Int    @id @default(autoincrement())
   title            String @default("Novo Deck")
-  imgSrc           String @default("")
+  imgSrc           String @default("placeholder_deck_image.jpg")
   newCardsCount    Int    @default(0)
   learnCardsCount  Int    @default(0)
   reviewCardsCount Int    @default(0)

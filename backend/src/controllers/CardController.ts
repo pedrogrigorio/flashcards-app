@@ -76,7 +76,6 @@ class CardController {
       const cardsForToday = await CardService.getCardsForToday(
         parseInt(req.body.deckId),
       )
-      console.log('CARDS PARA REVER' + cardsForToday[0].backText)
       return res.status(201).json(cardsForToday)
     } catch (error) {
       console.error('Error to get card for today: ', error)

@@ -61,9 +61,6 @@ class CardService {
       stampLevel,
       startingEasy,
     )
-    console.log('Nova review ' + newReview.newDate)
-    console.log('Nova review ' + newReview.newStartEasy)
-    console.log('Nova review ' + newReview.newSuccessfulReview)
     const cards = await CardRepository.updateCardsReviewed(
       deckId,
       CardId,

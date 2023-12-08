@@ -5,11 +5,27 @@ import { AuthMiddleware } from '../middlewares/auth'
 const cardRoutes = Router()
 
 cardRoutes.post('/card/create', AuthMiddleware, CardController.createCard)
-cardRoutes.put('/card/updateCard', CardController.updateCard)
+cardRoutes.put('/card/updateCard', AuthMiddleware, CardController.updateCard)
 cardRoutes.post('/card/deleteCard', AuthMiddleware, CardController.deleteCard)
-cardRoutes.post('/card/:id/getAllCards', CardController.getAllCards)
-cardRoutes.post('/card/:id/getCardById', CardController.getCardById)
-cardRoutes.post('/card/getCardsForToday', CardController.getCardsForToday)
-cardRoutes.post('/card/UpdateCardsReview', CardController.updateCardsReviewed)
+cardRoutes.post(
+  '/card/:id/getAllCards',
+  AuthMiddleware,
+  CardController.getAllCards,
+)
+cardRoutes.post(
+  '/card/:id/getCardById',
+  AuthMiddleware,
+  CardController.getCardById,
+)
+cardRoutes.post(
+  '/card/getCardsForToday',
+  AuthMiddleware,
+  CardController.getCardsForToday,
+)
+cardRoutes.post(
+  '/card/UpdateCardsReview',
+  AuthMiddleware,
+  CardController.updateCardsReviewed,
+)
 
 export default cardRoutes
